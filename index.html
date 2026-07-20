@@ -464,6 +464,72 @@ const JOURS=[
 let curDay=null,doneSet=new Set(),total=0;
 let tInt=null,tSec=0,tTot=0,notifOn=false;
 const $=id=>document.getElementById(id);
+
+// ══════════════════════════════════
+// MODE REPRISE — 3 semaines après arrêt prolongé (≥1 mois)
+// Réduit charges (-25%), séries (-1, min 2), intensité cardio,
+// et allonge le repos (+10s) pour limiter courbatures/blessures.
+// ══════════════════════════════════
+let reprise=false,repriseStart=null;
+try{
+  reprise=JSON.parse(localStorage.getItem('reprise')||'false');
+  repriseStart=localStorage.getItem('repriseStart')||null;
+}catch{}
+function repriseDaysElapsed(){ return repriseStart?Math.floor((Date.now()-new Date(repriseStart).getTime())/86400000):0; }
+function repriseWeek(){ return Math.min(3,Math.floor(repriseDaysElapsed()/7)+1); }
+function repriseActive(){
+  if(!reprise) return false;
+  if(repriseStart && repriseDaysElapsed()>=21){ setReprise(false); return false; }
+  return true;
+}
+function setReprise(on){
+  reprise=on;
+  if(on && !repriseStart) repriseStart=new Date().toISOString();
+  if(!on) repriseStart=null;
+  try{
+    localStorage.setItem('reprise',JSON.stringify(reprise));
+    if(repriseStart) localStorage.setItem('repriseStart',repriseStart); else localStorage.removeItem('repriseStart');
+  }catch{}
+}
+const roundKg=v=>Math.round(v*2)/2; // arrondi 0,5 kg (cohérent avec les plaques 1/2/5 kg dispo)
+function scaleCharge(c,factor){
+  if(c==null) return null;
+  if(typeof c==='number') return roundKg(Math.max(1,c*factor));
+  const m=String(c).match(/^(\d+)×(\d+(\.\d+)?)$/);
+  if(m) return m[1]+'×'+roundKg(Math.max(1,parseFloat(m[2])*factor));
+  return c;
+}
+function scaleStepsArr(steps){
+  // Reprise : plafonne la force à 12 (au lieu de 15) et réduit la durée ~15%
+  return steps.map(s=>({...s,f:Math.min(s.f,12),durS:Math.max(30,Math.round(s.durS*0.85/15)*15)}));
+}
+function getEffectiveDay(key){
+  const src=P[key];
+  const rActive=repriseActive();
+  const blocks=src.blocks.map(b=>({
+    title:b.title,
+    items:b.items.map(item=>{
+      if(!rActive) return item;
+      if(item.t==='e'){
+        return {...item,
+          series:Math.max(2,(item.series||4)-1),
+          timer:(item.timer||40)+10,
+          charges:item.charges?item.charges.map(c=>scaleCharge(c,0.75)):item.charges
+        };
+      }
+      if(item.t==='c'){
+        const stepsKey=item.steps;
+        const scaled=stepsKey?scaleStepsArr(ELLIPSTEPS[stepsKey]):null;
+        const newDur=scaled?scaled.reduce((s,x)=>s+x.durS,0):Math.round((item.durS||300)*0.85);
+        return {...item,durS:newDur,kcal:Math.round(item.kcal*0.8),_stepsOverride:scaled};
+      }
+      return item;
+    })
+  }));
+  const kcal=Math.round(src.kcal*(rActive?0.82:1));
+  return {...src,blocks,kcal,duree:src.duree};
+}
+
 let _mem=[];
 const getH=()=>{try{return JSON.parse(localStorage.getItem('th')||'[]')}catch{return _mem}};
 const setH=h=>{_mem=h;try{localStorage.setItem('th',JSON.stringify(h))}catch{}};
@@ -562,7 +628,7 @@ function startElliptiqueTimer(item,cardEl,chkEl){
   const ringId='ring-'+cardId, labelId='clabel-'+cardId;
   const timeId='ctime-'+cardId;
   const coachEl=cardEl.querySelector('.ex-coach');
-  const steps=item.steps?ELLIPSTEPS[item.steps]:null;
+  const steps=item._stepsOverride||(item.steps?ELLIPSTEPS[item.steps]:null);
   const totalSecs=item.durS||300;
 
   // Bouton Valider ✓ sur le cardio
@@ -766,7 +832,8 @@ function mkCardio(item,idx){
   const id='x'+idx;
   const el=document.createElement('div');
   el.className='cc'; el.id='card-'+id;
-  const sHTML=item.steps?stepsHTML(ELLIPSTEPS[item.steps],id):'';
+  const stepsForDisplay=item._stepsOverride||(item.steps?ELLIPSTEPS[item.steps]:null);
+  const sHTML=stepsForDisplay?stepsHTML(stepsForDisplay,id):'';
   el.innerHTML=`
     <div class="cm">
       <span class="cn">${item.nom}</span>
@@ -812,8 +879,8 @@ function expand(id){
 
 function openSeance(key,label){
   curDay=key; doneSet=new Set(); stopTimer();
-  const p=P[key];
-  $('sDayTag').textContent=label.toUpperCase();
+  const p=getEffectiveDay(key);
+  $('sDayTag').textContent=label.toUpperCase()+(repriseActive()?' · REPRISE S'+repriseWeek()+'/3':'');
   $('sTitle').textContent=p.nom.toUpperCase();
   $('sDuree').textContent='⏱ '+p.duree;
   $('sKcal').textContent='🔥 ~'+p.kcal+' kcal';
@@ -842,7 +909,7 @@ function buildHome(){
   $('statKcal').textContent=weekKcal(); $('statDone').textContent=weekSess();
   const list=$('dayList'); list.innerHTML='';
   JOURS.forEach(j=>{
-    const prog=j.rest?null:P[j.key];
+    const prog=j.rest?null:getEffectiveDay(j.key);
     const d=!j.rest&&dayDone(j.key);
     const el=document.createElement('div');
     el.className='dc'+(j.rest?' rest':'')+(d?' done':'');
@@ -856,10 +923,44 @@ function buildHome(){
     if(!j.rest) el.addEventListener('click',()=>openSeance(j.key,j.label));
     list.appendChild(el);
   });
+  buildRepriseCard();
+}
+
+function buildRepriseCard(){
+  let card=$('repriseCard');
+  if(!card){
+    card=document.createElement('div');
+    card.id='repriseCard';
+    card.className='nb2';
+    card.style.flexDirection='column';
+    card.style.alignItems='stretch';
+    card.style.cursor='default';
+    const dayList=$('dayList'), notifBtn=$('notifBtn');
+    dayList.parentNode.insertBefore(card,notifBtn);
+  }
+  const active=repriseActive();
+  const wk=active?repriseWeek():0;
+  card.innerHTML=`
+    <div style="display:flex;align-items:center;gap:12px;width:100%">
+      <div style="font-size:20px">🩹</div>
+      <div class="nt">
+        <div class="ntl">Mode Reprise</div>
+        <div class="nts">${active?`Semaine ${wk}/3 · charges -25%, séries -1, cardio allégé`:'À activer après ≥1 mois d\'arrêt (3 sem. de rodage)'}</div>
+      </div>
+      <div class="ntg${active?' on':''}" id="repriseToggle"><div class="nth"></div></div>
+    </div>`;
+  $('repriseToggle').addEventListener('click',()=>{
+    if(!active){
+      setReprise(true);
+    }else{
+      if(confirm('Désactiver le mode reprise et repasser au programme normal ?')) setReprise(false);
+    }
+    buildHome();
+  });
 }
 
 function showRecap(){
-  const p=P[curDay];
+  const p=getEffectiveDay(curDay);
   const lbl=JOURS.find(j=>j.key===curDay)?.label||'';
   stopTimer();
   const h=getH(); h.unshift({key:curDay,label:lbl,nom:p.nom,kcal:p.kcal,ts:new Date().toISOString()});
