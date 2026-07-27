@@ -204,6 +204,15 @@ body{min-height:100%;background:var(--bk);color:var(--w);font-family:var(--fb);f
 .cto-label{font-family:var(--fc);font-size:13px;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--mt);margin-bottom:16px}
 .cto-num{font-family:var(--fd);font-size:120px;color:var(--red);line-height:1;animation:countPop .4s ease}
 .cto-go{font-family:var(--fd);font-size:72px;color:#4ade80;line-height:1;animation:countPop .3s ease}
+/* MODALE CHOIX DE FORMAT */
+.modeov{position:fixed;inset:0;background:rgba(10,10,10,.75);display:none;align-items:flex-end;justify-content:center;z-index:600}
+.modeov.on{display:flex}
+.modeCard{width:100%;max-width:480px;background:var(--dk);border-top-left-radius:20px;border-top-right-radius:20px;padding:22px 20px calc(20px + env(safe-area-inset-bottom,0px));animation:fadeUp .2s ease}
+.modeTitle{font-family:var(--fd);font-size:24px;color:var(--w);margin-bottom:16px;text-align:center}
+.modeBtn{display:block;width:100%;background:var(--cd);border:1px solid var(--br);border-radius:var(--rad);padding:14px 16px;margin-bottom:10px;color:var(--w);font-family:var(--fb);font-size:15px;font-weight:700;text-align:center;cursor:pointer;min-height:56px;-webkit-tap-highlight-color:transparent}
+.modeBtn:active{opacity:.8}
+.modeSub{display:block;font-size:12px;color:var(--mt2);font-weight:400;margin-top:3px}
+.modeCancel{display:block;width:100%;background:none;border:none;color:var(--mt);font-family:var(--fc);font-size:13px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;padding:10px;cursor:pointer;min-height:44px;-webkit-tap-highlight-color:transparent}
 </style>
 </head>
 <body>
@@ -259,6 +268,14 @@ body{min-height:100%;background:var(--bk);color:var(--w);font-family:var(--fb);f
     <div style="text-align:right"><div class="hwt-label">Séances</div><div class="hwt-val" id="histWeekSessions">0</div><div class="hwu">cette semaine</div></div>
   </div>
   <div id="histContent"></div>
+</div>
+<div class="modeov" id="modeModal">
+  <div class="modeCard">
+    <div class="modeTitle">Quel format aujourd'hui ?</div>
+    <button class="modeBtn" id="modeNormalBtn">Programme normal<span class="modeSub" id="modeNormalSub"></span></button>
+    <button class="modeBtn" id="modeCourtBtn">Programme court<span class="modeSub" id="modeCourtSub"></span></button>
+    <button class="modeCancel" id="modeCancelBtn">Annuler</button>
+  </div>
 </div>
 <div class="cto" id="cto">
   <div class="cto-label" id="ctoLabel">Prépare-toi</div>
@@ -461,7 +478,7 @@ const JOURS=[
   {key:'weekend',label:'Sam / Dim',rest:true,kcal:300,nom:'Repos actif — 10 000 pas minimum',duree:'—'}
 ];
 
-let curDay=null,doneSet=new Set(),total=0;
+let curDay=null,doneSet=new Set(),total=0,curP=null,curMode='normal';
 let tInt=null,tSec=0,tTot=0,notifOn=false;
 const $=id=>document.getElementById(id);
 
@@ -528,6 +545,68 @@ function getEffectiveDay(key){
   }));
   const kcal=Math.round(src.kcal*(rActive?0.82:1));
   return {...src,blocks,kcal,duree:src.duree};
+}
+
+// ══════════════════════════════════
+// MODE COURT — ~25 min au lieu de ~55 min
+// Séries réduites (musculation) + durée cardio réduite,
+// kcal recalculées proportionnellement au temps réellement passé
+// (même intensité par minute que le programme normal).
+// ══════════════════════════════════
+const SHORT_RATIO=25/55; // ≈0.4545
+
+function shortenSteps(stepsKey,stepsArr,ratio){
+  if(!stepsArr||!stepsArr.length) return stepsArr;
+  if(stepsKey==='hiit6'){
+    const nRounds=Math.max(2,Math.round(6*ratio)); // garde des rounds entiers (modéré+sprint)
+    return stepsArr.slice(0,nRounds*2);
+  }
+  const total=stepsArr.reduce((s,x)=>s+x.durS,0);
+  const target=Math.max(60,Math.round(total*ratio/15)*15);
+  const out=[]; let acc=0;
+  for(const s of stepsArr){
+    if(acc>=target) break;
+    const rem=target-acc;
+    if(s.durS<=rem){ out.push({...s}); acc+=s.durS; }
+    else{ out.push({...s,durS:rem}); acc+=rem; break; }
+  }
+  return out.length?out:[{...stepsArr[0],durS:target}];
+}
+
+function shortenDay(day){
+  let cardioKcalFull=0,cardioKcalShort=0,seriesFull=0,seriesShort=0;
+  const blocks=day.blocks.map(b=>({
+    title:b.title,
+    items:b.items.map(item=>{
+      if(item.t==='e'){
+        const s0=item.series||4;
+        const ns=Math.max(2,Math.round(s0*SHORT_RATIO));
+        seriesFull+=s0; seriesShort+=ns;
+        return {...item,series:ns};
+      }
+      if(item.t==='c'){
+        const stepsKey=item.steps;
+        const baseSteps=item._stepsOverride||(stepsKey?ELLIPSTEPS[stepsKey]:null);
+        const fullDurS=item.durS||300;
+        let newDurS,newSteps=null;
+        if(baseSteps){
+          newSteps=shortenSteps(stepsKey,baseSteps,SHORT_RATIO);
+          newDurS=newSteps.reduce((s,x)=>s+x.durS,0);
+        }else{
+          newDurS=Math.max(30,Math.round(fullDurS*SHORT_RATIO/15)*15);
+        }
+        const newKcal=Math.max(1,Math.round(item.kcal*newDurS/fullDurS));
+        cardioKcalFull+=item.kcal; cardioKcalShort+=newKcal;
+        return {...item,durS:newDurS,kcal:newKcal,_stepsOverride:newSteps};
+      }
+      return item;
+    })
+  }));
+  const muscuKcalFull=Math.max(0,day.kcal-cardioKcalFull);
+  const muscuRatio=seriesFull>0?seriesShort/seriesFull:SHORT_RATIO;
+  const muscuKcalShort=Math.round(muscuKcalFull*muscuRatio);
+  const kcal=Math.max(50,muscuKcalShort+cardioKcalShort);
+  return {...day,blocks,kcal,duree:'~25 min'};
 }
 
 let _mem=[];
@@ -877,10 +956,13 @@ function expand(id){
   if(arrow) arrow.textContent=card.classList.contains('exp')?'⌄':'›';
 }
 
-function openSeance(key,label){
-  curDay=key; doneSet=new Set(); stopTimer();
-  const p=getEffectiveDay(key);
-  $('sDayTag').textContent=label.toUpperCase()+(repriseActive()?' · REPRISE S'+repriseWeek()+'/3':'');
+function openSeance(key,label,mode){
+  mode=mode||'normal';
+  curDay=key; curMode=mode; doneSet=new Set(); stopTimer();
+  let p=getEffectiveDay(key);
+  if(mode==='court') p=shortenDay(p);
+  curP=p;
+  $('sDayTag').textContent=label.toUpperCase()+(mode==='court'?' · COURT':'')+(repriseActive()?' · REPRISE S'+repriseWeek()+'/3':'');
   $('sTitle').textContent=p.nom.toUpperCase();
   $('sDuree').textContent='⏱ '+p.duree;
   $('sKcal').textContent='🔥 ~'+p.kcal+' kcal';
@@ -920,7 +1002,7 @@ function buildHome(){
       <div class="dct">${j.rest?j.nom:prog.nom}</div>
       <div class="dctg"><span class="tg">${j.rest?j.duree:prog.duree}</span><span class="tg r">~${j.rest?j.kcal:prog.kcal} kcal</span></div>
     </div>`;
-    if(!j.rest) el.addEventListener('click',()=>openSeance(j.key,j.label));
+    if(!j.rest) el.addEventListener('click',()=>askMode(j.key,j.label));
     list.appendChild(el);
   });
   buildRepriseCard();
@@ -960,7 +1042,7 @@ function buildRepriseCard(){
 }
 
 function showRecap(){
-  const p=getEffectiveDay(curDay);
+  const p=curP||getEffectiveDay(curDay);
   const lbl=JOURS.find(j=>j.key===curDay)?.label||'';
   stopTimer();
   const h=getH(); h.unshift({key:curDay,label:lbl,nom:p.nom,kcal:p.kcal,ts:new Date().toISOString()});
@@ -1027,6 +1109,27 @@ function updNotif(){
   $('notifToggle').classList.toggle('on',notifOn);
   $('notifSub').textContent=notifOn?'Rappel quotidien activé':'Désactivé';
 }
+
+let pendingKey=null,pendingLabel=null;
+function askMode(key,label){
+  pendingKey=key; pendingLabel=label;
+  const full=getEffectiveDay(key);
+  const short=shortenDay(full);
+  $('modeNormalSub').textContent=full.duree+' · ~'+full.kcal+' kcal';
+  $('modeCourtSub').textContent=short.duree+' · ~'+short.kcal+' kcal';
+  $('modeModal').classList.add('on');
+}
+$('modeNormalBtn').addEventListener('click',()=>{
+  $('modeModal').classList.remove('on');
+  if(pendingKey) openSeance(pendingKey,pendingLabel,'normal');
+});
+$('modeCourtBtn').addEventListener('click',()=>{
+  $('modeModal').classList.remove('on');
+  if(pendingKey) openSeance(pendingKey,pendingLabel,'court');
+});
+$('modeCancelBtn').addEventListener('click',()=>{
+  $('modeModal').classList.remove('on'); pendingKey=null; pendingLabel=null;
+});
 
 function navTo(s){
   document.querySelectorAll('.screen').forEach(el=>el.classList.remove('active'));
