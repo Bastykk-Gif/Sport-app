@@ -397,9 +397,13 @@ function vidPanel(key){
 }
 
 // ══════════════════════════════════
-// PROGRAMME V10
-// 2 haltères : 1,2,3,4,5,6,7,9,11,12,13,14,15,16,17 kg
-// 1 haltère  : 1–28 kg
+// PROGRAMME V11
+// Poids réellement chargeables ET équilibrés (plaques identiques de chaque côté
+// de la barre — stock : 6×1kg, 4×2kg, 4×5kg) :
+// 1 haltère seul   : 2,4,6,8,10,12,14,16,18,20,22,24,26,28 kg (paliers de 2 kg)
+// 2 haltères en même temps, même charge des deux côtés :
+//   2,4,6,10,12,14,16 kg par haltère — 8 kg IMPOSSIBLE à équilibrer avec ce stock
+//   (aucune combinaison ne permet 4 kg par côté sur les 2 barres en simultané)
 // ══════════════════════════════════
 const P={
   lundi:{nom:'Full Body + Cardio',duree:'55 min',kcal:420,blocks:[
@@ -407,9 +411,9 @@ const P={
       {t:'c',nom:'Elliptique — montée progressive',params:'Force 11→15 · +1/min · 50-53 tr/min',steps:'warmup',kcal:35,vk:'elliptique',durS:300}
     ]},
     {title:'Musculation · ~30 min — 40s repos entre séries',items:[
-      {t:'e',nom:'Goblet Squat',series:4,reps:12,charges:[15,16,16],unite:'kg',timer:40,vk:'gobletSquat',note:'Cuisses parallèles sol · talons bien posés'},
-      {t:'e',nom:'Développé couché',series:4,reps:10,charges:['2×14','2×15','2×16'],unite:'kg',timer:40,vk:'benchPress',note:'Descente lente 2 sec · coudes à 45°'},
-      {t:'e',nom:'Rowing 1 bras',series:4,reps:'10/côté',charges:[14,15,16],unite:'kg',timer:40,vk:'rowing',note:'Coude haut · pause 1 sec en haut'},
+      {t:'e',nom:'Goblet Squat',series:4,reps:12,charges:[14,16,18],unite:'kg',timer:40,vk:'gobletSquat',note:'Cuisses parallèles sol · talons bien posés'},
+      {t:'e',nom:'Développé couché',series:4,reps:10,charges:['2×12','2×14','2×16'],unite:'kg',timer:40,vk:'benchPress',note:'Descente lente 2 sec · coudes à 45°'},
+      {t:'e',nom:'Rowing 1 bras',series:4,reps:'10/côté',charges:[14,16,18],unite:'kg',timer:40,vk:'rowing',note:'Coude haut · pause 1 sec en haut'},
       {t:'e',nom:'Superman',series:3,reps:15,charges:[null,null,null],timer:40,vk:'superman',note:'Au sol · lever bras et jambes · hold 2 sec · pas de haltères'},
       {t:'e',nom:'Gainage frontal',series:3,reps:'45 sec',charges:[null,null,null],timer:30,ig:true,vk:'gainage',note:'Corps rigide tête-talons · serrer le ventre'},
     ]},
@@ -427,9 +431,9 @@ const P={
       {t:'c',nom:'Elliptique — montée progressive',params:'Force 10→14 · +1/min · 50-53 tr/min',steps:'warmup2',kcal:30,vk:'elliptique',durS:300}
     ]},
     {title:'Musculation · ~30 min',items:[
-      {t:'e',nom:'Développé épaules',series:4,reps:10,charges:['2×6','2×8','2×10'],unite:'kg',timer:40,vk:'shoulderP',note:'Dos plat contre dossier · ne pas hyperétendre'},
-      {t:'e',nom:'Rowing 1 bras',series:4,reps:'10/côté',charges:[14,15,16],unite:'kg',timer:40,vk:'rowing',note:'Coude haut · pause 1 sec en haut'},
-      {t:'e',nom:'Curl + Press combo',series:3,reps:12,charges:['2×8','2×10','2×12'],unite:'kg',timer:40,vk:'curl',note:'Curl → press enchaîné sans poser · 2×12 = barre + 5+5+1'},
+      {t:'e',nom:'Développé épaules',series:4,reps:10,charges:['2×6','2×10','2×12'],unite:'kg',timer:40,vk:'shoulderP',note:'Dos plat contre dossier · ne pas hyperétendre'},
+      {t:'e',nom:'Rowing 1 bras',series:4,reps:'10/côté',charges:[14,16,18],unite:'kg',timer:40,vk:'rowing',note:'Coude haut · pause 1 sec en haut'},
+      {t:'e',nom:'Curl + Press combo',series:3,reps:12,charges:['2×6','2×10','2×12'],unite:'kg',timer:40,vk:'curl',note:'Curl → press enchaîné sans poser · 2×12 = 5+1 kg de chaque côté sur chaque barre'},
       {t:'e',nom:'Gainage latéral',series:3,reps:'45 sec/côté',charges:[null,null,null],timer:30,ig:true,vk:'gainageLat',note:'Hanche haute · ne pas laisser tomber le bassin'},
       {t:'e',nom:'Rowing penché 2 bras',series:4,reps:10,charges:['2×12','2×14','2×16'],unite:'kg',timer:40,vk:'rowingB',note:'Torse 45° dos plat · coudes vers le plafond'},
       {t:'e',nom:'Crunch',series:3,reps:20,charges:[null,null,null],timer:40,vk:'crunch',note:'Mains derrière la nuque · exhaler en montant'},
@@ -443,9 +447,9 @@ const P={
       {t:'c',nom:'Elliptique — montée progressive',params:'Force 10→14 · +1/min · 50-53 tr/min',steps:'warmup2',kcal:30,vk:'elliptique',durS:300}
     ]},
     {title:'Musculation · ~30 min',items:[
-      {t:'e',nom:'Squat goblet',series:4,reps:12,charges:[15,16,16],unite:'kg',timer:40,vk:'gobletSquat',note:'Cuisses parallèles sol · talons bien posés'},
-      {t:'e',nom:'Fentes alternées',series:4,reps:'10/jambe',charges:['2×8','2×10','2×12'],unite:'kg',timer:40,vk:'fentes',note:'Genou avant ne dépasse pas la pointe du pied'},
-      {t:'e',nom:'Soulevé de terre',series:4,reps:10,charges:['2×14','2×15','2×16'],unite:'kg',timer:40,vk:'souleve',note:'Dos plat · hanches en arrière · contrôle à la descente'},
+      {t:'e',nom:'Squat goblet',series:4,reps:12,charges:[14,16,18],unite:'kg',timer:40,vk:'gobletSquat',note:'Cuisses parallèles sol · talons bien posés'},
+      {t:'e',nom:'Fentes alternées',series:4,reps:'10/jambe',charges:['2×6','2×10','2×12'],unite:'kg',timer:40,vk:'fentes',note:'Genou avant ne dépasse pas la pointe du pied'},
+      {t:'e',nom:'Soulevé de terre',series:4,reps:10,charges:['2×12','2×14','2×16'],unite:'kg',timer:40,vk:'souleve',note:'Dos plat · hanches en arrière · contrôle à la descente'},
       {t:'e',nom:'Hip thrust au sol',series:4,reps:15,charges:[10,12,14],unite:'kg',timer:40,vk:'hipFloor',note:'1 haltère sur le bassin · dos au sol · fessiers contractés 1 sec en haut'},
       {t:'e',nom:'Superman',series:3,reps:15,charges:[null,null,null],timer:40,vk:'superman',note:'Au sol · lever bras et jambes · hold 2 sec · pas de haltères'},
     ]},
@@ -458,10 +462,10 @@ const P={
       {t:'c',nom:'Elliptique — montée progressive',params:'Force 11→15 · +1/min · 50-53 tr/min',steps:'warmup',kcal:35,vk:'elliptique',durS:300}
     ]},
     {title:'Circuit · 4 tours — 30s repos · 2 min entre tours',items:[
-      {t:'e',nom:'Squat goblet',series:4,reps:15,charges:[15,16,16],unite:'kg',timer:30,vk:'gobletSquat',note:'Cuisses parallèles sol'},
+      {t:'e',nom:'Squat goblet',series:4,reps:15,charges:[14,16,18],unite:'kg',timer:30,vk:'gobletSquat',note:'Cuisses parallèles sol'},
       {t:'e',nom:'Pompes',series:4,reps:12,charges:[null,null,null],timer:30,vk:'pompes',note:'Mains légèrement plus larges que les épaules · corps gainé'},
-      {t:'e',nom:'Rowing 1 bras',series:4,reps:'10/côté',charges:[14,15,16],unite:'kg',timer:30,vk:'rowing',note:'Coude haut'},
-      {t:'e',nom:'Fentes',series:4,reps:'10/jambe',charges:['2×8','2×10','2×12'],unite:'kg',timer:30,vk:'fentes',note:'Genou avant ne dépasse pas la pointe du pied'},
+      {t:'e',nom:'Rowing 1 bras',series:4,reps:'10/côté',charges:[14,16,18],unite:'kg',timer:30,vk:'rowing',note:'Coude haut'},
+      {t:'e',nom:'Fentes',series:4,reps:'10/jambe',charges:['2×6','2×10','2×12'],unite:'kg',timer:30,vk:'fentes',note:'Genou avant ne dépasse pas la pointe du pied'},
       {t:'e',nom:'Gainage',series:4,reps:'45 sec',charges:[null,null,null],timer:30,ig:true,vk:'gainage'},
     ]},
     {title:'HIIT Elliptique · 18 min — 6 rounds',items:[
@@ -508,12 +512,19 @@ function setReprise(on){
     if(repriseStart) localStorage.setItem('repriseStart',repriseStart); else localStorage.removeItem('repriseStart');
   }catch{}
 }
-const roundKg=v=>Math.round(v*2)/2; // arrondi 0,5 kg (cohérent avec les plaques 1/2/5 kg dispo)
+// Poids réellement équilibrables avec le stock (6×1kg, 4×2kg, 4×5kg) — voir commentaire PROGRAMME plus haut
+const SINGLE_OK=[2,4,6,8,10,12,14,16,18,20,22,24,26,28]; // 1 haltère seul
+const DOUBLE_OK=[2,4,6,10,12,14,16]; // 2 haltères en simultané, même charge (8 kg impossible)
+function nearestFrom(arr,v){
+  return arr.reduce((best,x)=>Math.abs(x-v)<Math.abs(best-v)?x:best,arr[0]);
+}
+const roundKg=v=>nearestFrom(SINGLE_OK,Math.max(2,v));
+const roundKgDouble=v=>nearestFrom(DOUBLE_OK,Math.max(2,v));
 function scaleCharge(c,factor){
   if(c==null) return null;
-  if(typeof c==='number') return roundKg(Math.max(1,c*factor));
+  if(typeof c==='number') return roundKg(c*factor);
   const m=String(c).match(/^(\d+)×(\d+(\.\d+)?)$/);
-  if(m) return m[1]+'×'+roundKg(Math.max(1,parseFloat(m[2])*factor));
+  if(m) return m[1]+'×'+roundKgDouble(parseFloat(m[2])*factor);
   return c;
 }
 function scaleStepsArr(steps){
