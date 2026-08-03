@@ -274,6 +274,7 @@ body{min-height:100%;background:var(--bk);color:var(--w);font-family:var(--fb);f
     <div class="modeTitle">Quel format aujourd'hui ?</div>
     <button class="modeBtn" id="modeNormalBtn">Programme normal<span class="modeSub" id="modeNormalSub"></span></button>
     <button class="modeBtn" id="modeCourtBtn">Programme court<span class="modeSub" id="modeCourtSub"></span></button>
+    <button class="modeBtn" id="modeEteBtn">☀️ Mode Été — sans matériel<span class="modeSub" id="modeEteSub"></span></button>
     <button class="modeCancel" id="modeCancelBtn">Annuler</button>
   </div>
 </div>
@@ -304,7 +305,13 @@ const VIDS={
   pompes:     BASE+'male-Bodyweight-push-up-front.mp4',
   superman:   BASE+'male-Bodyweight-supermans-front.mp4',
   crunch:     BASE+'male-bodyweight-crunch-front.mp4',
-  elliptique: null
+  elliptique: null,
+  // ── Ajouts MODE ÉTÉ (sans matériel) ──
+  jumpingJacks:     null,
+  highKnees:        null,
+  squatJump:        null,
+  mountainClimbers: null,
+  burpees:          null
 };
 const MUSCLES={
   gobletSquat:{p:['Quadriceps','Fessiers'],s:['Ischio-jambiers','Mollets','Core']},
@@ -321,7 +328,13 @@ const MUSCLES={
   pompes:     {p:['Pectoraux','Triceps'],s:['Deltoïdes ant.','Core']},
   superman:   {p:['Lombaires','Fessiers'],s:['Ischio-jambiers','Trapèzes']},
   crunch:     {p:['Abdominaux','Core'],s:['Hip flexors']},
-  elliptique: {p:['Cardio complet','Jambes'],s:['Fessiers','Bras']}
+  elliptique: {p:['Cardio complet','Jambes'],s:['Fessiers','Bras']},
+  // ── Ajouts MODE ÉTÉ (sans matériel) ──
+  jumpingJacks:     {p:['Cardio complet'],s:['Mollets','Épaules']},
+  highKnees:        {p:['Cardio','Quadriceps'],s:['Mollets','Core']},
+  squatJump:        {p:['Quadriceps','Fessiers'],s:['Mollets','Cardio']},
+  mountainClimbers: {p:['Core','Cardio'],s:['Épaules','Quadriceps']},
+  burpees:          {p:['Cardio complet','Full body'],s:['Quadriceps','Pectoraux']}
 };
 
 // ── ELLIPTIQUE STEPS ──
@@ -386,13 +399,13 @@ function stepsHTML(steps,cardId){
   </div>`;
 }
 
-function vidPanel(key){
+function vidPanel(key,label){
   const url=VIDS[key]||null,m=MUSCLES[key]||MUSCLES.elliptique;
   const pt=m.p.map(t=>`<span class="mt3 p">${t}</span>`).join('');
   const st=m.s.map(t=>`<span class="mt3 s">${t}</span>`).join('');
   const vb=url
     ?`<div class="vp"><video src="${url}" autoplay loop muted playsinline webkit-playsinline preload="none"></video><div class="vc">© MuscleWiki</div></div>`
-    :`<div style="background:var(--cd2);border-radius:10px;height:44px;display:flex;align-items:center;justify-content:center;margin-bottom:12px;font-size:12px;color:var(--mt)">Elliptique</div>`;
+    :`<div style="background:var(--cd2);border-radius:10px;height:44px;display:flex;align-items:center;justify-content:center;margin-bottom:12px;font-size:12px;color:var(--mt)">${label||'Elliptique'}</div>`;
   return vb+`<div class="mtags">${pt}${st}</div>`;
 }
 
@@ -472,6 +485,89 @@ const P={
       {t:'c',nom:'HIIT — 6 × (2min F10 modéré + 1min F15 sprint)',
        params:'Modéré : Force 10 · 50-53 tr/min  |  Sprint : Force 15 · 60-70 tr/min  |  ~230 kcal',
        steps:'hiit6',kcal:230,vk:'elliptique',durS:1080}
+    ]}
+  ]}
+};
+
+// ══════════════════════════════════
+// MODE ÉTÉ — sans aucun matériel, ~30 min/jour
+// Uniquement poids du corps (pas d'haltères, pas d'elliptique).
+// Vidéos réutilisées quand le mouvement est identique sans charge
+// (squat, fentes, glute bridge) ; charges toujours à null.
+// ══════════════════════════════════
+const ETE={
+  lundi:{nom:'Été — Full Body sans matériel',duree:'~30 min',kcal:260,blocks:[
+    {title:'Échauffement · 3 min',items:[
+      {t:'e',nom:'Jumping Jacks',series:3,reps:40,charges:[null,null,null],timer:20,vk:'jumpingJacks',note:'Rythme modéré pour monter en température'}
+    ]},
+    {title:'Circuit Full Body · ~22 min — 30s repos entre séries',items:[
+      {t:'e',nom:'Squat bodyweight',series:4,reps:15,charges:[null,null,null],timer:30,vk:'gobletSquat',note:'Sans haltère · cuisses parallèles au sol · talons bien posés'},
+      {t:'e',nom:'Pompes',series:4,reps:12,charges:[null,null,null],timer:30,vk:'pompes',note:'Mains légèrement plus larges que les épaules · corps gainé'},
+      {t:'e',nom:'Fentes alternées',series:4,reps:'10/jambe',charges:[null,null,null],timer:30,vk:'fentes',note:'Sans haltère · genou avant ne dépasse pas la pointe du pied'},
+      {t:'e',nom:'Superman',series:3,reps:15,charges:[null,null,null],timer:30,vk:'superman',note:'Au sol · lever bras et jambes · hold 2 sec'},
+      {t:'e',nom:'Gainage frontal',series:3,reps:'45 sec',charges:[null,null,null],timer:30,ig:true,vk:'gainage',note:'Corps rigide tête-talons · serrer le ventre'}
+    ]},
+    {title:'Finisher cardio · 5 min',items:[
+      {t:'e',nom:'Burpees',series:3,reps:10,charges:[null,null,null],timer:30,vk:'burpees',note:'Rythme soutenu mais contrôlé'}
+    ]}
+  ]},
+  mardi:{nom:'Été — Cardio sans matériel',duree:'~30 min',kcal:280,blocks:[
+    {title:'Échauffement · 3 min',items:[
+      {t:'e',nom:'Montée de genoux',series:3,reps:40,charges:[null,null,null],timer:20,vk:'highKnees',note:'Rythme progressif'}
+    ]},
+    {title:'Circuit cardio · ~24 min — 20s repos',items:[
+      {t:'e',nom:'Jumping Jacks',series:5,reps:40,charges:[null,null,null],timer:20,vk:'jumpingJacks'},
+      {t:'e',nom:'Squat sauté',series:5,reps:12,charges:[null,null,null],timer:20,vk:'squatJump',note:'Réception souple genoux fléchis'},
+      {t:'e',nom:'Mountain Climbers',series:5,reps:'30 sec',charges:[null,null,null],timer:20,vk:'mountainClimbers'},
+      {t:'e',nom:'Burpees',series:5,reps:8,charges:[null,null,null],timer:20,vk:'burpees'}
+    ]},
+    {title:'Retour au calme · 3 min',items:[
+      {t:'e',nom:'Gainage frontal',series:2,reps:'45 sec',charges:[null,null,null],timer:30,ig:true,vk:'gainage'}
+    ]}
+  ]},
+  mercredi:{nom:'Été — Haut du corps & Core sans matériel',duree:'~30 min',kcal:250,blocks:[
+    {title:'Échauffement · 3 min',items:[
+      {t:'e',nom:'Jumping Jacks',series:3,reps:40,charges:[null,null,null],timer:20,vk:'jumpingJacks'}
+    ]},
+    {title:'Circuit Haut du corps & Core · ~24 min',items:[
+      {t:'e',nom:'Pompes',series:5,reps:12,charges:[null,null,null],timer:30,vk:'pompes',note:'Varier la largeur des mains si besoin de soulager'},
+      {t:'e',nom:'Gainage latéral',series:3,reps:'45 sec/côté',charges:[null,null,null],timer:30,ig:true,vk:'gainageLat'},
+      {t:'e',nom:'Superman',series:4,reps:15,charges:[null,null,null],timer:30,vk:'superman'},
+      {t:'e',nom:'Crunch',series:4,reps:20,charges:[null,null,null],timer:30,vk:'crunch'},
+      {t:'e',nom:'Pompes diamant (ou genoux)',series:3,reps:10,charges:[null,null,null],timer:30,vk:'pompes',note:'Mains rapprochées en losange · genoux au sol si besoin'}
+    ]},
+    {title:'Gainage final · 3 min',items:[
+      {t:'e',nom:'Gainage frontal',series:2,reps:'45 sec',charges:[null,null,null],timer:30,ig:true,vk:'gainage'}
+    ]}
+  ]},
+  jeudi:{nom:'Été — Bas du corps sans matériel',duree:'~30 min',kcal:270,blocks:[
+    {title:'Échauffement · 3 min',items:[
+      {t:'e',nom:'Montée de genoux',series:3,reps:40,charges:[null,null,null],timer:20,vk:'highKnees'}
+    ]},
+    {title:'Circuit Bas du corps · ~24 min',items:[
+      {t:'e',nom:'Squat bodyweight',series:5,reps:15,charges:[null,null,null],timer:30,vk:'gobletSquat',note:'Sans haltère'},
+      {t:'e',nom:'Fentes alternées',series:5,reps:'10/jambe',charges:[null,null,null],timer:30,vk:'fentes',note:'Sans haltère'},
+      {t:'e',nom:'Squat sauté',series:4,reps:12,charges:[null,null,null],timer:30,vk:'squatJump'},
+      {t:'e',nom:'Glute bridge au sol',series:4,reps:15,charges:[null,null,null],timer:30,vk:'hipFloor',note:'Sans charge · mains croisées sur la poitrine · fessiers contractés 1 sec en haut'},
+      {t:'e',nom:'Superman',series:3,reps:15,charges:[null,null,null],timer:30,vk:'superman'}
+    ]},
+    {title:'Gainage final · 3 min',items:[
+      {t:'e',nom:'Gainage frontal',series:2,reps:'45 sec',charges:[null,null,null],timer:30,ig:true,vk:'gainage'}
+    ]}
+  ]},
+  vendredi:{nom:'Été — Circuit Full Body + HIIT sans matériel',duree:'~30 min',kcal:290,blocks:[
+    {title:'Échauffement · 3 min',items:[
+      {t:'e',nom:'Jumping Jacks',series:3,reps:40,charges:[null,null,null],timer:20,vk:'jumpingJacks'}
+    ]},
+    {title:'Circuit · 3 tours — 20s repos',items:[
+      {t:'e',nom:'Squat bodyweight',series:3,reps:15,charges:[null,null,null],timer:20,vk:'gobletSquat'},
+      {t:'e',nom:'Pompes',series:3,reps:12,charges:[null,null,null],timer:20,vk:'pompes'},
+      {t:'e',nom:'Fentes alternées',series:3,reps:'10/jambe',charges:[null,null,null],timer:20,vk:'fentes'},
+      {t:'e',nom:'Gainage',series:3,reps:'45 sec',charges:[null,null,null],timer:20,ig:true,vk:'gainage'}
+    ]},
+    {title:'HIIT Finisher · ~8 min',items:[
+      {t:'e',nom:'Burpees',series:5,reps:10,charges:[null,null,null],timer:20,vk:'burpees',note:'Effort maximal contrôlé'},
+      {t:'e',nom:'Mountain Climbers',series:5,reps:'30 sec',charges:[null,null,null],timer:20,vk:'mountainClimbers'}
     ]}
   ]}
 };
@@ -894,7 +990,7 @@ function mkEx(item,idx){
       <button class="val-ex" id="valex-${id}">✓ Exercice fait</button>
     </div>
     <div class="eex" id="exp-${id}">
-      ${vidPanel(item.vk||'elliptique')}
+      ${vidPanel(item.vk||'elliptique',item.nom)}
       <div class="egrid">
         <div class="ebox"><div class="ebl">Séries</div><div class="ebv">${item.series}</div></div>
         <div class="ebox"><div class="ebl">Reps</div><div class="ebv">${item.reps}</div></div>
@@ -970,10 +1066,15 @@ function expand(id){
 function openSeance(key,label,mode){
   mode=mode||'normal';
   curDay=key; curMode=mode; doneSet=new Set(); stopTimer();
-  let p=getEffectiveDay(key);
-  if(mode==='court') p=shortenDay(p);
+  let p;
+  if(mode==='ete'){
+    p=ETE[key];
+  }else{
+    p=getEffectiveDay(key);
+    if(mode==='court') p=shortenDay(p);
+  }
   curP=p;
-  $('sDayTag').textContent=label.toUpperCase()+(mode==='court'?' · COURT':'')+(repriseActive()?' · REPRISE S'+repriseWeek()+'/3':'');
+  $('sDayTag').textContent=label.toUpperCase()+(mode==='court'?' · COURT':'')+(mode==='ete'?' · ÉTÉ':'')+(mode==='ete'?'':(repriseActive()?' · REPRISE S'+repriseWeek()+'/3':''));
   $('sTitle').textContent=p.nom.toUpperCase();
   $('sDuree').textContent='⏱ '+p.duree;
   $('sKcal').textContent='🔥 ~'+p.kcal+' kcal';
@@ -1128,6 +1229,8 @@ function askMode(key,label){
   const short=shortenDay(full);
   $('modeNormalSub').textContent=full.duree+' · ~'+full.kcal+' kcal';
   $('modeCourtSub').textContent=short.duree+' · ~'+short.kcal+' kcal';
+  const ete=ETE[key];
+  $('modeEteSub').textContent=ete?(ete.duree+' · ~'+ete.kcal+' kcal'):'';
   $('modeModal').classList.add('on');
 }
 $('modeNormalBtn').addEventListener('click',()=>{
@@ -1137,6 +1240,10 @@ $('modeNormalBtn').addEventListener('click',()=>{
 $('modeCourtBtn').addEventListener('click',()=>{
   $('modeModal').classList.remove('on');
   if(pendingKey) openSeance(pendingKey,pendingLabel,'court');
+});
+$('modeEteBtn').addEventListener('click',()=>{
+  $('modeModal').classList.remove('on');
+  if(pendingKey) openSeance(pendingKey,pendingLabel,'ete');
 });
 $('modeCancelBtn').addEventListener('click',()=>{
   $('modeModal').classList.remove('on'); pendingKey=null; pendingLabel=null;
