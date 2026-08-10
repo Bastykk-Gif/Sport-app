@@ -94,58 +94,11 @@
   #confirmRange{background:var(--accent); color:#0f1115; font-weight:600; border-color:var(--accent);}
   #confirmRange:disabled{opacity:.4; cursor:not-allowed;}
   .empty-state{color:var(--muted); font-size:.85rem; padding:20px; text-align:center;}
-
-  /* Modal jour + upload */
-  .modal.wide{width:420px;}
-  .shot-zone{
-    display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:14px; flex-shrink:0;
-  }
-  .shot-slot{
-    border:1.5px dashed var(--border); border-radius:10px; aspect-ratio:9/16; max-height:150px;
-    display:flex; align-items:center; justify-content:center; position:relative;
-    background:var(--panel2); cursor:pointer; overflow:hidden; font-size:.75rem; color:var(--muted); text-align:center; padding:8px;
-  }
-  .shot-slot img{width:100%; height:100%; object-fit:cover; position:absolute; inset:0;}
-  .shot-slot input{position:absolute; inset:0; opacity:0; cursor:pointer;}
-  .shot-slot .rm{
-    position:absolute; top:4px; right:4px; background:rgba(0,0,0,.6); color:#fff; border:none;
-    border-radius:6px; width:22px; height:22px; font-size:.75rem; cursor:pointer; z-index:2;
-  }
-  .privacy-note{font-size:.7rem; color:var(--muted); margin:-6px 0 14px; line-height:1.4;}
-  .form-grid{display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:14px;}
-  .form-grid label{display:block; font-size:.7rem; color:var(--muted); margin-bottom:3px;}
-  .form-grid input[type=number], .form-grid input[type=text]{
-    width:100%; background:var(--panel2); border:1px solid var(--border); border-radius:7px;
-    color:var(--text); padding:7px 8px; font-size:.85rem;
-  }
-  .form-grid .full{grid-column:1/-1;}
-  .chk-row{display:flex; align-items:center; gap:6px; font-size:.78rem; color:var(--muted); grid-column:1/-1;}
-  #saveDayBtn{background:var(--accent); color:#0f1115; font-weight:600; border-color:var(--accent);}
-  #saveDayBtn:disabled{opacity:.4; cursor:not-allowed;}
-  .pending-wrap{margin-top:24px;}
-  .pending-wrap h3{font-size:.85rem; margin-bottom:8px; color:var(--muted); font-weight:600;}
-  .pending-item{
-    background:var(--panel); border:1px solid var(--border); border-radius:10px; padding:10px 12px;
-    display:flex; align-items:center; justify-content:space-between; gap:8px; margin-bottom:8px; font-size:.8rem;
-  }
-  .pending-item .pi-date{font-weight:600;}
-  .pending-item .pi-meta{color:var(--muted); font-size:.72rem;}
-  .pending-item .pi-actions{display:flex; gap:6px;}
-  .pending-item .pi-actions button{padding:5px 9px; font-size:.72rem;}
-  .pi-copy{background:var(--accent2); color:#0f1115; border-color:var(--accent2); font-weight:600;}
-  .toast{
-    position:fixed; left:50%; bottom:24px; transform:translateX(-50%) translateY(20px);
-    background:var(--accent); color:#0f1115; font-weight:600; font-size:.82rem;
-    padding:12px 18px; border-radius:10px; z-index:300; opacity:0; pointer-events:none;
-    transition:opacity .25s, transform .25s; max-width:88vw; text-align:center; box-shadow:0 4px 20px rgba(0,0,0,.4);
-  }
-  .toast.show{opacity:1; transform:translateX(-50%) translateY(0);}
 </style>
 </head>
 <body>
 
 <h1>📊 Suivi Yazio — Olivier</h1>
-<div class="toast" id="toast"></div>
 <div class="sub" id="subtitle">Chargement des données...</div>
 
 <div class="toolbar">
@@ -155,7 +108,6 @@
   <button data-preset="30">30 jours</button>
   <button data-preset="all" class="active">Tout</button>
   <button id="openCalendar">📅 Choisir une plage</button>
-  <button id="openDayLoader">📥 Charger les données d'une journée</button>
   <span class="range-value" id="currentRange"></span>
 </div>
 
@@ -187,11 +139,6 @@
   </div>
 </div>
 
-<div class="pending-wrap" id="pendingWrap" style="display:none;">
-  <h3>🕓 Journées en attente de synchronisation (enregistrées sur cet appareil uniquement)</h3>
-  <div id="pendingList"></div>
-</div>
-
 <!-- Modal calendrier style "réservation hôtel" -->
 <div class="modal-overlay" id="modalOverlay">
   <div class="modal">
@@ -221,54 +168,6 @@
   </div>
 </div>
 
-<!-- Modal chargement d'une journée (screenshots + saisie) -->
-<div class="modal-overlay" id="dayModalOverlay">
-  <div class="modal wide">
-    <h3>Charger les données d'une journée</h3>
-    <div class="hint">1. Choisis la date · 2. Dépose les captures Yazio (aperçu local uniquement) · 3. Recopie les chiffres · 4. Enregistre.</div>
-
-    <div class="date-field">
-      <label class="date-field-label" for="daySingleDate">Date</label>
-      <div class="date-wrap">
-        <svg class="cal-icon" width="16" height="16" viewBox="0 0 24 24" fill="none"><rect x="3" y="4.5" width="18" height="16" rx="2.5" stroke="currentColor" stroke-width="1.6"/><path d="M3 9.5H21" stroke="currentColor" stroke-width="1.6"/><path d="M8 2.5V6.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M16 2.5V6.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
-        <input type="date" id="daySingleDate">
-      </div>
-    </div>
-    <div class="date-picked-hint" id="dayPickedLabel"></div>
-
-    <div class="shot-zone">
-      <label class="shot-slot" id="shotSlot1">
-        <span id="shotPlaceholder1">📷 Capture 1<br>(ex: résumé kcal/macros)</span>
-        <input type="file" accept="image/*" id="shotInput1">
-        <button class="rm" id="shotRemove1" style="display:none;" type="button">✕</button>
-      </label>
-      <label class="shot-slot" id="shotSlot2">
-        <span id="shotPlaceholder2">📷 Capture 2<br>(ex: poids/pas)</span>
-        <input type="file" accept="image/*" id="shotInput2">
-        <button class="rm" id="shotRemove2" style="display:none;" type="button">✕</button>
-      </label>
-    </div>
-    <div class="privacy-note">🔒 Les captures restent dans ton navigateur (aperçu local uniquement) — elles ne sont jamais envoyées ni sauvegardées où que ce soit. Elles disparaissent à la fermeture de cette fenêtre.<br><br>⚠️ Pas de lecture automatique : recopie les chiffres affichés sur les captures dans le formulaire ci-dessous.</div>
-
-    <div class="form-grid">
-      <div><label>Poids (kg)</label><input type="number" step="0.1" id="fPoids" placeholder="79.4"></div>
-      <div><label>Kcal mangées</label><input type="number" id="fKcal" placeholder="1900"></div>
-      <div><label>Glucides (g)</label><input type="number" id="fGlucides" placeholder="180"></div>
-      <div><label>Protéines (g)</label><input type="number" id="fProteines" placeholder="150"></div>
-      <div><label>Lipides (g)</label><input type="number" id="fLipides" placeholder="55"></div>
-      <div><label>Pas</label><input type="number" id="fPas" placeholder="5000"></div>
-      <div><label>Sport (kcal)</label><input type="number" id="fSport" placeholder="0"></div>
-      <div><label>Note</label><input type="text" id="fNote" placeholder="ex: anniversaire"></div>
-      <div class="chk-row"><input type="checkbox" id="fFige"> <label for="fFige" style="margin:0;">Poids figé (weekend, valeur du vendredi)</label></div>
-    </div>
-
-    <div class="modal-actions">
-      <button id="cancelDay">Annuler</button>
-      <button id="saveDayBtn" disabled>Enregistrer</button>
-    </div>
-  </div>
-</div>
-
 <script>
 let allEntries = [];
 let refTargets = {};
@@ -289,11 +188,9 @@ fetch('data.json?t=' + Date.now(), {cache:'no-store'})
   .then(data => {
     refTargets = data.reference_targets;
     allEntries = data.entries.filter(e => e.poids !== null || e.kcal !== null);
-    mergePendingIntoAllEntries();
     document.getElementById('subtitle').textContent =
       `${allEntries.length} jours enregistrés · Objectif référence : ${refTargets.kcal} kcal / ${refTargets.proteines_g}P / ${refTargets.lipides_g}L / ${refTargets.glucides_g}G`;
     applyPreset('all');
-    renderPendingList();
   })
   .catch(err => {
     document.getElementById('subtitle').textContent = 'Erreur de chargement des données : ' + err.message;
@@ -477,225 +374,6 @@ document.getElementById('confirmRange').addEventListener('click', () => {
   render();
 });
 
-// ================= Modal "Charger une journée" =================
-const PENDING_KEY = 'yazio_pending_entries_v1';
-let shotObjectUrls = [null, null];
-
-function loadPending(){
-  try { return JSON.parse(localStorage.getItem(PENDING_KEY) || '{}'); }
-  catch { return {}; }
-}
-function savePending(obj){
-  localStorage.setItem(PENDING_KEY, JSON.stringify(obj));
-}
-
-function mergePendingIntoAllEntries(){
-  const pending = loadPending();
-  Object.values(pending).forEach(entry => {
-    const idx = allEntries.findIndex(e => e.date === entry.date);
-    const merged = {...entry, pending:true};
-    if (idx >= 0) allEntries[idx] = merged;
-    else allEntries.push(merged);
-  });
-  allEntries.sort((a,b) => a.date.localeCompare(b.date));
-}
-
-function renderPendingList(){
-  const pending = loadPending();
-  const keys = Object.keys(pending).sort();
-  const wrap = document.getElementById('pendingWrap');
-  const list = document.getElementById('pendingList');
-  if (keys.length === 0){ wrap.style.display = 'none'; return; }
-  wrap.style.display = 'block';
-  list.innerHTML = keys.map(k => {
-    const e = pending[k];
-    return `<div class="pending-item">
-      <div>
-        <div class="pi-date">${fmtDate(e.date)} (${e.jour||''})</div>
-        <div class="pi-meta">${e.poids??'—'}kg · ${e.kcal??'—'}kcal · G${e.glucides??'—'} P${e.proteines??'—'} L${e.lipides??'—'} · ${e.pas??'—'} pas</div>
-      </div>
-      <div class="pi-actions">
-        <button class="pi-copy" data-copy="${e.date}">Copier pour Claude</button>
-        <button data-del="${e.date}">Suppr.</button>
-      </div>
-    </div>`;
-  }).join('');
-  list.querySelectorAll('[data-copy]').forEach(btn => {
-    btn.addEventListener('click', () => copyPendingEntry(btn.dataset.copy));
-  });
-  list.querySelectorAll('[data-del]').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const p = loadPending();
-      delete p[btn.dataset.del];
-      savePending(p);
-      allEntries = allEntries.filter(e => !(e.date === btn.dataset.del && e.pending));
-      renderPendingList();
-      applyPreset('all');
-    });
-  });
-}
-
-function showToast(msg, ms){
-  const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.classList.add('show');
-  clearTimeout(t._timer);
-  t._timer = setTimeout(() => t.classList.remove('show'), ms || 3500);
-}
-
-function formatEntryLine(p){
-  return `${p.date}|${p.jour||''}|${p.poids??''}kg${p.fige?'(figé)':''}|${p.kcal??''}kcal|${p.glucides??''}g glucides|${p.proteines??''}g protéines|${p.lipides??''}g lipides|${p.pas??''}pas|Sport:${p.sport_kcal??0}kcal${p.sport_note?(' — '+p.sport_note):''}`;
-}
-
-function copyTextToClipboard(text){
-  if (navigator.clipboard && navigator.clipboard.writeText){
-    return navigator.clipboard.writeText(text);
-  }
-  // Fallback (ex: clipboard API indisponible dans l'iframe)
-  const ta = document.createElement('textarea');
-  ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
-  document.body.appendChild(ta); ta.focus(); ta.select();
-  try { document.execCommand('copy'); } catch(e){}
-  document.body.removeChild(ta);
-  return Promise.resolve();
-}
-
-function copyPendingEntry(date){
-  const p = loadPending()[date];
-  if (!p) return;
-  const line = formatEntryLine(p);
-  copyTextToClipboard(line)
-    .then(() => showToast('📋 Copié ! Colle-le à Claude pour synchroniser.'))
-    .catch(() => prompt('Copie ce texte et colle-le à Claude :', line));
-}
-
-function jourFR(dateStr){
-  const jours = ['Dim','Lun','Mar','Mer','Jeu','Ven','Sam'];
-  const d = new Date(dateStr + 'T12:00:00');
-  return jours[d.getDay()];
-}
-
-const dayModalOverlay = document.getElementById('dayModalOverlay');
-const daySingleDateInput = document.getElementById('daySingleDate');
-
-document.getElementById('openDayLoader').addEventListener('click', () => {
-  resetDayForm();
-  const todayStr = new Date().toISOString().slice(0,10);
-  daySingleDateInput.max = todayStr;
-  daySingleDateInput.value = '';
-  dayModalOverlay.classList.add('open');
-  lockScroll(true);
-});
-document.getElementById('cancelDay').addEventListener('click', () => {
-  resetDayForm();
-  dayModalOverlay.classList.remove('open');
-  lockScroll(false);
-});
-document.querySelectorAll('#dayModalOverlay .date-wrap').forEach(wrap => {
-  wrap.addEventListener('click', () => {
-    const input = wrap.querySelector('input[type=date]');
-    if (typeof input.showPicker === 'function'){ try{ input.showPicker(); }catch(e){} }
-  });
-});
-daySingleDateInput.addEventListener('change', () => { updateDayPickedLabel(); updateSaveDayState(); });
-
-function updateDayPickedLabel(){
-  const label = document.getElementById('dayPickedLabel');
-  const v = daySingleDateInput.value;
-  label.textContent = v ? `Jour sélectionné : ${fmtDate(v)} (${jourFR(v)})` : '';
-}
-
-function setupShotSlot(slotId, inputId, placeholderId, removeId, idx){
-  const input = document.getElementById(inputId);
-  const slot = document.getElementById(slotId);
-  const placeholder = document.getElementById(placeholderId);
-  const removeBtn = document.getElementById(removeId);
-  input.addEventListener('change', () => {
-    const file = input.files[0];
-    if (!file) return;
-    if (shotObjectUrls[idx]) URL.revokeObjectURL(shotObjectUrls[idx]);
-    const url = URL.createObjectURL(file);
-    shotObjectUrls[idx] = url;
-    let img = slot.querySelector('img');
-    if (!img){ img = document.createElement('img'); slot.appendChild(img); }
-    img.src = url;
-    placeholder.style.display = 'none';
-    removeBtn.style.display = 'block';
-  });
-  removeBtn.addEventListener('click', (e) => {
-    e.preventDefault(); e.stopPropagation();
-    if (shotObjectUrls[idx]) URL.revokeObjectURL(shotObjectUrls[idx]);
-    shotObjectUrls[idx] = null;
-    input.value = '';
-    const img = slot.querySelector('img');
-    if (img) img.remove();
-    placeholder.style.display = 'block';
-    removeBtn.style.display = 'none';
-  });
-}
-setupShotSlot('shotSlot1','shotInput1','shotPlaceholder1','shotRemove1', 0);
-setupShotSlot('shotSlot2','shotInput2','shotPlaceholder2','shotRemove2', 1);
-
-function resetDayForm(){
-  ['fPoids','fKcal','fGlucides','fProteines','fLipides','fPas','fSport','fNote'].forEach(id => document.getElementById(id).value = '');
-  document.getElementById('fFige').checked = false;
-  [0,1].forEach(idx => {
-    if (shotObjectUrls[idx]) URL.revokeObjectURL(shotObjectUrls[idx]);
-    shotObjectUrls[idx] = null;
-  });
-  document.getElementById('shotInput1').value = '';
-  document.getElementById('shotInput2').value = '';
-  const img1 = document.querySelector('#shotSlot1 img'); if (img1) img1.remove();
-  const img2 = document.querySelector('#shotSlot2 img'); if (img2) img2.remove();
-  document.getElementById('shotPlaceholder1').style.display = 'block';
-  document.getElementById('shotPlaceholder2').style.display = 'block';
-  document.getElementById('shotRemove1').style.display = 'none';
-  document.getElementById('shotRemove2').style.display = 'none';
-  daySingleDateInput.value = '';
-  document.getElementById('dayPickedLabel').textContent = '';
-  updateSaveDayState();
-}
-
-function updateSaveDayState(){
-  document.getElementById('saveDayBtn').disabled = !daySingleDateInput.value;
-}
-
-document.getElementById('saveDayBtn').addEventListener('click', () => {
-  const dayPicked = daySingleDateInput.value;
-  if (!dayPicked) return;
-  const num = id => {
-    const v = document.getElementById(id).value;
-    return v === '' ? null : parseFloat(v);
-  };
-  const entry = {
-    date: dayPicked,
-    jour: jourFR(dayPicked),
-    poids: num('fPoids'),
-    fige: document.getElementById('fFige').checked,
-    kcal: num('fKcal'),
-    glucides: num('fGlucides'),
-    glucides_cible: refTargets.glucides_g,
-    proteines: num('fProteines'),
-    proteines_cible: refTargets.proteines_g,
-    lipides: num('fLipides'),
-    lipides_cible: refTargets.lipides_g,
-    pas: num('fPas'),
-    sport_kcal: num('fSport') ?? 0,
-    sport_note: document.getElementById('fNote').value || ''
-  };
-  const pending = loadPending();
-  pending[dayPicked] = entry;
-  savePending(pending);
-  mergePendingIntoAllEntries();
-  renderPendingList();
-  applyPreset('all');
-  resetDayForm();
-  dayModalOverlay.classList.remove('open');
-  lockScroll(false);
-  copyTextToClipboard(formatEntryLine(entry))
-    .then(() => showToast('✅ Enregistré et copié ! Colle-le à Claude pour synchroniser.', 4500))
-    .catch(() => showToast('✅ Enregistré (copie auto indisponible — utilise "Copier pour Claude" dans la liste).', 4500));
-});
 </script>
 </body>
 </html>
