@@ -69,21 +69,23 @@
     display:flex; flex-direction:column;
   }
   .modal h3{margin:0 0 4px; font-size:1rem; flex-shrink:0;}
-  .modal .hint{color:var(--muted); font-size:.78rem; margin-bottom:14px; flex-shrink:0;}
-  .cal-header{display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;}
-  .cal-header button{padding:4px 10px;}
-  .cal-month{font-weight:600; font-size:.9rem;}
-  .cal-grid{display:grid; grid-template-columns:repeat(7,1fr); gap:4px;}
-  .cal-dow{text-align:center; font-size:.68rem; color:var(--muted); padding:4px 0;}
-  .cal-day{
-    text-align:center; padding:10px 0; font-size:.82rem; border-radius:6px; cursor:pointer;
-    color:var(--text); min-height:22px;
+  .modal .hint{color:var(--muted); font-size:.78rem; margin-bottom:16px; flex-shrink:0;}
+  /* Champ date natif, style minimaliste (inspiré RdVS) */
+  .date-field{margin-bottom:14px;}
+  .date-field-label{display:block; font-size:.7rem; font-weight:700; color:var(--muted); text-transform:uppercase; letter-spacing:.06em; margin-bottom:8px;}
+  .date-fields-row{display:grid; grid-template-columns:1fr 1fr; gap:16px;}
+  .date-wrap{position:relative; cursor:pointer;}
+  .date-wrap .cal-icon{position:absolute; left:0; top:50%; transform:translateY(-50%); pointer-events:none; color:var(--muted);}
+  .date-wrap input[type=date]{
+    width:100%; border:none; border-bottom:1.5px solid var(--border); background:transparent;
+    font-family:inherit; font-size:15px; color:var(--text); padding:6px 2px 10px 28px;
+    color-scheme:dark; -webkit-appearance:none;
   }
-  .cal-day.empty{cursor:default;}
-  .cal-day:not(.empty):not(.disabled):hover{background:var(--panel2);}
-  .cal-day.disabled{color:#444; cursor:not-allowed;}
-  .cal-day.selected-start, .cal-day.selected-end{background:var(--accent); color:#0f1115; font-weight:700;}
-  .cal-day.in-range{background:rgba(94,234,212,.18);}
+  .date-wrap input[type=date]:focus{outline:none; border-bottom-color:var(--accent);}
+  .date-wrap input[type=date]::-webkit-calendar-picker-indicator{
+    position:absolute; left:0; top:0; width:100%; height:100%; margin:0; padding:0; opacity:0; cursor:pointer;
+  }
+  .date-picked-hint{font-size:.75rem; color:var(--accent); margin-top:10px; font-weight:600; min-height:1em;}
   .modal-actions{
     display:flex; justify-content:space-between; margin-top:14px; gap:8px;
     flex-shrink:0; position:sticky; bottom:0; background:var(--panel); padding-top:8px;
@@ -95,8 +97,6 @@
 
   /* Modal jour + upload */
   .modal.wide{width:420px;}
-  .day-picker-row{display:flex; align-items:center; justify-content:space-between; gap:8px; margin-bottom:14px; flex-shrink:0;}
-  .day-picker-row .cal-month{flex:1; text-align:center;}
   .shot-zone{
     display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:14px; flex-shrink:0;
   }
@@ -188,13 +188,24 @@
 <div class="modal-overlay" id="modalOverlay">
   <div class="modal">
     <h3>Sélectionner une période</h3>
-    <div class="hint">Clique la date de début, puis la date de fin.</div>
-    <div class="cal-header">
-      <button id="prevMonth">‹</button>
-      <span class="cal-month" id="calMonthLabel"></span>
-      <button id="nextMonth">›</button>
+    <div class="hint">Choisis une date de début et une date de fin.</div>
+    <div class="date-fields-row">
+      <div class="date-field">
+        <label class="date-field-label" for="rangeStart">Date de début</label>
+        <div class="date-wrap">
+          <svg class="cal-icon" width="16" height="16" viewBox="0 0 24 24" fill="none"><rect x="3" y="4.5" width="18" height="16" rx="2.5" stroke="currentColor" stroke-width="1.6"/><path d="M3 9.5H21" stroke="currentColor" stroke-width="1.6"/><path d="M8 2.5V6.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M16 2.5V6.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+          <input type="date" id="rangeStart">
+        </div>
+      </div>
+      <div class="date-field">
+        <label class="date-field-label" for="rangeEnd">Date de fin</label>
+        <div class="date-wrap">
+          <svg class="cal-icon" width="16" height="16" viewBox="0 0 24 24" fill="none"><rect x="3" y="4.5" width="18" height="16" rx="2.5" stroke="currentColor" stroke-width="1.6"/><path d="M3 9.5H21" stroke="currentColor" stroke-width="1.6"/><path d="M8 2.5V6.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M16 2.5V6.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+          <input type="date" id="rangeEnd">
+        </div>
+      </div>
     </div>
-    <div class="cal-grid" id="calGrid"></div>
+    <div class="date-picked-hint" id="rangePickedHint"></div>
     <div class="modal-actions">
       <button id="cancelRange">Annuler</button>
       <button id="confirmRange" disabled>Valider</button>
@@ -208,13 +219,14 @@
     <h3>Charger les données d'une journée</h3>
     <div class="hint">1. Choisis la date · 2. Dépose les captures Yazio (aperçu local uniquement) · 3. Recopie les chiffres · 4. Enregistre.</div>
 
-    <div class="day-picker-row">
-      <button id="dayPrevMonth">‹</button>
-      <span class="cal-month" id="dayCalMonthLabel"></span>
-      <button id="dayNextMonth">›</button>
+    <div class="date-field">
+      <label class="date-field-label" for="daySingleDate">Date</label>
+      <div class="date-wrap">
+        <svg class="cal-icon" width="16" height="16" viewBox="0 0 24 24" fill="none"><rect x="3" y="4.5" width="18" height="16" rx="2.5" stroke="currentColor" stroke-width="1.6"/><path d="M3 9.5H21" stroke="currentColor" stroke-width="1.6"/><path d="M8 2.5V6.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M16 2.5V6.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+        <input type="date" id="daySingleDate">
+      </div>
     </div>
-    <div class="cal-grid" id="dayCalGrid"></div>
-    <div style="text-align:center; font-size:.8rem; color:var(--accent); margin:8px 0 16px; font-weight:600;" id="dayPickedLabel"></div>
+    <div class="date-picked-hint" id="dayPickedLabel"></div>
 
     <div class="shot-zone">
       <label class="shot-slot" id="shotSlot1">
@@ -411,74 +423,44 @@ function makeChart(canvasId, type, labels, datasets, axisOverrides){
   });
 }
 
-// --- Calendrier "réservation hôtel" ---
-let calMonth, calYear;
-let selStart = null, selEnd = null;
-
+// --- Calendrier "réservation hôtel" (champs date natifs) ---
 const overlay = document.getElementById('modalOverlay');
+const rangeStartInput = document.getElementById('rangeStart');
+const rangeEndInput = document.getElementById('rangeEnd');
+const rangePickedHint = document.getElementById('rangePickedHint');
+
+function availableDateBounds(){
+  const dates = allEntries.map(e=>e.date).sort();
+  return {min: dates[0] || '', max: dates[dates.length-1] || ''};
+}
+
+function updateRangeUI(){
+  const s = rangeStartInput.value, e = rangeEndInput.value;
+  document.getElementById('confirmRange').disabled = !(s && e && s <= e);
+  rangePickedHint.textContent = (s && e) ? (s <= e ? `${fmtDate(s)} → ${fmtDate(e)}` : 'La date de fin doit être après la date de début') : '';
+}
+
 document.getElementById('openCalendar').addEventListener('click', () => {
-  const now = new Date();
-  calMonth = now.getMonth();
-  calYear = now.getFullYear();
-  selStart = null; selEnd = null;
-  renderCalendar();
+  const bounds = availableDateBounds();
+  rangeStartInput.min = bounds.min; rangeStartInput.max = bounds.max;
+  rangeEndInput.min = bounds.min; rangeEndInput.max = bounds.max;
+  rangeStartInput.value = ''; rangeEndInput.value = '';
+  updateRangeUI();
   overlay.classList.add('open');
   lockScroll(true);
 });
 document.getElementById('cancelRange').addEventListener('click', () => { overlay.classList.remove('open'); lockScroll(false); });
-document.getElementById('prevMonth').addEventListener('click', () => { calMonth--; if(calMonth<0){calMonth=11;calYear--;} renderCalendar(); });
-document.getElementById('nextMonth').addEventListener('click', () => { calMonth++; if(calMonth>11){calMonth=0;calYear++;} renderCalendar(); });
-
-function renderCalendar(){
-  const monthNames = ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'];
-  document.getElementById('calMonthLabel').textContent = `${monthNames[calMonth]} ${calYear}`;
-  const grid = document.getElementById('calGrid');
-  grid.innerHTML = '';
-  ['L','M','M','J','V','S','D'].forEach(d => {
-    const el = document.createElement('div');
-    el.className = 'cal-dow'; el.textContent = d;
-    grid.appendChild(el);
+rangeStartInput.addEventListener('change', updateRangeUI);
+rangeEndInput.addEventListener('change', updateRangeUI);
+document.querySelectorAll('#modalOverlay .date-wrap').forEach(wrap => {
+  wrap.addEventListener('click', () => {
+    const input = wrap.querySelector('input[type=date]');
+    if (typeof input.showPicker === 'function'){ try{ input.showPicker(); }catch(e){} }
   });
-  const firstDay = new Date(calYear, calMonth, 1);
-  let startOffset = firstDay.getDay() - 1; // lundi=0
-  if (startOffset < 0) startOffset = 6;
-  for (let i=0;i<startOffset;i++){
-    const el = document.createElement('div');
-    el.className = 'cal-day empty';
-    grid.appendChild(el);
-  }
-  const daysInMonth = new Date(calYear, calMonth+1, 0).getDate();
-  const availableDates = new Set(allEntries.map(e=>e.date));
-  for (let d=1; d<=daysInMonth; d++){
-    const dateStr = `${calYear}-${String(calMonth+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
-    const el = document.createElement('div');
-    el.className = 'cal-day';
-    el.textContent = d;
-    const hasData = availableDates.has(dateStr);
-    if (!hasData) el.classList.add('disabled');
-    if (selStart === dateStr) el.classList.add('selected-start');
-    if (selEnd === dateStr) el.classList.add('selected-end');
-    if (selStart && selEnd && dateStr > selStart && dateStr < selEnd) el.classList.add('in-range');
-    if (hasData){
-      el.addEventListener('click', () => onDayClick(dateStr));
-    }
-    grid.appendChild(el);
-  }
-}
-
-function onDayClick(dateStr){
-  if (!selStart || (selStart && selEnd)) {
-    selStart = dateStr; selEnd = null;
-  } else if (dateStr < selStart) {
-    selStart = dateStr;
-  } else {
-    selEnd = dateStr;
-  }
-  document.getElementById('confirmRange').disabled = !(selStart && selEnd);
-  renderCalendar();
-}
+});
 
 document.getElementById('confirmRange').addEventListener('click', () => {
+  const selStart = rangeStartInput.value, selEnd = rangeEndInput.value;
   filtered = allEntries.filter(e => e.date >= selStart && e.date <= selEnd);
   document.querySelectorAll('.toolbar > button[data-preset]').forEach(b=>b.classList.remove('active'));
   document.getElementById('currentRange').textContent = `${fmtDate(selStart)} → ${fmtDate(selEnd)}`;
@@ -489,7 +471,6 @@ document.getElementById('confirmRange').addEventListener('click', () => {
 
 // ================= Modal "Charger une journée" =================
 const PENDING_KEY = 'yazio_pending_entries_v1';
-let dayCalMonth, dayCalYear, dayPicked = null;
 let shotObjectUrls = [null, null];
 
 function loadPending(){
@@ -564,12 +545,13 @@ function jourFR(dateStr){
 }
 
 const dayModalOverlay = document.getElementById('dayModalOverlay');
+const daySingleDateInput = document.getElementById('daySingleDate');
+
 document.getElementById('openDayLoader').addEventListener('click', () => {
-  const now = new Date();
-  dayCalMonth = now.getMonth(); dayCalYear = now.getFullYear();
-  dayPicked = null;
   resetDayForm();
-  renderDayCalendar();
+  const todayStr = new Date().toISOString().slice(0,10);
+  daySingleDateInput.max = todayStr;
+  daySingleDateInput.value = '';
   dayModalOverlay.classList.add('open');
   lockScroll(true);
 });
@@ -578,46 +560,18 @@ document.getElementById('cancelDay').addEventListener('click', () => {
   dayModalOverlay.classList.remove('open');
   lockScroll(false);
 });
-document.getElementById('dayPrevMonth').addEventListener('click', () => { dayCalMonth--; if(dayCalMonth<0){dayCalMonth=11;dayCalYear--;} renderDayCalendar(); });
-document.getElementById('dayNextMonth').addEventListener('click', () => { dayCalMonth++; if(dayCalMonth>11){dayCalMonth=0;dayCalYear++;} renderDayCalendar(); });
-
-function renderDayCalendar(){
-  const monthNames = ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'];
-  document.getElementById('dayCalMonthLabel').textContent = `${monthNames[dayCalMonth]} ${dayCalYear}`;
-  const grid = document.getElementById('dayCalGrid');
-  grid.innerHTML = '';
-  ['L','M','M','J','V','S','D'].forEach(d => {
-    const el = document.createElement('div');
-    el.className = 'cal-dow'; el.textContent = d;
-    grid.appendChild(el);
+document.querySelectorAll('#dayModalOverlay .date-wrap').forEach(wrap => {
+  wrap.addEventListener('click', () => {
+    const input = wrap.querySelector('input[type=date]');
+    if (typeof input.showPicker === 'function'){ try{ input.showPicker(); }catch(e){} }
   });
-  const firstDay = new Date(dayCalYear, dayCalMonth, 1);
-  let startOffset = firstDay.getDay() - 1;
-  if (startOffset < 0) startOffset = 6;
-  for (let i=0;i<startOffset;i++){
-    const el = document.createElement('div');
-    el.className = 'cal-day empty';
-    grid.appendChild(el);
-  }
-  const daysInMonth = new Date(dayCalYear, dayCalMonth+1, 0).getDate();
-  const todayStr = new Date().toISOString().slice(0,10);
-  for (let d=1; d<=daysInMonth; d++){
-    const dateStr = `${dayCalYear}-${String(dayCalMonth+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
-    const el = document.createElement('div');
-    el.className = 'cal-day';
-    el.textContent = d;
-    if (dateStr > todayStr) el.classList.add('disabled');
-    if (dayPicked === dateStr) el.classList.add('selected-start');
-    if (dateStr <= todayStr){
-      el.addEventListener('click', () => { dayPicked = dateStr; renderDayCalendar(); updateDayPickedLabel(); updateSaveDayState(); });
-    }
-    grid.appendChild(el);
-  }
-}
+});
+daySingleDateInput.addEventListener('change', () => { updateDayPickedLabel(); updateSaveDayState(); });
 
 function updateDayPickedLabel(){
   const label = document.getElementById('dayPickedLabel');
-  label.textContent = dayPicked ? `Jour sélectionné : ${fmtDate(dayPicked)} (${jourFR(dayPicked)})` : '';
+  const v = daySingleDateInput.value;
+  label.textContent = v ? `Jour sélectionné : ${fmtDate(v)} (${jourFR(v)})` : '';
 }
 
 function setupShotSlot(slotId, inputId, placeholderId, removeId, idx){
@@ -666,15 +620,17 @@ function resetDayForm(){
   document.getElementById('shotPlaceholder2').style.display = 'block';
   document.getElementById('shotRemove1').style.display = 'none';
   document.getElementById('shotRemove2').style.display = 'none';
+  daySingleDateInput.value = '';
   document.getElementById('dayPickedLabel').textContent = '';
   updateSaveDayState();
 }
 
 function updateSaveDayState(){
-  document.getElementById('saveDayBtn').disabled = !dayPicked;
+  document.getElementById('saveDayBtn').disabled = !daySingleDateInput.value;
 }
 
 document.getElementById('saveDayBtn').addEventListener('click', () => {
+  const dayPicked = daySingleDateInput.value;
   if (!dayPicked) return;
   const num = id => {
     const v = document.getElementById(id).value;
