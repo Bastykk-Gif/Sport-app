@@ -153,8 +153,11 @@ let filtered = [];
 let charts = {};
 
 // --- Chargement des données ---
-fetch('data.json?t=' + Date.now())
-  .then(r => r.json())
+fetch('data.json?t=' + Date.now(), {cache:'no-store'})
+  .then(r => {
+    if (!r.ok) throw new Error('HTTP ' + r.status);
+    return r.json();
+  })
   .then(data => {
     refTargets = data.reference_targets;
     allEntries = data.entries.filter(e => e.poids !== null || e.kcal !== null);
@@ -163,7 +166,7 @@ fetch('data.json?t=' + Date.now())
     applyPreset('all');
   })
   .catch(err => {
-    document.getElementById('subtitle').textContent = 'Erreur de chargement des données.';
+    document.getElementById('subtitle').textContent = 'Erreur de chargement des données : ' + err.message;
     console.error(err);
   });
 
