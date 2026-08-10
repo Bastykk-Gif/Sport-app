@@ -1,0 +1,30 @@
+{
+  "reference_targets": {
+    "kcal": 1900,
+    "proteines_g": 158,
+    "lipides_g": 58,
+    "glucides_g": 230
+  },
+  "entries": [
+    {"date":"2026-07-20","jour":"Lun","poids":81.0,"figé":false,"kcal":1304,"glucides":144,"glucides_cible":222,"proteines":78,"proteines_cible":162,"lipides":39,"lipides_cible":35,"pas":2062,"sport_kcal":0,"sport_note":"non enregistré"},
+    {"date":"2026-07-21","jour":"Mar","poids":80.8,"figé":false,"kcal":2391,"glucides":230,"glucides_cible":222,"proteines":136,"proteines_cible":162,"lipides":97,"lipides_cible":35,"pas":2737,"sport_kcal":352,"sport_note":""},
+    {"date":"2026-07-22","jour":"Mer","poids":80.2,"figé":false,"kcal":1759,"glucides":142,"glucides_cible":222,"proteines":131,"proteines_cible":162,"lipides":69,"lipides_cible":35,"pas":4643,"sport_kcal":324,"sport_note":""},
+    {"date":"2026-07-23","jour":"Jeu","poids":80.2,"figé":false,"kcal":1889,"glucides":202,"glucides_cible":222,"proteines":139,"proteines_cible":162,"lipides":55,"lipides_cible":35,"pas":4593,"sport_kcal":361,"sport_note":""},
+    {"date":"2026-07-24","jour":"Ven","poids":80.2,"figé":false,"kcal":2129,"glucides":203,"glucides_cible":222,"proteines":113,"proteines_cible":162,"lipides":92,"lipides_cible":35,"pas":5748,"sport_kcal":204,"sport_note":""},
+    {"date":"2026-07-25","jour":"Sam","poids":null,"figé":false,"kcal":null,"glucides":null,"glucides_cible":222,"proteines":null,"proteines_cible":162,"lipides":null,"lipides_cible":35,"pas":null,"sport_kcal":null,"sport_note":"indisponible"},
+    {"date":"2026-07-26","jour":"Dim","poids":null,"figé":false,"kcal":null,"glucides":null,"glucides_cible":222,"proteines":null,"proteines_cible":162,"lipides":null,"lipides_cible":35,"pas":null,"sport_kcal":null,"sport_note":"indisponible"},
+    {"date":"2026-07-27","jour":"Lun","poids":81.5,"figé":false,"kcal":2376,"glucides":218,"glucides_cible":222,"proteines":179,"proteines_cible":162,"lipides":88,"lipides_cible":35,"pas":2705,"sport_kcal":222,"sport_note":""},
+    {"date":"2026-07-28","jour":"Mar","poids":81.1,"figé":false,"kcal":1680,"glucides":119,"glucides_cible":222,"proteines":159,"proteines_cible":162,"lipides":69,"lipides_cible":35,"pas":4391,"sport_kcal":429,"sport_note":""},
+    {"date":"2026-07-29","jour":"Mer","poids":80.3,"figé":false,"kcal":1816,"glucides":170,"glucides_cible":222,"proteines":145,"proteines_cible":162,"lipides":62,"lipides_cible":35,"pas":2093,"sport_kcal":393,"sport_note":""},
+    {"date":"2026-07-30","jour":"Jeu","poids":79.4,"figé":false,"kcal":2036,"glucides":127,"glucides_cible":222,"proteines":165,"proteines_cible":162,"lipides":84,"lipides_cible":35,"pas":3421,"sport_kcal":402,"sport_note":""},
+    {"date":"2026-07-31","jour":"Ven","poids":80.4,"figé":false,"kcal":1899,"glucides":161,"glucides_cible":222,"proteines":135,"proteines_cible":162,"lipides":67,"lipides_cible":35,"pas":3330,"sport_kcal":222,"sport_note":""},
+    {"date":"2026-08-01","jour":"Sam","poids":80.4,"figé":true,"kcal":1657,"glucides":100,"glucides_cible":204,"proteines":188,"proteines_cible":139,"lipides":55,"lipides_cible":51,"pas":1795,"sport_kcal":0,"sport_note":"weekend"},
+    {"date":"2026-08-02","jour":"Dim","poids":80.4,"figé":true,"kcal":1646,"glucides":100,"glucides_cible":204,"proteines":187,"proteines_cible":139,"lipides":54,"lipides_cible":51,"pas":1795,"sport_kcal":0,"sport_note":"weekend"},
+    {"date":"2026-08-03","jour":"Lun","poids":80.7,"figé":false,"kcal":1642,"glucides":109,"glucides_cible":204,"proteines":148,"proteines_cible":139,"lipides":66,"lipides_cible":51,"pas":3961,"sport_kcal":210,"sport_note":""},
+    {"date":"2026-08-04","jour":"Mar","poids":79.4,"figé":false,"a_jeun":true,"kcal":1632,"glucides":129,"glucides_cible":204,"proteines":119,"proteines_cible":139,"lipides":72,"lipides_cible":51,"pas":6348,"sport_kcal":506,"sport_note":"197 sport + 309 marche"},
+    {"date":"2026-08-05","jour":"Mer","poids":79.7,"figé":false,"a_jeun":true,"kcal":1892,"glucides":134,"glucides_cible":204,"proteines":155,"proteines_cible":139,"lipides":80,"lipides_cible":51,"pas":8575,"sport_kcal":390,"sport_note":"111+279"},
+    {"date":"2026-08-06","jour":"Jeu","poids":79.7,"figé":false,"a_jeun":true,"kcal":1609,"glucides":92,"glucides_cible":204,"proteines":181,"proteines_cible":139,"lipides":47,"lipides_cible":51,"pas":2269,"sport_kcal":419,"sport_note":"140+279"},
+    {"date":"2026-08-07","jour":"Ven","poids":79.4,"figé":false,"a_jeun":true,"kcal":2479,"glucides":219,"glucides_cible":204,"proteines":155,"proteines_cible":139,"lipides":97,"lipides_cible":51,"pas":6867,"sport_kcal":244,"sport_note":"anniversaire, excès justifié"},
+    {"date":"2026-08-08","jour":"Sam","poids":79.4,"figé":true,"kcal":null,"glucides":null,"glucides_cible":204,"proteines":null,"proteines_cible":139,"lipides":null,"lipides_cible":51,"pas":null,"sport_kcal":0,"sport_note":"weekend, repas famille, excès justifié"}
+  ]
+}

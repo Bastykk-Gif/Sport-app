@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Suivi Yazio — Dashboard</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.4/chart.umd.min.js"></script>
+<style>
+  :root{
+    --bg:#0f1115; --panel:#171a21; --panel2:#1d2129; --border:#2a2f3a;
+    --text:#e8eaed; --muted:#9aa3b2; --accent:#5eead4; --accent2:#818cf8;
+    --warn:#f59e0b; --bad:#f87171; --good:#4ade80;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    background:var(--bg); color:var(--text); padding:20px;
+  }
+  h1{font-size:1.4rem; margin:0 0 4px;}
+  .sub{color:var(--muted); font-size:.85rem; margin-bottom:20px;}
+  .toolbar{
+    display:flex; gap:12px; align-items:center; flex-wrap:wrap;
+    background:var(--panel); border:1px solid var(--border); border-radius:12px;
+    padding:12px 16px; margin-bottom:20px;
+  }
+  .range-label{font-size:.85rem; color:var(--muted);}
+  .range-value{font-weight:600; color:var(--accent);}
+  button{
+    background:var(--panel2); color:var(--text); border:1px solid var(--border);
+    border-radius:8px; padding:8px 14px; font-size:.85rem; cursor:pointer;
+  }
+  button:hover{border-color:var(--accent);}
+  button.active{background:var(--accent); color:#0f1115; border-color:var(--accent); font-weight:600;}
+  #openCalendar{background:var(--accent2); color:#0f1115; border-color:var(--accent2); font-weight:600;}
+  .grid{
+    display:grid; grid-template-columns:repeat(auto-fit,minmax(420px,1fr)); gap:16px;
+  }
+  .card{
+    background:var(--panel); border:1px solid var(--border); border-radius:12px; padding:16px;
+  }
+  .card h2{font-size:.95rem; margin:0 0 12px; color:var(--text); font-weight:600;}
+  .stats{display:flex; gap:16px; margin-bottom:8px; flex-wrap:wrap;}
+  .stat{font-size:.8rem; color:var(--muted);}
+  .stat b{color:var(--text); font-size:1rem; display:block;}
+  canvas{max-height:280px;}
+
+  /* Modal calendrier */
+  .modal-overlay{
+    display:none; position:fixed; inset:0; background:rgba(0,0,0,.6);
+    align-items:center; justify-content:center; z-index:100;
+  }
+  .modal-overlay.open{display:flex;}
+  .modal{
+    background:var(--panel); border:1px solid var(--border); border-radius:14px;
+    padding:20px; width:340px; max-width:92vw;
+  }
+  .modal h3{margin:0 0 4px; font-size:1rem;}
+  .modal .hint{color:var(--muted); font-size:.78rem; margin-bottom:14px;}
+  .cal-header{display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;}
+  .cal-header button{padding:4px 10px;}
+  .cal-month{font-weight:600; font-size:.9rem;}
+  .cal-grid{display:grid; grid-template-columns:repeat(7,1fr); gap:4px;}
+  .cal-dow{text-align:center; font-size:.68rem; color:var(--muted); padding:4px 0;}
+  .cal-day{
+    text-align:center; padding:8px 0; font-size:.8rem; border-radius:6px; cursor:pointer;
+    color:var(--text);
+  }
+  .cal-day.empty{cursor:default;}
+  .cal-day:not(.empty):not(.disabled):hover{background:var(--panel2);}
+  .cal-day.disabled{color:#444; cursor:not-allowed;}
+  .cal-day.selected-start, .cal-day.selected-end{background:var(--accent); color:#0f1115; font-weight:700;}
+  .cal-day.in-range{background:rgba(94,234,212,.18);}
+  .modal-actions{display:flex; justify-content:space-between; margin-top:14px; gap:8px;}
+  .modal-actions button{flex:1;}
+  #confirmRange{background:var(--accent); color:#0f1115; font-weight:600; border-color:var(--accent);}
+  #confirmRange:disabled{opacity:.4; cursor:not-allowed;}
+  .empty-state{color:var(--muted); font-size:.85rem; padding:20px; text-align:center;}
+</style>
+</head>
+<body>
+
+<h1>📊 Suivi Yazio — Olivier</h1>
+<div class="sub" id="subtitle">Chargement des données...</div>
+
+<div class="toolbar">
+  <span class="range-label">Période :</span>
+  <button data-preset="7">7 jours</button>
+  <button data-preset="14">14 jours</button>
+  <button data-preset="30">30 jours</button>
+  <button data-preset="all" class="active">Tout</button>
+  <button id="openCalendar">📅 Choisir une plage</button>
+  <span class="range-value" id="currentRange"></span>
+</div>
+
+<div class="grid">
+  <div class="card">
+    <h2>⚖️ Poids (kg)</h2>
+    <div class="stats" id="poidsStats"></div>
+    <canvas id="chartPoids"></canvas>
+  </div>
+  <div class="card">
+    <h2>🔥 Calories consommées vs cible</h2>
+    <div class="stats" id="kcalStats"></div>
+    <canvas id="chartKcal"></canvas>
+  </div>
+  <div class="card">
+    <h2>🥗 Macros (g) — Glucides / Protéines / Lipides</h2>
+    <div class="stats" id="macroStats"></div>
+    <canvas id="chartMacros"></canvas>
+  </div>
+  <div class="card">
+    <h2>💪 Énergie dépensée en sport (kcal)</h2>
+    <div class="stats" id="sportStats"></div>
+    <canvas id="chartSport"></canvas>
+  </div>
+  <div class="card" style="grid-column:1/-1;">
+    <h2>👣 Nombre de pas</h2>
+    <div class="stats" id="pasStats"></div>
+    <canvas id="chartPas"></canvas>
+  </div>
+</div>
+
+<!-- Modal calendrier style "réservation hôtel" -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal">
+    <h3>Sélectionner une période</h3>
+    <div class="hint">Clique la date de début, puis la date de fin.</div>
+    <div class="cal-header">
+      <button id="prevMonth">‹</button>
+      <span class="cal-month" id="calMonthLabel"></span>
+      <button id="nextMonth">›</button>
+    </div>
+    <div class="cal-grid" id="calGrid"></div>
+    <div class="modal-actions">
+      <button id="cancelRange">Annuler</button>
+      <button id="confirmRange" disabled>Valider</button>
+    </div>
+  </div>
+</div>
+
+<script>
+let allEntries = [];
+let refTargets = {};
+let filtered = [];
+let charts = {};
+
+// --- Chargement des données ---
+fetch('data.json?t=' + Date.now())
+  .then(r => r.json())
+  .then(data => {
+    refTargets = data.reference_targets;
+    allEntries = data.entries.filter(e => e.poids !== null || e.kcal !== null);
+    document.getElementById('subtitle').textContent =
+      `${allEntries.length} jours enregistrés · Objectif référence : ${refTargets.kcal} kcal / ${refTargets.proteines_g}P / ${refTargets.lipides_g}L / ${refTargets.glucides_g}G`;
+    applyPreset('all');
+  })
+  .catch(err => {
+    document.getElementById('subtitle').textContent = 'Erreur de chargement des données.';
+    console.error(err);
+  });
+
+function fmtDate(d){
+  const [y,m,day] = d.split('-');
+  return `${day}/${m}`;
+}
+
+function applyPreset(preset){
+  document.querySelectorAll('.toolbar > button[data-preset]').forEach(b=>b.classList.remove('active'));
+  if (preset !== 'custom') {
+    document.querySelector(`button[data-preset="${preset}"]`)?.classList.add('active');
+  }
+  if (preset === 'all') {
+    filtered = [...allEntries];
+    document.getElementById('currentRange').textContent = '';
+  } else if (preset !== 'custom') {
+    const n = parseInt(preset);
+    filtered = allEntries.slice(-n);
+    document.getElementById('currentRange').textContent = '';
+  }
+  render();
+}
+
+document.querySelectorAll('.toolbar > button[data-preset]').forEach(btn=>{
+  btn.addEventListener('click', () => applyPreset(btn.dataset.preset));
+});
+
+function render(){
+  if (filtered.length === 0){
+    Object.values(charts).forEach(c=>c && c.destroy());
+    return;
+  }
+  const labels = filtered.map(e => fmtDate(e.date));
+
+  // Poids
+  const poidsData = filtered.map(e => e.poids);
+  const poidsVals = poidsData.filter(v=>v!==null);
+  setStats('poidsStats', [
+    ['Actuel', poidsVals.length ? poidsVals[poidsVals.length-1]+' kg' : '—'],
+    ['Min', poidsVals.length ? Math.min(...poidsVals).toFixed(1)+' kg' : '—'],
+    ['Variation', poidsVals.length>1 ? (poidsVals[poidsVals.length-1]-poidsVals[0]>=0?'+':'')+(poidsVals[poidsVals.length-1]-poidsVals[0]).toFixed(1)+' kg' : '—'],
+  ]);
+  makeChart('chartPoids', 'line', labels, [
+    {label:'Poids (kg)', data:poidsData, borderColor:'#5eead4', backgroundColor:'rgba(94,234,212,.1)', spanGaps:true, tension:.3, pointRadius:3}
+  ]);
+
+  // Kcal
+  const kcalData = filtered.map(e => e.kcal);
+  setStats('kcalStats', [
+    ['Moyenne', avg(kcalData) ? Math.round(avg(kcalData))+' kcal' : '—'],
+    ['Cible', refTargets.kcal+' kcal'],
+  ]);
+  makeChart('chartKcal', 'bar', labels, [
+    {label:'Kcal consommées', data:kcalData, backgroundColor:'#818cf8'},
+    {label:'Cible', data:filtered.map(()=>refTargets.kcal), type:'line', borderColor:'#f59e0b', borderDash:[5,5], pointRadius:0}
+  ]);
+
+  // Macros
+  setStats('macroStats', [
+    ['Glucides moy.', avg(filtered.map(e=>e.glucides)) ? Math.round(avg(filtered.map(e=>e.glucides)))+'g / '+refTargets.glucides_g+'g' : '—'],
+    ['Protéines moy.', avg(filtered.map(e=>e.proteines)) ? Math.round(avg(filtered.map(e=>e.proteines)))+'g / '+refTargets.proteines_g+'g' : '—'],
+    ['Lipides moy.', avg(filtered.map(e=>e.lipides)) ? Math.round(avg(filtered.map(e=>e.lipides)))+'g / '+refTargets.lipides_g+'g' : '—'],
+  ]);
+  makeChart('chartMacros', 'line', labels, [
+    {label:'Glucides', data:filtered.map(e=>e.glucides), borderColor:'#f59e0b', spanGaps:true, tension:.3},
+    {label:'Protéines', data:filtered.map(e=>e.proteines), borderColor:'#4ade80', spanGaps:true, tension:.3},
+    {label:'Lipides', data:filtered.map(e=>e.lipides), borderColor:'#f87171', spanGaps:true, tension:.3},
+  ]);
+
+  // Sport
+  const sportData = filtered.map(e => e.sport_kcal);
+  setStats('sportStats', [
+    ['Total période', sum(sportData)+' kcal'],
+    ['Moyenne/jour', avg(sportData) ? Math.round(avg(sportData))+' kcal' : '—'],
+  ]);
+  makeChart('chartSport', 'bar', labels, [
+    {label:'Kcal dépensées (sport)', data:sportData, backgroundColor:'#4ade80'}
+  ]);
+
+  // Pas
+  const pasData = filtered.map(e => e.pas);
+  setStats('pasStats', [
+    ['Moyenne', avg(pasData) ? Math.round(avg(pasData)).toLocaleString('fr-FR') : '—'],
+    ['Max', pasData.some(v=>v!==null) ? Math.max(...pasData.filter(v=>v!==null)).toLocaleString('fr-FR') : '—'],
+  ]);
+  makeChart('chartPas', 'bar', labels, [
+    {label:'Pas', data:pasData, backgroundColor:'#818cf8'}
+  ]);
+}
+
+function avg(arr){
+  const v = arr.filter(x => x !== null && x !== undefined);
+  return v.length ? v.reduce((a,b)=>a+b,0)/v.length : 0;
+}
+function sum(arr){
+  return arr.filter(x=>x!==null && x!==undefined).reduce((a,b)=>a+b,0);
+}
+
+function setStats(elId, pairs){
+  const el = document.getElementById(elId);
+  el.innerHTML = pairs.map(([label,val]) => `<div class="stat"><b>${val}</b>${label}</div>`).join('');
+}
+
+function makeChart(canvasId, type, labels, datasets){
+  if (charts[canvasId]) charts[canvasId].destroy();
+  const ctx = document.getElementById(canvasId).getContext('2d');
+  charts[canvasId] = new Chart(ctx, {
+    type,
+    data: {labels, datasets},
+    options: {
+      responsive:true,
+      maintainAspectRatio:false,
+      interaction:{mode:'index', intersect:false},
+      plugins:{
+        legend:{labels:{color:'#9aa3b2', boxWidth:12, font:{size:11}}},
+      },
+      scales:{
+        x:{ticks:{color:'#9aa3b2', font:{size:10}}, grid:{color:'#2a2f3a'}},
+        y:{ticks:{color:'#9aa3b2', font:{size:10}}, grid:{color:'#2a2f3a'}}
+      }
+    }
+  });
+}
+
+// --- Calendrier "réservation hôtel" ---
+let calMonth, calYear;
+let selStart = null, selEnd = null;
+
+const overlay = document.getElementById('modalOverlay');
+document.getElementById('openCalendar').addEventListener('click', () => {
+  const now = new Date();
+  calMonth = now.getMonth();
+  calYear = now.getFullYear();
+  selStart = null; selEnd = null;
+  renderCalendar();
+  overlay.classList.add('open');
+});
+document.getElementById('cancelRange').addEventListener('click', () => overlay.classList.remove('open'));
+document.getElementById('prevMonth').addEventListener('click', () => { calMonth--; if(calMonth<0){calMonth=11;calYear--;} renderCalendar(); });
+document.getElementById('nextMonth').addEventListener('click', () => { calMonth++; if(calMonth>11){calMonth=0;calYear++;} renderCalendar(); });
+
+function renderCalendar(){
+  const monthNames = ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'];
+  document.getElementById('calMonthLabel').textContent = `${monthNames[calMonth]} ${calYear}`;
+  const grid = document.getElementById('calGrid');
+  grid.innerHTML = '';
+  ['L','M','M','J','V','S','D'].forEach(d => {
+    const el = document.createElement('div');
+    el.className = 'cal-dow'; el.textContent = d;
+    grid.appendChild(el);
+  });
+  const firstDay = new Date(calYear, calMonth, 1);
+  let startOffset = firstDay.getDay() - 1; // lundi=0
+  if (startOffset < 0) startOffset = 6;
+  for (let i=0;i<startOffset;i++){
+    const el = document.createElement('div');
+    el.className = 'cal-day empty';
+    grid.appendChild(el);
+  }
+  const daysInMonth = new Date(calYear, calMonth+1, 0).getDate();
+  const availableDates = new Set(allEntries.map(e=>e.date));
+  for (let d=1; d<=daysInMonth; d++){
+    const dateStr = `${calYear}-${String(calMonth+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+    const el = document.createElement('div');
+    el.className = 'cal-day';
+    el.textContent = d;
+    const hasData = availableDates.has(dateStr);
+    if (!hasData) el.classList.add('disabled');
+    if (selStart === dateStr) el.classList.add('selected-start');
+    if (selEnd === dateStr) el.classList.add('selected-end');
+    if (selStart && selEnd && dateStr > selStart && dateStr < selEnd) el.classList.add('in-range');
+    if (hasData){
+      el.addEventListener('click', () => onDayClick(dateStr));
+    }
+    grid.appendChild(el);
+  }
+}
+
+function onDayClick(dateStr){
+  if (!selStart || (selStart && selEnd)) {
+    selStart = dateStr; selEnd = null;
+  } else if (dateStr < selStart) {
+    selStart = dateStr;
+  } else {
+    selEnd = dateStr;
+  }
+  document.getElementById('confirmRange').disabled = !(selStart && selEnd);
+  renderCalendar();
+}
+
+document.getElementById('confirmRange').addEventListener('click', () => {
+  filtered = allEntries.filter(e => e.date >= selStart && e.date <= selEnd);
+  document.querySelectorAll('.toolbar > button[data-preset]').forEach(b=>b.classList.remove('active'));
+  document.getElementById('currentRange').textContent = `${fmtDate(selStart)} → ${fmtDate(selEnd)}`;
+  overlay.classList.remove('open');
+  render();
+});
+</script>
+</body>
+</html>
