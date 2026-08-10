@@ -291,6 +291,7 @@ body{min-height:100%;background:var(--bk);color:var(--w);font-family:var(--fb);f
 </div>
 <script>
 const MOIS=1;
+let suiviLoaded=false;
 const BASE='https://media.musclewiki.com/media/uploads/videos/branded/';
 const VIDS={
   gobletSquat:BASE+'male-dumbbell-goblet-squat-front.mp4',
@@ -1247,7 +1248,7 @@ function navTo(s){
   if(s==='home') buildHome();
   if(s==='suivi'){
     const f=$('suiviFrame');
-    if(!f.src) f.src='dashboard.html';
+    if(!suiviLoaded){ f.src='dashboard.html'; suiviLoaded=true; }
   }
 }
 function goHome(){stopTimer();navTo('home')}
