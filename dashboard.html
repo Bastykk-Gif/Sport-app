@@ -228,7 +228,7 @@ function render(){
   makeChart('chartKcal', 'bar', labels, [
     {label:'Kcal consommées', data:kcalData, backgroundColor:'#818cf8'},
     {label:'Cible', data:filtered.map(()=>refTargets.kcal), type:'line', borderColor:'#f59e0b', borderDash:[5,5], pointRadius:0}
-  ]);
+  ], {y:{min:1000}});
 
   // Macros
   setStats('macroStats', [
@@ -238,8 +238,11 @@ function render(){
   ]);
   makeChart('chartMacros', 'line', labels, [
     {label:'Glucides', data:filtered.map(e=>e.glucides), borderColor:'#f59e0b', spanGaps:true, tension:.3},
+    {label:'Objectif Glucides', data:filtered.map(()=>refTargets.glucides_g), borderColor:'#f59e0b', borderDash:[4,4], pointRadius:0, borderWidth:1},
     {label:'Protéines', data:filtered.map(e=>e.proteines), borderColor:'#4ade80', spanGaps:true, tension:.3},
+    {label:'Objectif Protéines', data:filtered.map(()=>refTargets.proteines_g), borderColor:'#4ade80', borderDash:[4,4], pointRadius:0, borderWidth:1},
     {label:'Lipides', data:filtered.map(e=>e.lipides), borderColor:'#f87171', spanGaps:true, tension:.3},
+    {label:'Objectif Lipides', data:filtered.map(()=>refTargets.lipides_g), borderColor:'#f87171', borderDash:[4,4], pointRadius:0, borderWidth:1},
   ]);
 
   // Sport
@@ -276,9 +279,14 @@ function setStats(elId, pairs){
   el.innerHTML = pairs.map(([label,val]) => `<div class="stat"><b>${val}</b>${label}</div>`).join('');
 }
 
-function makeChart(canvasId, type, labels, datasets){
+function makeChart(canvasId, type, labels, datasets, axisOverrides){
   if (charts[canvasId]) charts[canvasId].destroy();
   const ctx = document.getElementById(canvasId).getContext('2d');
+  const scales = {
+    x:{ticks:{color:'#9aa3b2', font:{size:10}}, grid:{color:'#2a2f3a'}},
+    y:{ticks:{color:'#9aa3b2', font:{size:10}}, grid:{color:'#2a2f3a'}}
+  };
+  if (axisOverrides && axisOverrides.y) Object.assign(scales.y, axisOverrides.y);
   charts[canvasId] = new Chart(ctx, {
     type,
     data: {labels, datasets},
@@ -289,10 +297,7 @@ function makeChart(canvasId, type, labels, datasets){
       plugins:{
         legend:{labels:{color:'#9aa3b2', boxWidth:12, font:{size:11}}},
       },
-      scales:{
-        x:{ticks:{color:'#9aa3b2', font:{size:10}}, grid:{color:'#2a2f3a'}},
-        y:{ticks:{color:'#9aa3b2', font:{size:10}}, grid:{color:'#2a2f3a'}}
-      }
+      scales
     }
   });
 }
