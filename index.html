@@ -41,6 +41,10 @@ body{min-height:100%;background:var(--bk);color:var(--w);font-family:var(--fb);f
 .bnav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:480px;height:calc(var(--nh) + var(--sb));background:var(--dk);border-top:1px solid var(--br);display:flex;z-index:200;padding-bottom:var(--sb)}
 .nb{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;border:none;background:none;color:var(--mt);font-family:var(--fc);font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;min-height:44px;transition:color .15s;-webkit-tap-highlight-color:transparent}
 .nb.on{color:var(--red)}.ni{font-size:22px;line-height:1}
+/* SUIVI */
+#suivi{padding-bottom:0!important}
+.suivi-frame-wrap{position:fixed;top:0;left:50%;transform:translateX(-50%);width:100%;max-width:480px;height:100vh;height:100dvh;padding-bottom:calc(var(--nh) + var(--sb));background:#0f1115}
+.suivi-frame-wrap iframe{width:100%;height:100%;border:none;display:block}
 /* HOME */
 .hh{background:var(--dk);padding:52px 20px 28px;position:relative;overflow:hidden}
 .hh::before{content:'SPORT';position:absolute;right:-8px;bottom:-18px;font-family:var(--fd);font-size:120px;color:rgba(255,255,255,.03);line-height:1;pointer-events:none}
@@ -264,6 +268,9 @@ body{min-height:100%;background:var(--bk);color:var(--w);font-family:var(--fb);f
   </div>
   <div id="histContent"></div>
 </div>
+<div id="suivi" class="screen">
+  <div class="suivi-frame-wrap"><iframe id="suiviFrame" src="" title="Suivi Yazio"></iframe></div>
+</div>
 <div class="modeov" id="modeModal">
   <div class="modeCard">
     <div class="modeTitle" id="modeTitle">Quel format aujourd'hui ?</div>
@@ -279,6 +286,7 @@ body{min-height:100%;background:var(--bk);color:var(--w);font-family:var(--fb);f
 <nav class="bnav">
   <button class="nb on" id="nav-home"><div class="ni">⊞</div>Programme</button>
   <button class="nb" id="nav-historique"><div class="ni">◎</div>Historique</button>
+  <button class="nb" id="nav-suivi"><div class="ni">📊</div>Suivi</button>
 </nav>
 </div>
 <script>
@@ -1237,6 +1245,10 @@ function navTo(s){
   window.scrollTo({top:0,behavior:'instant'});
   if(s==='historique') buildHist();
   if(s==='home') buildHome();
+  if(s==='suivi'){
+    const f=$('suiviFrame');
+    if(!f.src) f.src='dashboard.html';
+  }
 }
 function goHome(){stopTimer();navTo('home')}
 
@@ -1245,6 +1257,7 @@ $('btnFinish').addEventListener('click',showRecap);
 $('btnHome').addEventListener('click',goHome);
 $('nav-home').addEventListener('click',()=>navTo('home'));
 $('nav-historique').addEventListener('click',()=>navTo('historique'));
+$('nav-suivi').addEventListener('click',()=>navTo('suivi'));
 
 buildHome();
 </script>
