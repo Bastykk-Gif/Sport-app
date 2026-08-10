@@ -25,7 +25,7 @@
     {"date":"2026-08-05","jour":"Mer","poids":79.7,"figé":false,"a_jeun":true,"kcal":1892,"glucides":134,"glucides_cible":204,"proteines":155,"proteines_cible":139,"lipides":80,"lipides_cible":51,"pas":8575,"sport_kcal":390,"sport_note":"111+279"},
     {"date":"2026-08-06","jour":"Jeu","poids":79.7,"figé":false,"a_jeun":true,"kcal":1609,"glucides":92,"glucides_cible":204,"proteines":181,"proteines_cible":139,"lipides":47,"lipides_cible":51,"pas":2269,"sport_kcal":419,"sport_note":"140+279"},
     {"date":"2026-08-07","jour":"Ven","poids":79.4,"figé":false,"a_jeun":true,"kcal":2479,"glucides":219,"glucides_cible":204,"proteines":155,"proteines_cible":139,"lipides":97,"lipides_cible":51,"pas":6867,"sport_kcal":244,"sport_note":"anniversaire, excès justifié"},
-    {"date":"2026-08-08","jour":"Sam","poids":79.4,"figé":true,"kcal":null,"glucides":null,"glucides_cible":204,"proteines":null,"proteines_cible":139,"lipides":null,"lipides_cible":51,"pas":null,"sport_kcal":0,"sport_note":"weekend, repas famille, excès justifié"},
+    {"date":"2026-08-08","jour":"Sam","poids":79.4,"figé":true,"kcal":2078,"glucides":120,"glucides_cible":199,"proteines":166,"proteines_cible":135,"lipides":101,"lipides_cible":50,"pas":1583,"sport_kcal":77,"sport_note":"weekend, repas famille, excès justifié"},
     {"date":"2026-08-09","jour":"Dim","poids":79.4,"figé":true,"kcal":1769,"glucides":189,"glucides_cible":199,"proteines":153,"proteines_cible":135,"lipides":43,"lipides_cible":50,"pas":1547,"sport_kcal":75,"sport_note":"weekend, 75kcal marche uniquement"}
   ]
 }
