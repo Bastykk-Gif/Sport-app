@@ -133,11 +133,19 @@
   .pending-item .pi-actions{display:flex; gap:6px;}
   .pending-item .pi-actions button{padding:5px 9px; font-size:.72rem;}
   .pi-copy{background:var(--accent2); color:#0f1115; border-color:var(--accent2); font-weight:600;}
+  .toast{
+    position:fixed; left:50%; bottom:24px; transform:translateX(-50%) translateY(20px);
+    background:var(--accent); color:#0f1115; font-weight:600; font-size:.82rem;
+    padding:12px 18px; border-radius:10px; z-index:300; opacity:0; pointer-events:none;
+    transition:opacity .25s, transform .25s; max-width:88vw; text-align:center; box-shadow:0 4px 20px rgba(0,0,0,.4);
+  }
+  .toast.show{opacity:1; transform:translateX(-50%) translateY(0);}
 </style>
 </head>
 <body>
 
 <h1>📊 Suivi Yazio — Olivier</h1>
+<div class="toast" id="toast"></div>
 <div class="sub" id="subtitle">Chargement des données...</div>
 
 <div class="toolbar">
@@ -240,7 +248,7 @@
         <button class="rm" id="shotRemove2" style="display:none;" type="button">✕</button>
       </label>
     </div>
-    <div class="privacy-note">🔒 Les captures restent dans ton navigateur (aperçu local uniquement) — elles ne sont jamais envoyées ni sauvegardées où que ce soit. Elles disparaissent à la fermeture de cette fenêtre.</div>
+    <div class="privacy-note">🔒 Les captures restent dans ton navigateur (aperçu local uniquement) — elles ne sont jamais envoyées ni sauvegardées où que ce soit. Elles disparaissent à la fermeture de cette fenêtre.<br><br>⚠️ Pas de lecture automatique : recopie les chiffres affichés sur les captures dans le formulaire ci-dessous.</div>
 
     <div class="form-grid">
       <div><label>Poids (kg)</label><input type="number" step="0.1" id="fPoids" placeholder="79.4"></div>
@@ -527,15 +535,38 @@ function renderPendingList(){
   });
 }
 
+function showToast(msg, ms){
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(t._timer);
+  t._timer = setTimeout(() => t.classList.remove('show'), ms || 3500);
+}
+
+function formatEntryLine(p){
+  return `${p.date}|${p.jour||''}|${p.poids??''}kg${p.fige?'(figé)':''}|${p.kcal??''}kcal|${p.glucides??''}g glucides|${p.proteines??''}g protéines|${p.lipides??''}g lipides|${p.pas??''}pas|Sport:${p.sport_kcal??0}kcal${p.sport_note?(' — '+p.sport_note):''}`;
+}
+
+function copyTextToClipboard(text){
+  if (navigator.clipboard && navigator.clipboard.writeText){
+    return navigator.clipboard.writeText(text);
+  }
+  // Fallback (ex: clipboard API indisponible dans l'iframe)
+  const ta = document.createElement('textarea');
+  ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+  document.body.appendChild(ta); ta.focus(); ta.select();
+  try { document.execCommand('copy'); } catch(e){}
+  document.body.removeChild(ta);
+  return Promise.resolve();
+}
+
 function copyPendingEntry(date){
   const p = loadPending()[date];
   if (!p) return;
-  const line = `${p.date}|${p.jour||''}|${p.poids??''}kg${p.fige?'(figé)':''}|${p.kcal??''}kcal|${p.glucides??''}g glucides|${p.proteines??''}g protéines|${p.lipides??''}g lipides|${p.pas??''}pas|Sport:${p.sport_kcal??0}kcal${p.sport_note?(' — '+p.sport_note):''}`;
-  navigator.clipboard.writeText(line).then(() => {
-    alert('Copié ! Colle ceci dans la conversation avec Claude pour synchroniser définitivement :\n\n' + line);
-  }).catch(() => {
-    prompt('Copie ce texte et colle-le à Claude :', line);
-  });
+  const line = formatEntryLine(p);
+  copyTextToClipboard(line)
+    .then(() => showToast('📋 Copié ! Colle-le à Claude pour synchroniser.'))
+    .catch(() => prompt('Copie ce texte et colle-le à Claude :', line));
 }
 
 function jourFR(dateStr){
@@ -661,6 +692,9 @@ document.getElementById('saveDayBtn').addEventListener('click', () => {
   resetDayForm();
   dayModalOverlay.classList.remove('open');
   lockScroll(false);
+  copyTextToClipboard(formatEntryLine(entry))
+    .then(() => showToast('✅ Enregistré et copié ! Colle-le à Claude pour synchroniser.', 4500))
+    .catch(() => showToast('✅ Enregistré (copie auto indisponible — utilise "Copier pour Claude" dans la liste).', 4500));
 });
 </script>
 </body>
