@@ -26,6 +26,22 @@
     {"date":"2026-08-06","jour":"Jeu","poids":79.7,"figé":false,"a_jeun":true,"kcal":1609,"glucides":92,"glucides_cible":204,"proteines":181,"proteines_cible":139,"lipides":47,"lipides_cible":51,"pas":2269,"sport_kcal":419,"sport_note":"140+279"},
     {"date":"2026-08-07","jour":"Ven","poids":79.4,"figé":false,"a_jeun":true,"kcal":2479,"glucides":219,"glucides_cible":204,"proteines":155,"proteines_cible":139,"lipides":97,"lipides_cible":51,"pas":6867,"sport_kcal":244,"sport_note":"anniversaire, excès justifié"},
     {"date":"2026-08-08","jour":"Sam","poids":79.4,"figé":true,"kcal":2078,"glucides":120,"glucides_cible":199,"proteines":166,"proteines_cible":135,"lipides":101,"lipides_cible":50,"pas":1583,"sport_kcal":77,"sport_note":"weekend, repas famille, excès justifié"},
-    {"date":"2026-08-09","jour":"Dim","poids":79.4,"figé":true,"kcal":1769,"glucides":189,"glucides_cible":199,"proteines":153,"proteines_cible":135,"lipides":43,"lipides_cible":50,"pas":1547,"sport_kcal":75,"sport_note":"weekend, 75kcal marche uniquement"}
+    {"date":"2026-08-09","jour":"Dim","poids":79.4,"figé":true,"kcal":1769,"glucides":189,"glucides_cible":199,"proteines":153,"proteines_cible":135,"lipides":43,"lipides_cible":50,"pas":1547,"sport_kcal":75,"sport_note":"weekend, 75kcal marche uniquement"},
+    {"date":"2026-08-10","jour":"Lun","poids":80.4,"figé":false,"a_jeun":true,"kcal":1767,"glucides":168,"glucides_cible":199,"proteines":163,"proteines_cible":135,"lipides":47,"lipides_cible":50,"pas":4664,"sport_kcal":421,"sport_note":"217+204, total brûlé incl. pas=651kcal — +1kg vs vendredi, probable rétention post excès weekend"}
+  ],
+  "mensurations": [
+    {"date":"2026-07-22","taille":89.0,"ventre":96.0,"poitrine":100.5,"mollet_droit":38.0,"mollet_gauche":34.0},
+    {"date":"2026-07-23","taille":89.0,"ventre":96.0,"poitrine":100.0,"mollet_droit":38.0,"mollet_gauche":35.0},
+    {"date":"2026-07-27","taille":88.5,"ventre":96.5,"poitrine":101.0,"mollet_droit":39.0,"mollet_gauche":35.0},
+    {"date":"2026-07-28","taille":90.0,"ventre":96.0,"poitrine":101.0,"mollet_droit":39.0,"mollet_gauche":36.0},
+    {"date":"2026-07-29","taille":88.0,"ventre":94.0,"poitrine":103.0,"mollet_droit":39.0,"mollet_gauche":35.0},
+    {"date":"2026-07-30","taille":88.0,"ventre":96.0,"poitrine":100.0,"mollet_droit":39.0,"mollet_gauche":34.5},
+    {"date":"2026-07-31","taille":89.0,"ventre":96.0,"poitrine":103.0,"mollet_droit":39.0,"mollet_gauche":35.0},
+    {"date":"2026-08-03","taille":89.0,"ventre":95.0,"poitrine":103.0,"mollet_droit":39.0,"mollet_gauche":35.0},
+    {"date":"2026-08-05","taille":88.0,"ventre":94.0,"poitrine":100.0,"mollet_droit":38.0,"mollet_gauche":35.0},
+    {"date":"2026-08-06","taille":88.0,"ventre":94.0,"poitrine":100.0,"mollet_droit":39.0,"mollet_gauche":35.0},
+    {"date":"2026-08-07","taille":86.0,"ventre":94.0,"poitrine":100.0,"mollet_droit":39.0,"mollet_gauche":34.5},
+    {"date":"2026-08-10","taille":86.0,"ventre":93.0,"poitrine":99.5,"mollet_droit":38.0,"mollet_gauche":34.0},
+    {"date":"2026-08-11","taille":86.0,"ventre":94.5,"poitrine":100.0,"mollet_droit":38.5,"mollet_gauche":35.0}
   ]
 }

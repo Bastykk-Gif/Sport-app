@@ -137,6 +137,11 @@
     <div class="stats" id="pasStats"></div>
     <canvas id="chartPas"></canvas>
   </div>
+  <div class="card" style="grid-column:1/-1;">
+    <h2>📏 Mensurations (cm)</h2>
+    <div class="stats" id="mensStats"></div>
+    <canvas id="chartMens"></canvas>
+  </div>
 </div>
 
 <!-- Modal calendrier style "réservation hôtel" -->
@@ -170,6 +175,7 @@
 
 <script>
 let allEntries = [];
+let allMensurations = [];
 let refTargets = {};
 let filtered = [];
 let charts = {};
@@ -188,9 +194,11 @@ fetch('data.json?t=' + Date.now(), {cache:'no-store'})
   .then(data => {
     refTargets = data.reference_targets;
     allEntries = data.entries.filter(e => e.poids !== null || e.kcal !== null);
+    allMensurations = data.mensurations || [];
     document.getElementById('subtitle').textContent =
       `${allEntries.length} jours enregistrés · Objectif référence : ${refTargets.kcal} kcal / ${refTargets.proteines_g}P / ${refTargets.lipides_g}L / ${refTargets.glucides_g}G`;
     applyPreset('all');
+    renderMensurations();
   })
   .catch(err => {
     document.getElementById('subtitle').textContent = 'Erreur de chargement des données : ' + err.message;
@@ -298,6 +306,32 @@ function avg(arr){
 }
 function sum(arr){
   return arr.filter(x=>x!==null && x!==undefined).reduce((a,b)=>a+b,0);
+}
+
+function renderMensurations(){
+  if (!allMensurations.length){
+    document.getElementById('mensStats').innerHTML = '';
+    return;
+  }
+  const ms = [...allMensurations].sort((a,b) => a.date.localeCompare(b.date));
+  const labels = ms.map(m => fmtDate(m.date));
+  const last = ms[ms.length-1];
+  const first = ms[0];
+  const delta = (k) => (last[k]-first[k] >= 0 ? '+' : '') + (last[k]-first[k]).toFixed(1);
+  setStats('mensStats', [
+    ['Taille', `${last.taille}cm (${delta('taille')})`],
+    ['Ventre', `${last.ventre}cm (${delta('ventre')})`],
+    ['Poitrine', `${last.poitrine}cm (${delta('poitrine')})`],
+    ['Mollet D', `${last.mollet_droit}cm`],
+    ['Mollet G', `${last.mollet_gauche}cm`],
+  ]);
+  makeChart('chartMens', 'line', labels, [
+    {label:'Taille', data:ms.map(m=>m.taille), borderColor:'#5eead4', spanGaps:true, tension:.3},
+    {label:'Ventre', data:ms.map(m=>m.ventre), borderColor:'#f87171', spanGaps:true, tension:.3},
+    {label:'Poitrine', data:ms.map(m=>m.poitrine), borderColor:'#818cf8', spanGaps:true, tension:.3},
+    {label:'Mollet droit', data:ms.map(m=>m.mollet_droit), borderColor:'#f59e0b', spanGaps:true, tension:.3},
+    {label:'Mollet gauche', data:ms.map(m=>m.mollet_gauche), borderColor:'#4ade80', spanGaps:true, tension:.3},
+  ]);
 }
 
 function setStats(elId, pairs){
