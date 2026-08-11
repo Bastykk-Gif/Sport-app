@@ -314,7 +314,18 @@ const VIDS={
   highKnees:        null,
   squatJump:        'videos/male-Bodyweight-jump-squats-front.mp4',
   mountainClimbers: 'videos/male-Bodyweight-slow-tempo-mountain-climber-front.mp4',
-  burpees:          'videos/male-bodyweight-burpee-side.mp4'
+  burpees:          'videos/male-bodyweight-burpee-side.mp4',
+  // ── Ajouts ÉLASTIQUES (Domyos, pack x3 : 10-20-30 kg / verte-jaune-orange) ──
+  bandSquat:    null,
+  bandRow:      null,
+  bandShoulderP:null,
+  bandCurl:     null,
+  bandTricep:   null,
+  bandFacePull: null,
+  bandDeadlift: null,
+  bandGluteKick:null,
+  bandWalk:     null,
+  bandChestPress:null
 };
 const MUSCLES={
   gobletSquat:{p:['Quadriceps','Fessiers'],s:['Ischio-jambiers','Mollets','Core']},
@@ -337,7 +348,18 @@ const MUSCLES={
   highKnees:        {p:['Cardio','Quadriceps'],s:['Mollets','Core']},
   squatJump:        {p:['Quadriceps','Fessiers'],s:['Mollets','Cardio']},
   mountainClimbers: {p:['Core','Cardio'],s:['Épaules','Quadriceps']},
-  burpees:          {p:['Cardio complet','Full body'],s:['Quadriceps','Pectoraux']}
+  burpees:          {p:['Cardio complet','Full body'],s:['Quadriceps','Pectoraux']},
+  // ── Ajouts ÉLASTIQUES ──
+  bandSquat:    {p:['Quadriceps','Fessiers'],s:['Ischio-jambiers','Core']},
+  bandRow:      {p:['Grand dorsal','Rhomboïdes'],s:['Biceps','Trapèzes']},
+  bandShoulderP:{p:['Deltoïdes'],s:['Triceps','Trapèzes']},
+  bandCurl:     {p:['Biceps'],s:['Avant-bras']},
+  bandTricep:   {p:['Triceps'],s:['Deltoïdes']},
+  bandFacePull: {p:['Deltoïdes post.','Trapèzes'],s:['Coiffe des rotateurs']},
+  bandDeadlift: {p:['Ischio-jambiers','Lombaires'],s:['Fessiers']},
+  bandGluteKick:{p:['Fessiers'],s:['Ischio-jambiers']},
+  bandWalk:     {p:['Moyen fessier','Fessiers'],s:['Hanches']},
+  bandChestPress:{p:['Pectoraux'],s:['Triceps','Deltoïdes ant.']}
 };
 
 // ── ELLIPTIQUE STEPS ──
@@ -430,6 +452,7 @@ const P={
       {t:'e',nom:'Goblet Squat',series:4,reps:12,charges:[14,16,18],unite:'kg',timer:40,vk:'gobletSquat',note:'Cuisses parallèles sol · talons bien posés'},
       {t:'e',nom:'Développé couché',series:4,reps:10,charges:['2×12','2×14','2×16'],unite:'kg',timer:40,vk:'benchPress',note:'Descente lente 2 sec · coudes à 45°'},
       {t:'e',nom:'Rowing 1 bras',series:4,reps:'10/côté',charges:[14,16,18],unite:'kg',timer:40,vk:'rowing',note:'Coude haut · pause 1 sec en haut'},
+      {t:'e',nom:'Face pull élastique',series:3,reps:15,charges:['Verte','Verte','Jaune'],timer:30,vk:'bandFacePull',note:'Élastique fixé en hauteur · tirer vers le visage, coudes hauts (santé épaules)'},
       {t:'e',nom:'Superman',series:3,reps:15,charges:[null,null,null],timer:40,vk:'superman',note:'Au sol · lever bras et jambes · hold 2 sec · pas de haltères'},
       {t:'e',nom:'Gainage frontal',series:3,reps:'45 sec',charges:[null,null,null],timer:30,ig:true,vk:'gainage',note:'Corps rigide tête-talons · serrer le ventre'},
     ]},
@@ -452,6 +475,7 @@ const P={
       {t:'e',nom:'Curl + Press combo',series:3,reps:12,charges:['2×6','2×10','2×12'],unite:'kg',timer:40,vk:'curl',note:'Curl → press enchaîné sans poser · 2×12 = 5+1 kg de chaque côté sur chaque barre'},
       {t:'e',nom:'Gainage latéral',series:3,reps:'45 sec/côté',charges:[null,null,null],timer:30,ig:true,vk:'gainageLat',note:'Hanche haute · ne pas laisser tomber le bassin'},
       {t:'e',nom:'Rowing penché 2 bras',series:4,reps:10,charges:['2×12','2×14','2×16'],unite:'kg',timer:40,vk:'rowingB',note:'Torse 45° dos plat · coudes vers le plafond'},
+      {t:'e',nom:'Extension triceps élastique',series:3,reps:15,charges:['Verte','Verte','Jaune'],timer:30,vk:'bandTricep',note:'Élastique fixé en hauteur (porte) ou sous le pied derrière la tête'},
       {t:'e',nom:'Crunch',series:3,reps:20,charges:[null,null,null],timer:40,vk:'crunch',note:'Mains derrière la nuque · exhaler en montant'},
     ]},
     {title:'Cardio · 15 min',items:[
@@ -467,6 +491,7 @@ const P={
       {t:'e',nom:'Fentes alternées',series:4,reps:'10/jambe',charges:['2×6','2×10','2×12'],unite:'kg',timer:40,vk:'fentes',note:'Genou avant ne dépasse pas la pointe du pied'},
       {t:'e',nom:'Soulevé de terre',series:4,reps:10,charges:['2×12','2×14','2×16'],unite:'kg',timer:40,vk:'souleve',note:'Dos plat · hanches en arrière · contrôle à la descente'},
       {t:'e',nom:'Hip thrust au sol',series:4,reps:15,charges:[10,12,14],unite:'kg',timer:40,vk:'hipFloor',note:'1 haltère sur le bassin · dos au sol · fessiers contractés 1 sec en haut'},
+      {t:'e',nom:'Marche latérale élastique',series:3,reps:'12/côté',charges:['Verte','Verte','Jaune'],timer:30,vk:'bandWalk',note:'Élastique mi-cuisses · pas latéraux contrôlés en squat mi-hauteur (moyen fessier)'},
       {t:'e',nom:'Superman',series:3,reps:15,charges:[null,null,null],timer:40,vk:'superman',note:'Au sol · lever bras et jambes · hold 2 sec · pas de haltères'},
     ]},
     {title:'Cardio · 15 min',items:[
@@ -493,27 +518,27 @@ const P={
 };
 
 // ══════════════════════════════════
-// MODE ÉTÉ (SANS ACCESSOIRES) — version Longue, symétrique aux jours avec accessoires.
-// Uniquement poids du corps (pas d'haltères, pas d'elliptique).
+// MODE ÉLASTIQUES (déplacement/voyage) — version Longue, symétrique aux jours avec accessoires.
+// Bandes de résistance Domyos (pack x3, 10-20-30 kg = verte/jaune/orange) + poids du corps.
+// Ne prend pas de place dans un sac : remplace l'ancien mode 100% bodyweight.
 // La version Courte est dérivée automatiquement via shortenDay() (même logique
 // que pour les programmes avec accessoires — pas de duplication de calcul).
-// Vidéos réutilisées quand le mouvement est identique sans charge
-// (squat, fentes, glute bridge) ; charges toujours à null.
+// Progression de charge élastique par mois : charges[0]=Verte, [1]=Jaune, [2]=Orange.
 // ══════════════════════════════════
-const ETE={
-  lundi:{nom:'Été — Full Body sans matériel',duree:'55 min',kcal:440,blocks:[
+const ELAST={
+  lundi:{nom:'Élastiques — Full Body',duree:'55 min',kcal:440,blocks:[
     {title:'Échauffement · 4 min',items:[
       {t:'e',nom:'Jumping Jacks',series:4,reps:40,charges:[null,null,null],timer:20,vk:'jumpingJacks',note:'Rythme modéré pour monter en température'}
     ]},
     {title:'Circuit Full Body · Round 1 — 30s repos',items:[
-      {t:'e',nom:'Squat bodyweight',series:4,reps:15,charges:[null,null,null],timer:30,vk:'gobletSquat',note:'Sans haltère · cuisses parallèles au sol · talons bien posés'},
+      {t:'e',nom:'Squat élastique',series:4,reps:15,charges:['Verte','Jaune','Orange'],timer:30,vk:'bandSquat',note:'Élastique sous les pieds, tendu sur les épaules · cuisses parallèles au sol'},
+      {t:'e',nom:'Rowing élastique',series:4,reps:12,charges:['Verte','Jaune','Orange'],timer:30,vk:'bandRow',note:'Élastique ancré sous les pieds (assis ou debout) · coudes près du corps'},
       {t:'e',nom:'Pompes',series:4,reps:12,charges:[null,null,null],timer:30,vk:'pompes',note:'Mains légèrement plus larges que les épaules · corps gainé'},
-      {t:'e',nom:'Fentes alternées',series:4,reps:'10/jambe',charges:[null,null,null],timer:30,vk:'fentes',note:'Sans haltère · genou avant ne dépasse pas la pointe du pied'},
-      {t:'e',nom:'Superman',series:3,reps:15,charges:[null,null,null],timer:30,vk:'superman',note:'Au sol · lever bras et jambes · hold 2 sec'},
+      {t:'e',nom:'Fentes alternées',series:4,reps:'10/jambe',charges:[null,null,null],timer:30,vk:'fentes',note:'Sans charge · genou avant ne dépasse pas la pointe du pied'},
       {t:'e',nom:'Gainage frontal',series:3,reps:'45 sec',charges:[null,null,null],timer:30,ig:true,vk:'gainage',note:'Corps rigide tête-talons · serrer le ventre'}
     ]},
     {title:'Circuit Full Body · Round 2 — 30s repos',items:[
-      {t:'e',nom:'Squat bodyweight',series:3,reps:18,charges:[null,null,null],timer:30,vk:'gobletSquat'},
+      {t:'e',nom:'Développé épaules élastique',series:3,reps:12,charges:['Verte','Jaune','Orange'],timer:30,vk:'bandShoulderP',note:'Élastique sous les pieds · pousser vers le haut sans cambrer'},
       {t:'e',nom:'Pompes',series:3,reps:14,charges:[null,null,null],timer:30,vk:'pompes'},
       {t:'e',nom:'Fentes alternées',series:3,reps:'12/jambe',charges:[null,null,null],timer:30,vk:'fentes'},
       {t:'e',nom:'Gainage latéral',series:2,reps:'40 sec/côté',charges:[null,null,null],timer:30,ig:true,vk:'gainageLat'}
@@ -522,7 +547,7 @@ const ETE={
       {t:'e',nom:'Burpees',series:5,reps:10,charges:[null,null,null],timer:30,vk:'burpees',note:'Rythme soutenu mais contrôlé'}
     ]}
   ]},
-  mardi:{nom:'Été — Cardio sans matériel',duree:'45 min',kcal:450,blocks:[
+  mardi:{nom:'Élastiques — Cardio',duree:'45 min',kcal:450,blocks:[
     {title:'Échauffement · 4 min',items:[
       {t:'e',nom:'Montée de genoux',series:4,reps:40,charges:[null,null,null],timer:20,vk:'highKnees',note:'Rythme progressif'}
     ]},
@@ -533,7 +558,7 @@ const ETE={
       {t:'e',nom:'Burpees',series:5,reps:8,charges:[null,null,null],timer:20,vk:'burpees'}
     ]},
     {title:'Circuit cardio · Round 2 — 20s repos',items:[
-      {t:'e',nom:'Montée de genoux',series:4,reps:40,charges:[null,null,null],timer:20,vk:'highKnees'},
+      {t:'e',nom:'Marche latérale élastique',series:4,reps:'10/côté',charges:['Verte','Verte','Jaune'],timer:20,vk:'bandWalk',note:'Élastique aux chevilles ou mi-cuisses · rester en squat mi-hauteur'},
       {t:'e',nom:'Squat sauté',series:4,reps:12,charges:[null,null,null],timer:20,vk:'squatJump'},
       {t:'e',nom:'Jumping Jacks',series:4,reps:40,charges:[null,null,null],timer:20,vk:'jumpingJacks'}
     ]},
@@ -541,52 +566,52 @@ const ETE={
       {t:'e',nom:'Gainage frontal',series:2,reps:'45 sec',charges:[null,null,null],timer:30,ig:true,vk:'gainage'}
     ]}
   ]},
-  mercredi:{nom:'Été — Haut du corps & Core sans matériel',duree:'55 min',kcal:410,blocks:[
+  mercredi:{nom:'Élastiques — Haut du corps & Core',duree:'55 min',kcal:410,blocks:[
     {title:'Échauffement · 4 min',items:[
       {t:'e',nom:'Jumping Jacks',series:4,reps:40,charges:[null,null,null],timer:20,vk:'jumpingJacks'}
     ]},
     {title:'Circuit Haut du corps · Round 1',items:[
-      {t:'e',nom:'Pompes',series:5,reps:12,charges:[null,null,null],timer:30,vk:'pompes',note:'Varier la largeur des mains si besoin de soulager'},
-      {t:'e',nom:'Gainage latéral',series:3,reps:'45 sec/côté',charges:[null,null,null],timer:30,ig:true,vk:'gainageLat'},
-      {t:'e',nom:'Superman',series:4,reps:15,charges:[null,null,null],timer:30,vk:'superman'},
-      {t:'e',nom:'Crunch',series:4,reps:20,charges:[null,null,null],timer:30,vk:'crunch'}
+      {t:'e',nom:'Rowing élastique',series:4,reps:12,charges:['Verte','Jaune','Orange'],timer:30,vk:'bandRow',note:'Élastique ancré sous les pieds · coude haut, pause 1 sec'},
+      {t:'e',nom:'Pompes',series:4,reps:12,charges:[null,null,null],timer:30,vk:'pompes',note:'Varier la largeur des mains si besoin de soulager'},
+      {t:'e',nom:'Extension triceps élastique',series:3,reps:15,charges:['Verte','Verte','Jaune'],timer:30,vk:'bandTricep',note:'Élastique fixé en hauteur (porte) ou sous le pied derrière la tête'},
+      {t:'e',nom:'Curl biceps élastique',series:3,reps:15,charges:['Verte','Jaune','Jaune'],timer:30,vk:'bandCurl',note:'Élastique sous les pieds · coudes fixes le long du corps'}
     ]},
     {title:'Circuit Haut du corps · Round 2',items:[
-      {t:'e',nom:'Pompes diamant (ou genoux)',series:4,reps:10,charges:[null,null,null],timer:30,vk:'pompes',note:'Mains rapprochées en losange · genoux au sol si besoin'},
+      {t:'e',nom:'Face pull élastique',series:3,reps:15,charges:['Verte','Verte','Jaune'],timer:30,vk:'bandFacePull',note:'Élastique fixé en hauteur · tirer vers le visage, coudes hauts (santé épaules)'},
       {t:'e',nom:'Crunch',series:3,reps:20,charges:[null,null,null],timer:30,vk:'crunch'},
-      {t:'e',nom:'Superman',series:3,reps:15,charges:[null,null,null],timer:30,vk:'superman'}
+      {t:'e',nom:'Gainage latéral',series:3,reps:'45 sec/côté',charges:[null,null,null],timer:30,ig:true,vk:'gainageLat'}
     ]},
     {title:'Gainage final · 4 min',items:[
       {t:'e',nom:'Gainage frontal',series:3,reps:'45 sec',charges:[null,null,null],timer:30,ig:true,vk:'gainage'}
     ]}
   ]},
-  jeudi:{nom:'Été — Bas du corps sans matériel',duree:'55 min',kcal:460,blocks:[
+  jeudi:{nom:'Élastiques — Bas du corps',duree:'55 min',kcal:460,blocks:[
     {title:'Échauffement · 4 min',items:[
       {t:'e',nom:'Montée de genoux',series:4,reps:40,charges:[null,null,null],timer:20,vk:'highKnees'}
     ]},
     {title:'Circuit Bas du corps · Round 1',items:[
-      {t:'e',nom:'Squat bodyweight',series:5,reps:15,charges:[null,null,null],timer:30,vk:'gobletSquat',note:'Sans haltère'},
-      {t:'e',nom:'Fentes alternées',series:5,reps:'10/jambe',charges:[null,null,null],timer:30,vk:'fentes',note:'Sans haltère'},
-      {t:'e',nom:'Squat sauté',series:4,reps:12,charges:[null,null,null],timer:30,vk:'squatJump'},
-      {t:'e',nom:'Glute bridge au sol',series:4,reps:15,charges:[null,null,null],timer:30,vk:'hipFloor',note:'Sans charge · mains croisées sur la poitrine · fessiers contractés 1 sec en haut'}
+      {t:'e',nom:'Squat élastique',series:5,reps:15,charges:['Verte','Jaune','Orange'],timer:30,vk:'bandSquat',note:'Élastique sous les pieds, tendu sur les épaules'},
+      {t:'e',nom:'Soulevé de terre jambes tendues élastique',series:4,reps:12,charges:['Verte','Jaune','Orange'],timer:30,vk:'bandDeadlift',note:'Élastique sous les pieds · dos plat, hanches en arrière'},
+      {t:'e',nom:'Fentes alternées',series:4,reps:'10/jambe',charges:[null,null,null],timer:30,vk:'fentes',note:'Sans charge'},
+      {t:'e',nom:'Glute kickback élastique',series:4,reps:'15/jambe',charges:['Verte','Verte','Jaune'],timer:30,vk:'bandGluteKick',note:'Élastique à la cheville · pousser la jambe en arrière, contraction fessier 1 sec'}
     ]},
     {title:'Circuit Bas du corps · Round 2',items:[
-      {t:'e',nom:'Squat bodyweight',series:3,reps:18,charges:[null,null,null],timer:30,vk:'gobletSquat'},
-      {t:'e',nom:'Fentes alternées',series:3,reps:'12/jambe',charges:[null,null,null],timer:30,vk:'fentes'},
+      {t:'e',nom:'Marche latérale élastique',series:3,reps:'12/côté',charges:['Verte','Verte','Jaune'],timer:30,vk:'bandWalk',note:'Élastique mi-cuisses · pas latéraux contrôlés en squat mi-hauteur'},
+      {t:'e',nom:'Squat sauté',series:3,reps:15,charges:[null,null,null],timer:30,vk:'squatJump'},
       {t:'e',nom:'Superman',series:3,reps:15,charges:[null,null,null],timer:30,vk:'superman'}
     ]},
     {title:'Gainage final · 4 min',items:[
       {t:'e',nom:'Gainage frontal',series:2,reps:'45 sec',charges:[null,null,null],timer:30,ig:true,vk:'gainage'}
     ]}
   ]},
-  vendredi:{nom:'Été — Circuit Full Body + HIIT sans matériel',duree:'55 min',kcal:500,blocks:[
+  vendredi:{nom:'Élastiques — Circuit Full Body + HIIT',duree:'55 min',kcal:500,blocks:[
     {title:'Échauffement · 4 min',items:[
       {t:'e',nom:'Jumping Jacks',series:4,reps:40,charges:[null,null,null],timer:20,vk:'jumpingJacks'}
     ]},
     {title:'Circuit · 4 tours — 20s repos',items:[
-      {t:'e',nom:'Squat bodyweight',series:4,reps:15,charges:[null,null,null],timer:20,vk:'gobletSquat'},
+      {t:'e',nom:'Squat élastique',series:4,reps:15,charges:['Verte','Jaune','Orange'],timer:20,vk:'bandSquat'},
       {t:'e',nom:'Pompes',series:4,reps:12,charges:[null,null,null],timer:20,vk:'pompes'},
-      {t:'e',nom:'Fentes alternées',series:4,reps:'10/jambe',charges:[null,null,null],timer:20,vk:'fentes'},
+      {t:'e',nom:'Rowing élastique',series:4,reps:12,charges:['Verte','Jaune','Orange'],timer:20,vk:'bandRow'},
       {t:'e',nom:'Gainage',series:4,reps:'45 sec',charges:[null,null,null],timer:20,ig:true,vk:'gainage'}
     ]},
     {title:'HIIT Finisher · ~12 min',items:[
@@ -722,7 +747,7 @@ function shortenDay(day){
 // en réutilisant applyEasy() et shortenDay(), sans dupliquer la logique.
 // ══════════════════════════════════
 function buildDay(key,duration,difficulty,equip){
-  let d = equip==='sans' ? ETE[key] : P[key];
+  let d = equip==='sans' ? ELAST[key] : P[key];
   if(difficulty==='facile') d=applyEasy(d);
   if(duration==='court') d=shortenDay(d);
   return d;
@@ -1083,7 +1108,7 @@ function openSeance(key,label,duration,difficulty,equip){
   const tags=[
     duration==='court'?'COURT':'LONG',
     difficulty==='facile'?'FACILE':'NORMAL',
-    equip==='sans'?'SANS ACCESSOIRES':'AVEC ACCESSOIRES'
+    equip==='sans'?'ÉLASTIQUES':'AVEC ACCESSOIRES'
   ];
   $('sDayTag').textContent=label.toUpperCase()+' · '+tags.join(' · ');
   $('sTitle').textContent=p.nom.toUpperCase();
@@ -1228,9 +1253,9 @@ function askDifficulty(key,label,duration){
 function askEquip(key,label,duration,difficulty){
   const dAvec=buildDay(key,duration,difficulty,'avec');
   const dSans=buildDay(key,duration,difficulty,'sans');
-  showStep('Avec ou sans accessoires ?',
+  showStep('Accessoires ou élastiques ?',
     'Avec accessoires',dAvec.duree+' · ~'+dAvec.kcal+' kcal',()=>openSeance(key,label,duration,difficulty,'avec'),
-    '☀️ Sans accessoires',dSans.duree+' · ~'+dSans.kcal+' kcal',()=>openSeance(key,label,duration,difficulty,'sans')
+    '🎗️ Élastiques',dSans.duree+' · ~'+dSans.kcal+' kcal',()=>openSeance(key,label,duration,difficulty,'sans')
   );
 }
 
