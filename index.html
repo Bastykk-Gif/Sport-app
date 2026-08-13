@@ -673,7 +673,11 @@ function applyEasy(src){
       return item;
     })
   }));
-  const kcal=Math.round(src.kcal*0.82);
+  // Facteur aligné sur celui appliqué aux items cardio (×0.8) : évite un désalignement
+  // avec shortenDay() (mode Court), qui déduit le kcal "muscu implicite" par soustraction
+  // (day.kcal - cardio) ; un facteur différent (0.82) faussait cette soustraction et pouvait
+  // faire ressortir un total Facile+Court supérieur au Normal+Court.
+  const kcal=Math.round(src.kcal*0.8);
   return {...src,blocks,kcal,duree:src.duree};
 }
 
