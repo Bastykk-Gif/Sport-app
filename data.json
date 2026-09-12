@@ -883,6 +883,23 @@
       "pas": 5360,
       "sport_kcal": 255,
       "sport_note": "Aucune séance Sport-app enregistrée, 255kcal via 5360 pas uniquement"
+    },
+    {
+      "date": "2026-09-11",
+      "jour": "Ven",
+      "poids": 77.6,
+      "figé": false,
+      "a_jeun": true,
+      "kcal": 1668,
+      "glucides": 138,
+      "glucides_cible": 162,
+      "proteines": 137,
+      "proteines_cible": 153,
+      "lipides": 59,
+      "lipides_cible": 44,
+      "pas": 4692,
+      "sport_kcal": 223,
+      "sport_note": "Aucune séance Sport-app enregistrée, 223kcal via 4692 pas uniquement"
     }
   ],
   "mensurations": [
