@@ -917,6 +917,23 @@
       "pas": 2175,
       "sport_kcal": 103,
       "sport_note": "Aucune séance Sport-app enregistrée, 103kcal via 2175 pas uniquement (samedi, pas de sport prévu le week-end)"
+    },
+    {
+      "date": "2026-09-13",
+      "jour": "Dim",
+      "poids": 77.6,
+      "figé": true,
+      "a_jeun": false,
+      "kcal": 1767,
+      "glucides": 170,
+      "glucides_cible": 162,
+      "proteines": 111,
+      "proteines_cible": 153,
+      "lipides": 68,
+      "lipides_cible": 44,
+      "pas": 1658,
+      "sport_kcal": 79,
+      "sport_note": "Aucune séance Sport-app enregistrée, 79kcal via 1658 pas uniquement (dimanche, pas de sport prévu le week-end)"
     }
   ],
   "mensurations": [
