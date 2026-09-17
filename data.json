@@ -951,6 +951,23 @@
       "pas": 5070,
       "sport_kcal": 237,
       "sport_note": "Excès calorique marqué (+1013 kcal), dîner fast-food (cheeseburgers). Aucune séance structurée, 237kcal via 5070 pas. Pesée hebdomadaire (76,2kg, -1,4kg vs 77,6kg du 09/09)."
+    },
+    {
+      "date": "2026-09-16",
+      "jour": "Mer",
+      "poids": 76.2,
+      "figé": false,
+      "a_jeun": true,
+      "kcal": 1626,
+      "glucides": 146,
+      "glucides_cible": 162,
+      "proteines": 166,
+      "proteines_cible": 153,
+      "lipides": 38,
+      "lipides_cible": 44,
+      "pas": 3315,
+      "sport_kcal": 155,
+      "sport_note": "Aucune séance Sport-app enregistrée, 155kcal via 3315 pas uniquement. Poids affiché identique au 14/09 (76,2kg), probablement pas de nouvelle pesée (rythme hebdomadaire)."
     }
   ],
   "mensurations": [
