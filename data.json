@@ -985,6 +985,23 @@
       "pas": 3315,
       "sport_kcal": 155,
       "sport_note": "Aucune séance Sport-app enregistrée, 155kcal via 3315 pas uniquement. Poids affiché identique au 14/09 (76,2kg), probablement pas de nouvelle pesée (rythme hebdomadaire)."
+    },
+    {
+      "date": "2026-09-17",
+      "jour": "Jeu",
+      "poids": 76.2,
+      "figé": false,
+      "a_jeun": true,
+      "kcal": 1693,
+      "glucides": 128,
+      "glucides_cible": 162,
+      "proteines": 161,
+      "proteines_cible": 153,
+      "lipides": 51,
+      "lipides_cible": 44,
+      "pas": 4690,
+      "sport_kcal": 219,
+      "sport_note": "Aucune séance Sport-app enregistrée, 219kcal via 4690 pas uniquement. Bon jour : kcal quasi pile cible (1693/1700), protéines couvertes (161/153g, rompt la tendance de sous-consommation récente), glucides toujours sous cible (128/162g), lipides légèrement au-dessus (51/44g). Poids affiché identique aux jours précédents (76,2kg), pas de nouvelle pesée (rythme hebdomadaire)."
     }
   ],
   "mensurations": [
