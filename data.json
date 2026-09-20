@@ -1019,6 +1019,23 @@
       "pas": 4277,
       "sport_kcal": 200,
       "sport_note": "Aucune séance Sport-app enregistrée, 200kcal via 4277 pas (1,7km) uniquement."
+    },
+    {
+      "date": "2026-09-19",
+      "jour": "Sam",
+      "poids": 76.2,
+      "figé": true,
+      "a_jeun": false,
+      "kcal": 2423,
+      "glucides": 177,
+      "glucides_cible": 162,
+      "proteines": 186,
+      "proteines_cible": 153,
+      "lipides": 75,
+      "lipides_cible": 44,
+      "pas": 3534,
+      "sport_kcal": 165,
+      "sport_note": "Aucune séance Sport-app enregistrée, 165kcal via 3534 pas uniquement. Repas d'anniversaire : +723kcal vs cible (2423/1700), glucides et protéines largement couverts, lipides en net dépassement (75/44g), cohérent avec le contexte ponctuel de l'occasion. Poids figé (valeur du vendredi 18/09)."
     }
   ],
   "mensurations": [
