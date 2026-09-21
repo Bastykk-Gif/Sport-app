@@ -6,23 +6,15 @@
 <title>Suivi candidatures - Olivier Chevreux</title>
 <style>
 :root {
+  color-scheme: light only;
   --bg: #f7f8fa; --card:#fff; --text:#1a1a1a; --muted:#6b7280;
   --oui-bg:#e6f4ea; --non-bg:#fdecec; --border:#e5e7eb; --accent:#2f5496;
 }
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --bg:#111318; --card:#1a1d24; --text:#eef0f3; --muted:#9aa3af;
-    --oui-bg:#173226; --non-bg:#3a1f1f; --border:#2a2e37; --accent:#7fa8e0;
-  }
-}
-:root[data-theme="dark"] {
-  --bg:#111318; --card:#1a1d24; --text:#eef0f3; --muted:#9aa3af;
-  --oui-bg:#173226; --non-bg:#3a1f1f; --border:#2a2e37; --accent:#7fa8e0;
-}
 * { box-sizing: border-box; }
+html { background:#f7f8fa !important; }
 body {
   margin:0; padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
-  background:var(--bg); color:var(--text); font-family: -apple-system, "Segoe UI", Arial, sans-serif;
+  background:#f7f8fa !important; color:#1a1a1a !important; font-family: -apple-system, "Segoe UI", Arial, sans-serif;
 }
 .wrap { max-width:1200px; margin:0 auto; padding: 24px 16px 60px; }
 h1 { font-size:1.4rem; margin-bottom:4px; }
@@ -53,12 +45,14 @@ tr:hover td { filter:brightness(0.97); }
   <div class="stat"><b>99</b><span>Offres évaluées</span></div>
   <div class="stat"><b>23</b><span>Candidatures envoyées</span></div>
   <div class="stat"><b>23%</b><span>Taux de passage</span></div>
+  <div class="stat"><b>2</b><span>Refusées</span></div>
+  <div class="stat"><b>21</b><span>En attente de retour</span></div>
 </div>
 <div class="controls">
   <input type="text" id="search" placeholder="Rechercher poste / entreprise..." oninput="filterTable()">
   <select id="filterCand" onchange="filterTable()">
     <option value="">Tous</option>
-    <option value="oui">Candidaté</option>
+    <option value="oui" selected>Candidaté</option>
     <option value="non">Non candidaté</option>
   </select>
 </div>
@@ -876,6 +870,7 @@ function filterTable() {
     tr.style.display = (matchesText && matchesFilter) ? '' : 'none';
   });
 }
+filterTable();
 </script>
 </body>
 </html>
