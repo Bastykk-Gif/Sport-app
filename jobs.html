@@ -35,6 +35,15 @@ tr.oui td { background:var(--oui-bg); }
 tr.non td { background:var(--non-bg); }
 td.tag { font-weight:600; }
 tr:hover td { filter:brightness(0.97); }
+th:last-child, td:last-child { min-width:130px; white-space:nowrap; }
+.resp-refus { color:#b42318; font-weight:700; }
+.resp-refus::before { content:"¹6  "; }
+.resp-attente { color:var(--muted); font-style:italic; }
+.resp-autre { color:var(--accent); font-weight:600; }
+th.sortable { cursor:pointer; user-select:none; }
+th.sortable:hover { filter:brightness(1.1); }
+.sort-arrow { font-size:0.7em; opacity:0.7; margin-left:4px; }
+table.hide-raison th:nth-child(5), table.hide-raison td:nth-child(5) { display:none; }
 </style>
 </head>
 <body>
@@ -42,11 +51,11 @@ tr:hover td { filter:brightness(0.97); }
 <h1>Suivi des candidatures - Olivier Chevreux</h1>
 <div class="sub">Mis à jour automatiquement depuis les échanges avec Claude</div>
 <div class="stats">
-  <div class="stat"><b>99</b><span>Offres évaluées</span></div>
-  <div class="stat"><b>23</b><span>Candidatures envoyées</span></div>
-  <div class="stat"><b>23%</b><span>Taux de passage</span></div>
-  <div class="stat"><b>3</b><span>Refusées</span></div>
-  <div class="stat"><b>20</b><span>En attente de retour</span></div>
+  <div class="stat"><b>101</b><span>Offres évaluées</span></div>
+  <div class="stat"><b>25</b><span>Candidatures envoyées</span></div>
+  <div class="stat"><b>25%</b><span>Taux de passage</span></div>
+  <div class="stat"><b>6</b><span>Refusées</span></div>
+  <div class="stat"><b>19</b><span>En attente de retour</span></div>
 </div>
 <div class="controls">
   <input type="text" id="search" placeholder="Rechercher poste / entreprise..." oninput="filterTable()">
@@ -59,801 +68,822 @@ tr:hover td { filter:brightness(0.97); }
 <div class="table-scroll">
 <table id="tbl">
 <thead><tr>
-<th>Date</th><th>Intitulé du poste</th><th>Entreprise</th><th>Candidaté</th><th>Raison absence</th><th>Salaire</th><th>Réponse</th>
+<th class="sortable" onclick="sortTable(0,'date')">Date<span class="sort-arrow" id="arrow-0"></span></th>
+<th class="sortable" onclick="sortTable(1,'text')">Intitulé du poste<span class="sort-arrow" id="arrow-1"></span></th>
+<th class="sortable" onclick="sortTable(2,'text')">Entreprise<span class="sort-arrow" id="arrow-2"></span></th>
+<th>Candidaté</th><th>Raison absence</th>
+<th class="sortable" onclick="sortTable(5,'num')">Salaire<span class="sort-arrow" id="arrow-5"></span></th>
+<th>Réponse</th>
 </tr></thead>
 <tbody>
-<tr class="non">
+<tr class="non" data-date="20260915" data-salaire="50">
 <td>15/09/2026</td>
 <td>Responsable Régional IDF – Aide à domicile</td>
 <td>emeis</td>
 <td class="tag">Non</td>
 <td>Salaire</td>
 <td>&lt; 50 K€ (estimé ~47 K€)</td>
-<td></td>
-</tr><tr class="non">
+<td class="resp-attente">En attente</td>
+</tr><tr class="non" data-date="20260915" data-salaire="30">
 <td>15/09/2026</td>
 <td>Responsable expert dermocosmétique</td>
 <td>Pharmanimation</td>
 <td class="tag">Non</td>
 <td>Salaire</td>
 <td>30 K€</td>
-<td></td>
-</tr><tr class="oui">
+<td class="resp-attente">En attente</td>
+</tr><tr class="oui" data-date="20260915" data-salaire="55">
 <td>15/09/2026</td>
 <td>Directeur régional/Directrice régionale</td>
 <td>B&amp;B HOTELS France</td>
 <td class="tag">Oui</td>
 <td></td>
 <td>55-70 K€ (estimé)</td>
-<td>En attente</td>
-</tr><tr class="non">
+<td class="resp-attente">En attente</td>
+</tr><tr class="non" data-date="20260915" data-salaire="35">
 <td>15/09/2026</td>
 <td>Responsable logistique</td>
 <td>Mondial Relay (InPost)</td>
 <td class="tag">Non</td>
 <td>Salaire</td>
 <td>35-38 K€</td>
-<td></td>
-</tr><tr class="non">
+<td class="resp-attente">En attente</td>
+</tr><tr class="non" data-date="20260915" data-salaire="-1">
 <td>15/09/2026</td>
 <td>Regional Aftersales Manager</td>
 <td>Omoda &amp; Jaecoo (Chery)</td>
 <td class="tag">Non</td>
 <td>Anglais</td>
 <td>-</td>
-<td></td>
-</tr><tr class="oui">
+<td class="resp-attente">En attente</td>
+</tr><tr class="oui" data-date="20260916" data-salaire="80">
 <td>16/09/2026</td>
 <td>COO / Directeur des Opérations</td>
 <td>Charly (client végétaux)</td>
 <td class="tag">Oui</td>
 <td></td>
 <td>80-120 K€</td>
-<td>En attente</td>
-</tr><tr class="non">
+<td class="resp-attente">En attente</td>
+</tr><tr class="non" data-date="20260916" data-salaire="50">
 <td>16/09/2026</td>
 <td>Directeur régional (matériel, Maroc/Sahel)</td>
 <td>VINCI Sogea-Satom</td>
 <td class="tag">Non</td>
 <td>Compétences</td>
 <td>&gt; 50 K€ (estimé)</td>
-<td></td>
-</tr><tr class="non">
+<td class="resp-attente">En attente</td>
+</tr><tr class="non" data-date="20260916" data-salaire="80">
 <td>16/09/2026</td>
 <td>Ingénieur structure génie civil</td>
 <td>Client confidentiel</td>
 <td class="tag">Non</td>
 <td>Anglais</td>
 <td>80-90 K€</td>
-<td></td>
-</tr><tr class="non">
+<td class="resp-attente">En attente</td>
+</tr><tr class="non" data-date="20260916" data-salaire="42">
 <td>16/09/2026</td>
 <td>Coordinateur Retail</td>
 <td>Lacoste</td>
 <td class="tag">Non</td>
 <td>Salaire</td>
 <td>42-54 K€ (estimé)</td>
-<td></td>
-</tr><tr class="non">
+<td class="resp-attente">En attente</td>
+</tr><tr class="non" data-date="20260916" data-salaire="-1">
 <td>16/09/2026</td>
 <td>Area Manager Hôtellerie</td>
 <td>Best Western France</td>
 <td class="tag">Non</td>
 <td>Anglais</td>
 <td>-</td>
-<td></td>
-</tr><tr class="non">
+<td class="resp-attente">En attente</td>
+</tr><tr class="non" data-date="20260916" data-salaire="-1">
 <td>16/09/2026</td>
 <td>Responsable Opérationnel 3PL AMXL</td>
 <td>Amazon France Logistique</td>
 <td class="tag">Non</td>
 <td>Anglais</td>
 <td>-</td>
-<td></td>
-</tr><tr class="non">
+<td class="resp-attente">En attente</td>
+</tr><tr class="non" data-date="20260916" data-salaire="34.8">
 <td>16/09/2026</td>
 <td>Directeur de Plateforme Médico-Sociale</td>
 <td>Les Jardins d&#x27;Iroise</td>
 <td class="tag">Non</td>
 <td>Salaire</td>
 <td>34,8-57,6 K€ (médiane 47 K€)</td>
-<td></td>
-</tr><tr class="non">
+<td class="resp-attente">En attente</td>
+</tr><tr class="non" data-date="20260916" data-salaire="50">
 <td>16/09/2026</td>
 <td>Directeur de la vie locale</td>
 <td>Ville de Palaiseau (Michael Page)</td>
 <td class="tag">Non</td>
 <td>Compétences</td>
 <td>50-60 K€</td>
-<td></td>
-</tr><tr class="non">
+<td class="resp-attente">En attente</td>
+</tr><tr class="non" data-date="20260916" data-salaire="100">
 <td>16/09/2026</td>
 <td>Directeur Régional IDF</td>
 <td>De Graët Consulting</td>
 <td class="tag">Non</td>
 <td>Compétences</td>
 <td>&gt; 100 K€ (estimé)</td>
-<td></td>
-</tr><tr class="non">
+<td class="resp-attente">En attente</td>
+</tr><tr class="non" data-date="20260916" data-salaire="90">
 <td>16/09/2026</td>
 <td>Directeur National des Ventes</td>
 <td>POMONA</td>
 <td class="tag">Non</td>
 <td>Compétences</td>
 <td>90-130 K€ (estimé)</td>
-<td></td>
-</tr><tr class="non">
+<td class="resp-attente">En attente</td>
+</tr><tr class="non" data-date="20260916" data-salaire="27">
 <td>16/09/2026</td>
 <td>Directeur d&#x27;agence immobilière</td>
 <td>Human Immobilier</td>
 <td class="tag">Non</td>
 <td>Salaire</td>
 <td>27-90 K€</td>
-<td></td>
-</tr><tr class="non">
+<td class="resp-attente">En attente</td>
+</tr><tr class="non" data-date="20260916" data-salaire="65">
 <td>16/09/2026</td>
 <td>Directeur(rice) Régional(e) Paris</td>
 <td>LA ROSÉE</td>
 <td class="tag">Non</td>
 <td>Compétences</td>
 <td>65 K€</td>
-<td></td>
-</tr><tr class="non">
+<td class="resp-attente">En attente</td>
+</tr><tr class="non" data-date="20260916" data-salaire="66">
 <td>16/09/2026</td>
 <td>Directeur de Territoire</td>
 <td>Unapei 92</td>
 <td class="tag">Non</td>
 <td>Compétences</td>
 <td>Selon CCN66</td>
-<td></td>
-</tr><tr class="non">
+<td class="resp-attente">En attente</td>
+</tr><tr class="non" data-date="20260916" data-salaire="-1">
 <td>16/09/2026</td>
 <td>Directeur des opérations multi-sites</td>
 <td>Coutume</td>
 <td class="tag">Non</td>
 <td>Compétences</td>
 <td>Non précisé</td>
-<td></td>
-</tr><tr class="non">
+<td class="resp-attente">En attente</td>
+</tr><tr class="non" data-date="20260916" data-salaire="-1">
 <td>16/09/2026</td>
 <td>Directeur(trice)</td>
 <td>SEMARMONT (Montrouge)</td>
 <td class="tag">Non</td>
 <td>Compétences</td>
 <td>Non précisé</td>
-<td></td>
-</tr><tr class="oui">
+<td class="resp-attente">En attente</td>
+</tr><tr class="oui" data-date="20260916" data-salaire="70">
 <td>16/09/2026</td>
 <td>Directeur(trice) des Opérations</td>
 <td>Groupe Bertrand Hospitality</td>
 <td class="tag">Oui</td>
 <td></td>
 <td>70-90 K€ (estimé)</td>
-<td>Refus</td>
-</tr><tr class="oui">
+<td class="resp-refus">Refus</td>
+</tr><tr class="oui" data-date="20260917" data-salaire="50">
 <td>17/09/2026</td>
 <td>Directeur Régional Réseau de Magasins Retail</td>
 <td>Allintalent</td>
 <td class="tag">Oui</td>
 <td></td>
 <td>50-60 K€ (estimé)</td>
-<td>En attente</td>
-</tr><tr class="non">
+<td class="resp-attente">En attente</td>
+</tr><tr class="non" data-date="20260917" data-salaire="-1">
 <td>17/09/2026</td>
 <td>Directeur de Territoire</td>
 <td>La Gazette des Communes (Argenteuil)</td>
 <td class="tag">Non</td>
 <td>Compétences</td>
 <td>Non précisé</td>
-<td></td>
-</tr><tr class="non">
+<td class="resp-attente">En attente</td>
+</tr><tr class="non" data-date="20260917" data-salaire="-1">
 <td>17/09/2026</td>
 <td>Category Manager Regional IDF</td>
 <td>HEINEKEN France / France Boissons</td>
 <td class="tag">Non</td>
 <td>Compétences</td>
 <td>Non précisé</td>
-<td></td>
-</tr><tr class="non">
+<td class="resp-attente">En attente</td>
+</tr><tr class="non" data-date="20260917" data-salaire="-1">
 <td>17/09/2026</td>
 <td>Directeur de l&#x27;offre Autonomie</td>
 <td>Département des Yvelines</td>
 <td class="tag">Non</td>
 <td>Compétences</td>
 <td>Non précisé</td>
-<td></td>
-</tr><tr class="oui">
+<td class="resp-attente">En attente</td>
+</tr><tr class="oui" data-date="20260917" data-salaire="55">
 <td>17/09/2026</td>
 <td>Directeur secteur/Directrice secteur</td>
 <td>DBAO group</td>
 <td class="tag">Oui</td>
 <td></td>
 <td>55-75 K€ (estimé)</td>
-<td>En attente</td>
-</tr><tr class="non">
+<td class="resp-refus">Refus</td>
+</tr><tr class="non" data-date="20260917" data-salaire="-1">
 <td>17/09/2026</td>
 <td>Chef des Ventes Régional Paris Ouest</td>
 <td>PepsiCo</td>
 <td class="tag">Non</td>
 <td>Compétences</td>
 <td>Non précisé</td>
-<td></td>
-</tr><tr class="non">
+<td class="resp-attente">En attente</td>
+</tr><tr class="non" data-date="20260917" data-salaire="-1">
 <td>17/09/2026</td>
 <td>Directeur Commercial Régional IDF</td>
 <td>Zetra</td>
 <td class="tag">Non</td>
 <td>Compétences</td>
 <td>Non précisé</td>
-<td></td>
-</tr><tr class="non">
+<td class="resp-attente">En attente</td>
+</tr><tr class="non" data-date="20260917" data-salaire="-1">
 <td>17/09/2026</td>
 <td>Responsable Régional Longines</td>
 <td>Swatch Group</td>
 <td class="tag">Non</td>
 <td>Anglais</td>
 <td>Non précisé</td>
-<td></td>
-</tr><tr class="non">
+<td class="resp-attente">En attente</td>
+</tr><tr class="non" data-date="20260917" data-salaire="-1">
 <td>17/09/2026</td>
 <td>Responsable Sûreté et Sécurité France/Monaco</td>
 <td>Louis Vuitton</td>
 <td class="tag">Non</td>
 <td>Anglais</td>
 <td>Non précisé</td>
-<td></td>
-</tr><tr class="non">
+<td class="resp-attente">En attente</td>
+</tr><tr class="non" data-date="20260917" data-salaire="-1">
 <td>17/09/2026</td>
 <td>Directeur commercial régional AURA et IDF</td>
 <td>Groupe GIBOIRE</td>
 <td class="tag">Non</td>
 <td>Anglais</td>
 <td>Non précisé</td>
-<td></td>
-</tr><tr class="oui">
+<td class="resp-attente">En attente</td>
+</tr><tr class="oui" data-date="20260917" data-salaire="50">
 <td>17/09/2026</td>
 <td>Directeur Réseau UCAR</td>
 <td>BYmyCAR</td>
 <td class="tag">Oui</td>
 <td></td>
 <td>50-60 K€</td>
-<td>En attente</td>
-</tr><tr class="oui">
+<td class="resp-attente">En attente</td>
+</tr><tr class="oui" data-date="20260918" data-salaire="50">
 <td>18/09/2026</td>
 <td>Directeur Régional (self-stockage)</td>
 <td>Une pièce en plus</td>
 <td class="tag">Oui</td>
 <td></td>
 <td>50-60 K€</td>
-<td>En attente</td>
-</tr><tr class="oui">
+<td class="resp-attente">En attente</td>
+</tr><tr class="oui" data-date="20260918" data-salaire="65">
 <td>18/09/2026</td>
 <td>Directeur d&#x27;activité télésurveillance</td>
 <td>ITQ SECURITY</td>
 <td class="tag">Oui</td>
 <td></td>
 <td>65-85 K€ (estimé)</td>
-<td>En attente</td>
-</tr><tr class="oui">
+<td class="resp-attente">En attente</td>
+</tr><tr class="oui" data-date="20260918" data-salaire="85">
 <td>18/09/2026</td>
 <td>Directeur Régional Messagerie</td>
 <td>Kyosei</td>
 <td class="tag">Oui</td>
 <td></td>
 <td>85-90 K€</td>
-<td>En attente</td>
-</tr><tr class="non">
+<td class="resp-attente">En attente</td>
+</tr><tr class="non" data-date="20260918" data-salaire="55">
 <td>18/09/2026</td>
 <td>Directeur Adjoint Développement Foncier</td>
 <td>Kaufman &amp; Broad</td>
 <td class="tag">Non</td>
 <td>Compétences</td>
 <td>55-70 K€ (estimé)</td>
-<td></td>
-</tr><tr class="non">
+<td class="resp-attente">En attente</td>
+</tr><tr class="non" data-date="20260918" data-salaire="64.6">
 <td>18/09/2026</td>
 <td>District Manager H/F</td>
 <td>Emerite RH (Shurgard)</td>
 <td class="tag">Non</td>
 <td>Anglais</td>
 <td>64,6-79 K€</td>
-<td></td>
-</tr><tr class="non">
+<td class="resp-attente">En attente</td>
+</tr><tr class="non" data-date="20260918" data-salaire="65">
 <td>18/09/2026</td>
 <td>ABU Service Manager</td>
 <td>Fenwick-Linde (KION Group)</td>
 <td class="tag">Non</td>
 <td>Anglais</td>
 <td>65 K€</td>
-<td></td>
-</tr><tr class="non">
+<td class="resp-attente">En attente</td>
+</tr><tr class="non" data-date="20260918" data-salaire="55">
 <td>18/09/2026</td>
 <td>Responsable des Ventes</td>
 <td>Emmi Desserts France</td>
 <td class="tag">Non</td>
 <td>Compétences</td>
 <td>55-60 K€</td>
-<td></td>
-</tr><tr class="oui">
+<td class="resp-attente">En attente</td>
+</tr><tr class="oui" data-date="20260918" data-salaire="60">
 <td>18/09/2026</td>
 <td>Responsable Régional H/F (réseau mode)</td>
 <td>Michael Page</td>
 <td class="tag">Oui</td>
 <td></td>
 <td>60-70 K€</td>
-<td>En attente</td>
-</tr><tr class="non">
+<td class="resp-attente">En attente</td>
+</tr><tr class="non" data-date="20260918" data-salaire="115">
 <td>18/09/2026</td>
 <td>Directeur des Opérations Retail (400 magasins)</td>
 <td>Michael Page</td>
 <td class="tag">Non</td>
 <td>Anglais</td>
 <td>115-125 K€</td>
-<td></td>
-</tr><tr class="non">
+<td class="resp-attente">En attente</td>
+</tr><tr class="non" data-date="20260918" data-salaire="70">
 <td>18/09/2026</td>
 <td>Retail &amp; Event Manager</td>
 <td>Michael Page</td>
 <td class="tag">Non</td>
 <td>Anglais + compétences</td>
 <td>70-80 K€</td>
-<td></td>
-</tr><tr class="non">
+<td class="resp-attente">En attente</td>
+</tr><tr class="non" data-date="20260918" data-salaire="65">
 <td>18/09/2026</td>
 <td>Responsable d&#x27;Agence IDF (assurance)</td>
 <td>Michael Page</td>
 <td class="tag">Non</td>
 <td>Compétences</td>
 <td>65-90 K€</td>
-<td></td>
-</tr><tr class="non">
+<td class="resp-attente">En attente</td>
+</tr><tr class="non" data-date="20260918" data-salaire="110">
 <td>18/09/2026</td>
 <td>Directeur Régional IDF (promoteur résidentiel)</td>
 <td>Michael Page</td>
 <td class="tag">Non</td>
 <td>Compétences</td>
 <td>110-130 K€</td>
-<td></td>
-</tr><tr class="non">
+<td class="resp-attente">En attente</td>
+</tr><tr class="non" data-date="20260918" data-salaire="60">
 <td>18/09/2026</td>
 <td>Chef des Ventes/Directeur concession auto</td>
 <td>Michael Page</td>
 <td class="tag">Non</td>
 <td>Compétences</td>
 <td>60-72 K€</td>
-<td></td>
-</tr><tr class="oui">
+<td class="resp-attente">En attente</td>
+</tr><tr class="oui" data-date="20260918" data-salaire="90">
 <td>18/09/2026</td>
 <td>Directeur de Business Unit (marketplace)</td>
 <td>Michael Page</td>
 <td class="tag">Oui</td>
 <td></td>
 <td>90-100 K€</td>
-<td>En attente</td>
-</tr><tr class="non">
+<td class="resp-attente">En attente</td>
+</tr><tr class="non" data-date="20260918" data-salaire="73">
 <td>18/09/2026</td>
 <td>Responsable National Grands Comptes Retail</td>
 <td>Michael Page</td>
 <td class="tag">Non</td>
 <td>Compétences</td>
 <td>73-78 K€</td>
-<td></td>
-</tr><tr class="non">
+<td class="resp-attente">En attente</td>
+</tr><tr class="non" data-date="20260918" data-salaire="80">
 <td>18/09/2026</td>
 <td>Sport Outdoor Manager France</td>
 <td>Michael Page</td>
 <td class="tag">Non</td>
 <td>Anglais</td>
 <td>80-100 K€</td>
-<td></td>
-</tr><tr class="non">
+<td class="resp-attente">En attente</td>
+</tr><tr class="non" data-date="20260918" data-salaire="60">
 <td>18/09/2026</td>
 <td>Directeur Régional</td>
 <td>Michael Page (Lyon)</td>
 <td class="tag">Non</td>
 <td>Géographie</td>
 <td>60-75 K€</td>
-<td></td>
-</tr><tr class="oui">
+<td class="resp-attente">En attente</td>
+</tr><tr class="oui" data-date="20260918" data-salaire="65">
 <td>18/09/2026</td>
 <td>Manager Commercial (événementiel B2B)</td>
 <td>Uptoo (Ris-Orangis)</td>
 <td class="tag">Oui</td>
 <td></td>
 <td>65-75 K€</td>
-<td>En attente</td>
-</tr><tr class="non">
+<td class="resp-attente">En attente</td>
+</tr><tr class="non" data-date="20260918" data-salaire="28.6">
 <td>18/09/2026</td>
 <td>Responsable d&#x27;agence Immobilier Neuf</td>
 <td>Uptoo</td>
 <td class="tag">Non</td>
 <td>Compétences</td>
 <td>28,6-100 K€</td>
-<td></td>
-</tr><tr class="non">
+<td class="resp-attente">En attente</td>
+</tr><tr class="non" data-date="20260918" data-salaire="100">
 <td>18/09/2026</td>
 <td>Directeur National des Ventes (GSA)</td>
 <td>Uptoo</td>
 <td class="tag">Non</td>
 <td>Compétences</td>
 <td>100-120 K€</td>
-<td></td>
-</tr><tr class="oui">
+<td class="resp-attente">En attente</td>
+</tr><tr class="oui" data-date="20260918" data-salaire="50">
 <td>18/09/2026</td>
 <td>Responsable Commercial (événementiel B2B)</td>
 <td>Uptoo (Paris)</td>
 <td class="tag">Oui</td>
 <td></td>
 <td>50-55 K€</td>
-<td>En attente</td>
-</tr><tr class="non">
+<td class="resp-refus">Refus</td>
+</tr><tr class="non" data-date="20260918" data-salaire="75">
 <td>18/09/2026</td>
 <td>Business Development &amp; Relations Membres</td>
 <td>Uptoo</td>
 <td class="tag">Non</td>
 <td>Anglais</td>
 <td>75-90 K€</td>
-<td></td>
-</tr><tr class="non">
+<td class="resp-attente">En attente</td>
+</tr><tr class="non" data-date="20260918" data-salaire="60">
 <td>18/09/2026</td>
 <td>Chargé d&#x27;Affaires Stand sur-mesure</td>
 <td>Uptoo</td>
 <td class="tag">Non</td>
 <td>Anglais</td>
 <td>60-70 K€</td>
-<td></td>
-</tr><tr class="non">
+<td class="resp-attente">En attente</td>
+</tr><tr class="non" data-date="20260918" data-salaire="50">
 <td>18/09/2026</td>
 <td>Responsable d&#x27;agence d&#x27;assurances</td>
 <td>Uptoo (Le Mans)</td>
 <td class="tag">Non</td>
 <td>Hors périmètre</td>
 <td>50-85 K€</td>
-<td></td>
-</tr><tr class="non">
+<td class="resp-attente">En attente</td>
+</tr><tr class="non" data-date="20260918" data-salaire="45">
 <td>18/09/2026</td>
 <td>Chargée d&#x27;affaires B2B Soft Facility Management</td>
 <td>Uptoo</td>
 <td class="tag">Non</td>
 <td>Compétences</td>
 <td>45-55 K€</td>
-<td></td>
-</tr><tr class="oui">
+<td class="resp-attente">En attente</td>
+</tr><tr class="oui" data-date="20260918" data-salaire="80">
 <td>18/09/2026</td>
 <td>Directeur de Zone</td>
 <td>Onet Sécurité Solutions Humaines</td>
 <td class="tag">Oui</td>
 <td></td>
 <td>80-100 K€ (estimé)</td>
-<td>En attente</td>
-</tr><tr class="non">
+<td class="resp-attente">En attente</td>
+</tr><tr class="non" data-date="20260918" data-salaire="55">
 <td>18/09/2026</td>
 <td>Inside Sales Team Lead</td>
 <td>TP-LINK Enterprises France</td>
 <td class="tag">Non</td>
 <td>Anglais</td>
 <td>55-75 K€</td>
-<td></td>
-</tr><tr class="non">
+<td class="resp-attente">En attente</td>
+</tr><tr class="non" data-date="20260918" data-salaire="60">
 <td>18/09/2026</td>
 <td>Channel Distribution Account Manager</td>
 <td>TP-LINK Enterprises France</td>
 <td class="tag">Non</td>
 <td>Anglais</td>
 <td>60-90 K€</td>
-<td></td>
-</tr><tr class="oui">
+<td class="resp-attente">En attente</td>
+</tr><tr class="oui" data-date="20260918" data-salaire="50">
 <td>18/09/2026</td>
 <td>Directeur de territoire IDF</td>
 <td>OGF</td>
 <td class="tag">Oui</td>
 <td></td>
 <td>50-55 K€</td>
-<td>En attente</td>
-</tr><tr class="non">
+<td class="resp-attente">En attente</td>
+</tr><tr class="non" data-date="20260918" data-salaire="30">
 <td>18/09/2026</td>
 <td>Manager commercial terrain</td>
 <td>France Telephone</td>
 <td class="tag">Non</td>
 <td>Salaire</td>
 <td>30-70 K€</td>
-<td></td>
-</tr><tr class="non">
+<td class="resp-attente">En attente</td>
+</tr><tr class="non" data-date="20260918" data-salaire="46">
 <td>18/09/2026</td>
 <td>Chef des Ventes Régional Pharmacie</td>
 <td>DAYTONA</td>
 <td class="tag">Non</td>
 <td>Salaire</td>
 <td>~46-48 K€</td>
-<td></td>
-</tr><tr class="non">
+<td class="resp-attente">En attente</td>
+</tr><tr class="non" data-date="20260918" data-salaire="65">
 <td>18/09/2026</td>
 <td>Manager Commercial</td>
 <td>MACSF</td>
 <td class="tag">Non</td>
 <td>Compétences</td>
 <td>65-80 K€</td>
-<td></td>
-</tr><tr class="non">
+<td class="resp-attente">En attente</td>
+</tr><tr class="non" data-date="20260918" data-salaire="32.4">
 <td>18/09/2026</td>
 <td>Responsable Développement Commercial IDF</td>
 <td>Lyreco</td>
 <td class="tag">Non</td>
 <td>Salaire</td>
 <td>32,4-51,6 K€</td>
-<td></td>
-</tr><tr class="non">
+<td class="resp-attente">En attente</td>
+</tr><tr class="non" data-date="20260918" data-salaire="50">
 <td>18/09/2026</td>
 <td>Responsable de secteur Sud Est</td>
 <td>Sebia</td>
 <td class="tag">Non</td>
 <td>Anglais</td>
 <td>50-55 K€</td>
-<td></td>
-</tr><tr class="oui">
+<td class="resp-attente">En attente</td>
+</tr><tr class="oui" data-date="20260918" data-salaire="55">
 <td>18/09/2026</td>
 <td>Responsable des relations entreprises</td>
 <td>ESGCV / PSB (Galileo)</td>
 <td class="tag">Oui</td>
 <td></td>
 <td>55-60 K€</td>
-<td>En attente</td>
-</tr><tr class="oui">
+<td class="resp-attente">En attente</td>
+</tr><tr class="oui" data-date="20260918" data-salaire="52.6">
 <td>18/09/2026</td>
 <td>Responsable des Ventes Secteur</td>
 <td>Lidl France</td>
 <td class="tag">Oui</td>
 <td></td>
 <td>52,6-63,8 K€</td>
-<td>En attente</td>
-</tr><tr class="non">
+<td class="resp-refus">Refus</td>
+</tr><tr class="non" data-date="20260918" data-salaire="40">
 <td>18/09/2026</td>
 <td>Commercial Terrain (dentaire)</td>
 <td>Binhas Global Dental School</td>
 <td class="tag">Non</td>
 <td>Salaire</td>
 <td>40-80 K€</td>
-<td></td>
-</tr><tr class="oui">
+<td class="resp-attente">En attente</td>
+</tr><tr class="oui" data-date="20260918" data-salaire="60">
 <td>18/09/2026</td>
 <td>Directeur Commercial - Réseau Vente Indirect</td>
 <td>ROBODOM</td>
 <td class="tag">Oui</td>
 <td></td>
 <td>60-90 K€</td>
-<td>En attente</td>
-</tr><tr class="non">
+<td class="resp-attente">En attente</td>
+</tr><tr class="non" data-date="20260918" data-salaire="40">
 <td>18/09/2026</td>
 <td>Responsable Commercial formations secourisme</td>
 <td>Association Nationale des Premiers Secours</td>
 <td class="tag">Non</td>
 <td>Salaire</td>
 <td>40-45 K€</td>
-<td></td>
-</tr><tr class="oui">
+<td class="resp-attente">En attente</td>
+</tr><tr class="oui" data-date="20260918" data-salaire="45">
 <td>18/09/2026</td>
 <td>Responsable Secteur (Boulogne-Billancourt)</td>
 <td>Groupement Mousquetaires</td>
 <td class="tag">Oui</td>
 <td></td>
 <td>~45-55 K€ (estimé)</td>
-<td>En attente</td>
-</tr><tr class="oui">
+<td class="resp-attente">En attente</td>
+</tr><tr class="oui" data-date="20260918" data-salaire="45">
 <td>18/09/2026</td>
 <td>Responsable Secteur (Rambouillet)</td>
 <td>Groupement Mousquetaires</td>
 <td class="tag">Oui</td>
 <td></td>
 <td>~45-55 K€ (estimé)</td>
-<td>En attente</td>
-</tr><tr class="non">
+<td class="resp-attente">En attente</td>
+</tr><tr class="non" data-date="20260918" data-salaire="50">
 <td>18/09/2026</td>
 <td>Chef des ventes régional (réseau PMS)</td>
 <td>Groupe Loste</td>
 <td class="tag">Non</td>
 <td>Compétences</td>
 <td>~50-60 K€ (estimé)</td>
-<td></td>
-</tr><tr class="oui">
+<td class="resp-attente">En attente</td>
+</tr><tr class="oui" data-date="20260918" data-salaire="60">
 <td>18/09/2026</td>
 <td>Responsable de secteur agences emploi</td>
 <td>Actual Talent</td>
 <td class="tag">Oui</td>
 <td></td>
 <td>60-90 K€</td>
-<td>Refus</td>
-</tr><tr class="oui">
+<td class="resp-refus">Refus</td>
+</tr><tr class="oui" data-date="20260918" data-salaire="33">
 <td>18/09/2026</td>
 <td>Responsable du Développement Commercial</td>
 <td>C3E</td>
 <td class="tag">Oui (sur demande explicite)</td>
 <td>Salaire sous le seuil mais candidature demandée</td>
 <td>33-75 K€</td>
-<td>En attente</td>
-</tr><tr class="non">
+<td class="resp-attente">En attente</td>
+</tr><tr class="non" data-date="20260921" data-salaire="80">
 <td>21/09/2026</td>
 <td>Responsable des Ventes France</td>
 <td>Biddle (Killeen Search)</td>
 <td class="tag">Non</td>
 <td>Anglais</td>
 <td>80-100 K€</td>
-<td></td>
-</tr><tr class="non">
+<td class="resp-attente">En attente</td>
+</tr><tr class="non" data-date="20260921" data-salaire="72">
 <td>21/09/2026</td>
 <td>Directeur/Responsable Croissance &amp; Diversification Réseau</td>
 <td>CENTURY 21</td>
 <td class="tag">Non</td>
 <td>Compétences</td>
 <td>72-92 K€</td>
-<td></td>
-</tr><tr class="non">
+<td class="resp-attente">En attente</td>
+</tr><tr class="non" data-date="20260921" data-salaire="50">
 <td>21/09/2026</td>
 <td>Responsable Commercial BtoB (Marchés Publics)</td>
 <td>Groupe Fnac Darty</td>
 <td class="tag">Non</td>
 <td>Compétences</td>
 <td>50-60 K€</td>
-<td></td>
-</tr><tr class="non">
+<td class="resp-attente">En attente</td>
+</tr><tr class="non" data-date="20260921" data-salaire="60">
 <td>21/09/2026</td>
 <td>Directeur Commercial GMS/RHF</td>
 <td>Uptoo</td>
 <td class="tag">Non</td>
 <td>Compétences</td>
 <td>60-67 K€</td>
-<td></td>
-</tr><tr class="non">
+<td class="resp-attente">En attente</td>
+</tr><tr class="non" data-date="20260921" data-salaire="70">
 <td>21/09/2026</td>
 <td>Responsable Régional OEM/VAR</td>
 <td>Uptoo</td>
 <td class="tag">Non</td>
 <td>Compétences</td>
 <td>70-90 K€</td>
-<td></td>
-</tr><tr class="non">
+<td class="resp-attente">En attente</td>
+</tr><tr class="non" data-date="20260921" data-salaire="55">
 <td>21/09/2026</td>
 <td>Responsable Service Programmation Mécaniques Commerciales</td>
 <td>Groupement Mousquetaires</td>
 <td class="tag">Non</td>
 <td>Compétences</td>
 <td>~55-75 K€ (estimé)</td>
-<td></td>
-</tr><tr class="non">
+<td class="resp-attente">En attente</td>
+</tr><tr class="non" data-date="20260921" data-salaire="48">
 <td>21/09/2026</td>
 <td>Directeur de Service MNA 92</td>
 <td>LE LIEN</td>
 <td class="tag">Non</td>
 <td>Compétences</td>
 <td>≥ 48 K€</td>
-<td></td>
-</tr><tr class="non">
+<td class="resp-attente">En attente</td>
+</tr><tr class="non" data-date="20260921" data-salaire="-1">
 <td>21/09/2026</td>
 <td>Senior Consultant/Manager Retail Banking</td>
 <td>Sopra Steria Next</td>
 <td class="tag">Non</td>
 <td>Compétences</td>
 <td>Non précisé</td>
-<td></td>
-</tr><tr class="non">
+<td class="resp-attente">En attente</td>
+</tr><tr class="non" data-date="20260921" data-salaire="-1">
 <td>21/09/2026</td>
 <td>Sales Manager B2B</td>
 <td>Bright World Technologies</td>
 <td class="tag">Non</td>
 <td>Anglais</td>
 <td>Non précisé</td>
-<td></td>
-</tr><tr class="non">
+<td class="resp-attente">En attente</td>
+</tr><tr class="non" data-date="20260921" data-salaire="45">
 <td>21/09/2026</td>
 <td>Chargé de Développement Réseau Commercial B2B</td>
 <td>Uptoo (Créteil)</td>
 <td class="tag">Non</td>
 <td>Compétences</td>
 <td>45-55 K€</td>
-<td></td>
-</tr><tr class="non">
+<td class="resp-attente">En attente</td>
+</tr><tr class="non" data-date="20260921" data-salaire="75">
 <td>21/09/2026</td>
 <td>Directeur Commercial</td>
 <td>WENZEL France</td>
 <td class="tag">Non</td>
 <td>Anglais</td>
 <td>≥ 75 K€</td>
-<td></td>
-</tr><tr class="non">
+<td class="resp-attente">En attente</td>
+</tr><tr class="non" data-date="20260921" data-salaire="60">
 <td>21/09/2026</td>
 <td>Channel Manager IT-IA</td>
 <td>NOWBRAINS</td>
 <td class="tag">Non</td>
 <td>Compétences</td>
 <td>60-90 K€</td>
-<td></td>
-</tr><tr class="non">
+<td class="resp-attente">En attente</td>
+</tr><tr class="non" data-date="20260921" data-salaire="55">
 <td>21/09/2026</td>
 <td>Responsable Commerciale Accession Sociale</td>
 <td>Batigère</td>
 <td class="tag">Non</td>
 <td>Compétences</td>
 <td>55-65 K€</td>
-<td></td>
-</tr><tr class="non">
+<td class="resp-attente">En attente</td>
+</tr><tr class="non" data-date="20260921" data-salaire="55">
 <td>21/09/2026</td>
 <td>Responsable Commercial - Solutions PUI</td>
 <td>Michael Page</td>
 <td class="tag">Non</td>
 <td>Compétences</td>
 <td>55-75 K€</td>
-<td></td>
-</tr><tr class="non">
+<td class="resp-attente">En attente</td>
+</tr><tr class="non" data-date="20260921" data-salaire="65">
 <td>21/09/2026</td>
 <td>Responsable Commercial B2B (vidéosurveillance, Paris)</td>
 <td>UPTOO</td>
 <td class="tag">Non</td>
 <td>Anglais</td>
 <td>65-85 K€</td>
-<td></td>
-</tr><tr class="non">
+<td class="resp-attente">En attente</td>
+</tr><tr class="non" data-date="20260921" data-salaire="65">
 <td>21/09/2026</td>
 <td>Responsable Commercial B2B (vidéosurveillance, Versailles)</td>
 <td>UPTOO</td>
 <td class="tag">Non</td>
 <td>Anglais</td>
 <td>65-85 K€</td>
-<td></td>
-</tr><tr class="non">
+<td class="resp-attente">En attente</td>
+</tr><tr class="non" data-date="20260921" data-salaire="70">
 <td>21/09/2026</td>
 <td>Responsable Commercial</td>
 <td>Alphea Conseil (Évry)</td>
 <td class="tag">Non</td>
 <td>Anglais</td>
 <td>70-80 K€</td>
-<td></td>
-</tr><tr class="non">
+<td class="resp-attente">En attente</td>
+</tr><tr class="non" data-date="20260921" data-salaire="83">
 <td>21/09/2026</td>
 <td>Responsable Commercial Avant-Vente Industriel</td>
 <td>Lynx RH</td>
 <td class="tag">Non</td>
 <td>Anglais</td>
 <td>83-87 K€</td>
-<td></td>
-</tr><tr class="non">
+<td class="resp-attente">En attente</td>
+</tr><tr class="non" data-date="20260921" data-salaire="-1">
 <td>21/09/2026</td>
 <td>Superviseur Santé</td>
 <td>Groupe Henner</td>
 <td class="tag">Non</td>
 <td>Compétences</td>
 <td>Non précisé</td>
-<td></td>
-</tr><tr class="non">
+<td class="resp-attente">En attente</td>
+</tr><tr class="non" data-date="20260921" data-salaire="50">
 <td>21/09/2026</td>
 <td>Field Sales Representative FMCG</td>
 <td>Approach People Recruitment</td>
 <td class="tag">Non</td>
 <td>Anglais</td>
 <td>50-60 K€</td>
-<td></td>
-</tr><tr class="non">
+<td class="resp-attente">En attente</td>
+</tr><tr class="non" data-date="20260921" data-salaire="40.5">
 <td>21/09/2026</td>
 <td>Responsable Régional du Développement</td>
 <td>Prosol (fresh.)</td>
 <td class="tag">Non</td>
 <td>Compétences</td>
 <td>40,5-71,2 K€ (estimé)</td>
-<td></td>
-</tr><tr class="non">
+<td class="resp-attente">En attente</td>
+</tr><tr class="non" data-date="20260921" data-salaire="36">
 <td>21/09/2026</td>
 <td>Responsable Régional</td>
 <td>Happy Curl - La Boutique du Coiffeur</td>
 <td class="tag">Non</td>
 <td>Salaire</td>
 <td>36-58,8 K€/an</td>
+<td class="resp-attente">En attente</td>
+</tr><tr class="oui" data-date="20260922" data-salaire="60">
+<td>22/09/2026</td>
+<td>Directeur des Opérations Île-de-France</td>
+<td>PALFINGER France</td>
+<td class="tag">Oui</td>
 <td></td>
-</tr><tr class="oui">
+<td>60-80 K€</td>
+<td class="resp-attente">En attente</td>
+</tr><tr class="oui" data-date="20260922" data-salaire="70">
+<td>22/09/2026</td>
+<td>Responsable d&#x27;Exploitation Projets</td>
+<td>Groupe Résilians</td>
+<td class="tag">Oui</td>
+<td></td>
+<td>70-100 K€ (estimé)</td>
+<td class="resp-attente">En attente</td>
+</tr><tr class="oui" data-date="00000000" data-salaire="-1">
 <td>—</td>
 <td>Team Leader Inside Sales H/F</td>
 <td>Edenred Group</td>
 <td class="tag">Oui</td>
 <td></td>
 <td>Non précisé</td>
-<td>Refus</td>
+<td class="resp-refus">Refus</td>
 </tr>
 </tbody>
 </table>
@@ -869,8 +899,39 @@ function filterTable() {
     const matchesFilter = !f || tr.classList.contains(f);
     tr.style.display = (matchesText && matchesFilter) ? '' : 'none';
   });
+  document.getElementById('tbl').classList.toggle('hide-raison', f === 'oui');
 }
 filterTable();
+
+let sortState = {};
+function sortTable(colIndex, type) {
+  const tbody = document.querySelector('#tbl tbody');
+  const rows = Array.from(tbody.querySelectorAll('tr'));
+  const asc = !(sortState[colIndex] === 'asc');
+  sortState = {};
+  sortState[colIndex] = asc ? 'asc' : 'desc';
+  document.querySelectorAll('.sort-arrow').forEach(a => a.textContent = '');
+  const arrow = document.getElementById('arrow-' + colIndex);
+  if (arrow) arrow.textContent = asc ? '\u25B2' : '\u25BC';
+
+  rows.sort((a, b) => {
+    let va, vb;
+    if (type === 'date') {
+      va = a.dataset.date; vb = b.dataset.date;
+    } else if (type === 'num') {
+      va = parseFloat(a.dataset.salaire); vb = parseFloat(b.dataset.salaire);
+      if (isNaN(va)) va = -1;
+      if (isNaN(vb)) vb = -1;
+    } else {
+      va = a.children[colIndex].textContent.trim().toLowerCase();
+      vb = b.children[colIndex].textContent.trim().toLowerCase();
+    }
+    if (va < vb) return asc ? -1 : 1;
+    if (va > vb) return asc ? 1 : -1;
+    return 0;
+  });
+  rows.forEach(r => tbody.appendChild(r));
+}
 </script>
 </body>
 </html>
