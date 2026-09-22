@@ -1053,6 +1053,23 @@
       "pas": 2357,
       "sport_kcal": 110,
       "sport_note": "Aucune séance Sport-app enregistrée, 110kcal via 2357 pas uniquement. Anniversaire d'Olivier. Excès calorique modéré (2098/1700, +398), porté par les lipides (83/44g, quasi le double de la cible) ; protéines bien couvertes (187/153g, 2e bon jour consécutif) ; glucides toujours sous cible (140/162g). Poids figé (valeur du vendredi 18/09)."
+    },
+    {
+      "date": "2026-09-21",
+      "jour": "Lun",
+      "poids": 76.2,
+      "figé": false,
+      "a_jeun": true,
+      "kcal": 1373,
+      "glucides": 155,
+      "glucides_cible": 162,
+      "proteines": 80,
+      "proteines_cible": 153,
+      "lipides": 42,
+      "lipides_cible": 44,
+      "pas": 4737,
+      "sport_kcal": 221,
+      "sport_note": "Aucune séance Sport-app enregistrée, 221kcal via 4737 pas (0,8km) uniquement. Déficit protéique sévère (80/153g, ~52% de la cible) malgré une large marge calorique inutilisée (1373/1700, -327kcal) qui aurait permis de le combler. Glucides et lipides dans les clous."
     }
   ],
   "mensurations": [
