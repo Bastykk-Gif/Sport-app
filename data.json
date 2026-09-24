@@ -1087,6 +1087,22 @@
       "pas": 4453,
       "sport_kcal": 208,
       "sport_note": "Aucune séance Sport-app enregistrée, 208kcal via 4453 pas (0,9km) uniquement. 2e jour consécutif de déficit protéique sévère (98/153g, après 80/153g le 21/09) malgré une marge calorique quasi inexistante (1804/1700, +104kcal) - le surplus calorique est allé presque entièrement vers les glucides (247/162g, net dépassement inhabituel après des mois de sous-consommation chronique) au détriment des protéines. Lipides dans les clous (46/44g). Poids inchangé (76,2kg, rythme hebdomadaire)."
+    },
+    {
+      "date": "2026-09-23",
+      "jour": "Mer",
+      "poids": 76.2,
+      "figé": false,
+      "a_jeun": true,
+      "kcal": 1843,
+      "glucides": 229,
+      "glucides_cible": 162,
+      "proteines": 83,
+      "proteines_cible": 153,
+      "lipides": 65,
+      "lipides_cible": 44,
+      "sport_kcal": 191,
+      "sport_note": "Aucune séance Sport-app enregistrée, 191kcal brûlées (activité quotidienne uniquement). 3e jour consécutif de déficit protéique sévère (83/153g, ~54% de la cible, après 80 puis 98g) : aucun des 3 repas n'a de source protéique solide côté déjeuner (pain blanc, flan) ; dîner steak+skyr insuffisant. Excès calorique modéré (1843/1700, +143), porté par les glucides (229/162g) et les lipides (65/44g, +48%). Poids inchangé (76,2kg, rythme hebdomadaire)."
     }
   ],
   "mensurations": [
