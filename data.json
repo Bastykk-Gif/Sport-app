@@ -1120,6 +1120,23 @@
       "pas": 4882,
       "sport_kcal": 228,
       "sport_note": "Aucune séance Sport-app enregistrée, 228kcal brûlées (4882 pas, activité quotidienne uniquement). Excès calorique important (2515/1700, +815) et déficit protéique persistant (122/153g, -36g). Dérapage lipidique majeur (114/44g, x2,5) et glucidique modéré (210/162g), concentrés sur le dîner (kebab, frites). Poids en réelle baisse (76,2kg, mesure du jour, -4,8kg depuis le 20/07)."
+    },
+    {
+      "date": "2026-09-26",
+      "jour": "Sam",
+      "poids": 76.2,
+      "figé": true,
+      "a_jeun": false,
+      "kcal": 3223,
+      "glucides": 341,
+      "glucides_cible": 162,
+      "proteines": 86,
+      "proteines_cible": 153,
+      "lipides": 136,
+      "lipides_cible": 44,
+      "pas": 4572,
+      "sport_kcal": 213,
+      "sport_note": "Aucune séance Sport-app enregistrée, 213kcal brûlées (4572 pas, activité quotidienne uniquement). Excès calorique majeur (3223/1700, +1523, quasi le double de la cible) porté par le dîner (bière Heineken, Buffalo Chicken) : lipides x3,1 (136/44g), glucides au-dessus (341/162g) mais sans valeur qualitative (excès global, pas rééquilibrage). Protéines en déficit sévère (86/153g, 56%) - 4e épisode de ce type depuis le 21/09 (80g, 98g, 83g, 86g), devient un point d'instabilité récurrent plutôt qu'isolé. Poids affiché = valeur figée du vendredi (samedi), pas une mesure du jour."
     }
   ],
   "mensurations": [
