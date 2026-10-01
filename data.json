@@ -1105,6 +1105,22 @@
       "sport_note": "Aucune séance Sport-app enregistrée, 191kcal brûlées (activité quotidienne uniquement). 3e jour consécutif de déficit protéique sévère (83/153g, ~54% de la cible, après 80 puis 98g) : aucun des 3 repas n'a de source protéique solide côté déjeuner (pain blanc, flan) ; dîner steak+skyr insuffisant. Excès calorique modéré (1843/1700, +143), porté par les glucides (229/162g) et les lipides (65/44g, +48%). Poids inchangé (76,2kg, rythme hebdomadaire)."
     },
     {
+      "date": "2026-09-24",
+      "jour": "Jeu",
+      "poids": 76.2,
+      "figé": false,
+      "a_jeun": true,
+      "kcal": 1728,
+      "glucides": 168,
+      "glucides_cible": 162,
+      "proteines": 120,
+      "proteines_cible": 153,
+      "lipides": 56,
+      "lipides_cible": 44,
+      "sport_kcal": 240,
+      "sport_note": "Aucune séance Sport-app enregistrée, 240kcal brûlées (activité quotidienne uniquement). Calories quasi pile cible (1728/1700, +28). Glucides enfin sur cible (168/162g), rompt le déficit chronique. Protéines encore en déficit (120/153g, 78%, -33g), 4e jour consécutif après 21-23/09. Lipides en léger excès (56/44g, +27%). Poids 76,2kg inchangé (pesée hebdomadaire)."
+    },
+    {
       "date": "2026-09-25",
       "jour": "Ven",
       "poids": 76.2,
