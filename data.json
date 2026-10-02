@@ -1221,6 +1221,23 @@
       "pas": 2940,
       "sport_kcal": 137,
       "sport_note": "Aucune séance Sport-app enregistrée, 137kcal brûlées (2940 pas, activité quotidienne uniquement). Excès calorique (2099/1700, +399) porté par le déjeuner cantine (1250 kcal, lapin sauce moutarde) et un pain au chocolat en en-cas (370 kcal). Petit-déjeuner à 117 kcal (Chocapic seul, pas de whey visible). Protéines sous cible (121/153g, 79%, -32g), 8e jour consécutif de déficit. Lipides x1,7 (73/44g). Glucides à la cible (168/162g). Poids 76,2kg inchangé (pesée hebdomadaire)."
+    },
+    {
+      "date": "2026-10-01",
+      "jour": "Jeu",
+      "poids": 76.2,
+      "figé": false,
+      "a_jeun": true,
+      "kcal": 1909,
+      "glucides": 169,
+      "glucides_cible": 162,
+      "proteines": 125,
+      "proteines_cible": 153,
+      "lipides": 66,
+      "lipides_cible": 44,
+      "pas": 5020,
+      "sport_kcal": 234,
+      "sport_note": "Aucune séance Sport-app enregistrée, 234kcal brûlées (5020 pas, activité quotidienne uniquement). Excès calorique modéré (1909/1700, +209), le plus faible depuis plusieurs jours, mais déjeuner à 1000 kcal (choucroute garnie avec jambon, cible 697) et petit-déjeuner 279/323, dîner 630/578 (lentilles vertes à l'italienne, filets...), en-cas 0/102. Protéines sous cible (125/153g, 82%, -28g). Lipides x1,5 (66/44g). Glucides à la cible (169/162g). Poids 76,2kg inchangé (pesée hebdomadaire)."
     }
   ],
   "mensurations": [
