@@ -1238,6 +1238,23 @@
       "pas": 5020,
       "sport_kcal": 234,
       "sport_note": "Aucune séance Sport-app enregistrée, 234kcal brûlées (5020 pas, activité quotidienne uniquement). Excès calorique modéré (1909/1700, +209), le plus faible depuis plusieurs jours, mais déjeuner à 1000 kcal (choucroute garnie avec jambon, cible 697) et petit-déjeuner 279/323, dîner 630/578 (lentilles vertes à l'italienne, filets...), en-cas 0/102. Protéines sous cible (125/153g, 82%, -28g). Lipides x1,5 (66/44g). Glucides à la cible (169/162g). Poids 76,2kg inchangé (pesée hebdomadaire)."
+    },
+    {
+      "date": "2026-10-02",
+      "jour": "Ven",
+      "poids": 76.2,
+      "figé": false,
+      "a_jeun": true,
+      "kcal": 1962,
+      "glucides": 215,
+      "glucides_cible": 162,
+      "proteines": 83,
+      "proteines_cible": 153,
+      "lipides": 82,
+      "lipides_cible": 44,
+      "pas": 5876,
+      "sport_kcal": 274,
+      "sport_note": "Aucune séance Sport-app enregistrée, 274kcal brûlées (5876 pas, activité quotidienne uniquement). Excès calorique (1962/1700, +262) porté par le déjeuner (salade César sauce César, 919/697 kcal) et le dîner (bœuf sauté basilic thaï + flan coco, 693/578). Protéines en déficit sévère (83/153g, 54%), 10e jour consécutif sous cible, rechute après 3 jours à 121-125g. Lipides x1,9 (82/44g). Glucides au-dessus (215/162g). Moyenne 7 jours (26/09-02/10) ~2130 kcal/j = maintenance estimée, explique le plateau à 76,2kg depuis le 14/09."
     }
   ],
   "mensurations": [
