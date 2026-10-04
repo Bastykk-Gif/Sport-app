@@ -1255,6 +1255,23 @@
       "pas": 5876,
       "sport_kcal": 274,
       "sport_note": "Aucune séance Sport-app enregistrée, 274kcal brûlées (5876 pas, activité quotidienne uniquement). Excès calorique (1962/1700, +262) porté par le déjeuner (salade César sauce César, 919/697 kcal) et le dîner (bœuf sauté basilic thaï + flan coco, 693/578). Protéines en déficit sévère (83/153g, 54%), 10e jour consécutif sous cible, rechute après 3 jours à 121-125g. Lipides x1,9 (82/44g). Glucides au-dessus (215/162g). Moyenne 7 jours (26/09-02/10) ~2130 kcal/j = maintenance estimée, explique le plateau à 76,2kg depuis le 14/09."
+    },
+    {
+      "date": "2026-10-03",
+      "jour": "Sam",
+      "poids": 76.2,
+      "figé": true,
+      "a_jeun": false,
+      "kcal": 2148,
+      "glucides": 223,
+      "glucides_cible": 162,
+      "proteines": 101,
+      "proteines_cible": 153,
+      "lipides": 88,
+      "lipides_cible": 44,
+      "pas": 3201,
+      "sport_kcal": 149,
+      "sport_note": "Aucune séance Sport-app enregistrée, 149kcal brûlées (3201 pas, activité quotidienne uniquement). Excès calorique (2148/1700, +448) porté par le dîner (1122/578 kcal, poires au sirop, penne...) et les produits sucrés (cake au citron au petit-déj 422 kcal, madeleine en en-cas 227 kcal). Petit-déjeuner sans whey visible. Protéines en déficit (101/153g, 66%), 11e jour consécutif sous cible. Lipides x2 (88/44g). Glucides au-dessus (223/162g). Moyenne 7 jours (27/09-03/10) ~1976 kcal/j, proche maintenance. Poids affiché = valeur figée du vendredi (samedi), pas une mesure du jour."
     }
   ],
   "mensurations": [
