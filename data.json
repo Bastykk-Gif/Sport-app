@@ -1490,6 +1490,13 @@
       "proteines_g": 158,
       "lipides_g": 45,
       "glucides_g": 166
+    },
+    {
+      "from_date": "2026-10-05",
+      "kcal": 1700,
+      "proteines_g": 120,
+      "lipides_g": 55,
+      "glucides_g": 180
     }
   ]
 }
