@@ -1443,6 +1443,30 @@
       "poitrine": 99.0,
       "mollet_droit": 39.0,
       "mollet_gauche": 34.5
+    },
+    {
+      "date": "2026-09-09",
+      "taille": 86.0,
+      "ventre": 94.0,
+      "poitrine": 98.0,
+      "mollet_droit": 38.0,
+      "mollet_gauche": 34.0
+    },
+    {
+      "date": "2026-09-14",
+      "taille": 86.0,
+      "ventre": 93.0,
+      "poitrine": 99.0,
+      "mollet_droit": 38.0,
+      "mollet_gauche": 35.0
+    },
+    {
+      "date": "2026-10-05",
+      "taille": 86.0,
+      "ventre": 93.0,
+      "poitrine": 99.0,
+      "mollet_droit": 38.5,
+      "mollet_gauche": 35.0
     }
   ],
   "target_history": [
