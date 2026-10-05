@@ -1272,6 +1272,23 @@
       "pas": 3201,
       "sport_kcal": 149,
       "sport_note": "Aucune séance Sport-app enregistrée, 149kcal brûlées (3201 pas, activité quotidienne uniquement). Excès calorique (2148/1700, +448) porté par le dîner (1122/578 kcal, poires au sirop, penne...) et les produits sucrés (cake au citron au petit-déj 422 kcal, madeleine en en-cas 227 kcal). Petit-déjeuner sans whey visible. Protéines en déficit (101/153g, 66%), 11e jour consécutif sous cible. Lipides x2 (88/44g). Glucides au-dessus (223/162g). Moyenne 7 jours (27/09-03/10) ~1976 kcal/j, proche maintenance. Poids affiché = valeur figée du vendredi (samedi), pas une mesure du jour."
+    },
+    {
+      "date": "2026-10-04",
+      "jour": "Dim",
+      "poids": 76.2,
+      "figé": true,
+      "a_jeun": false,
+      "kcal": 1821,
+      "glucides": 229,
+      "glucides_cible": 162,
+      "proteines": 106,
+      "proteines_cible": 153,
+      "lipides": 51,
+      "lipides_cible": 44,
+      "pas": 1431,
+      "sport_kcal": 67,
+      "sport_note": "Aucune séance Sport-app enregistrée, 67kcal brûlées (1431 pas, activité quotidienne uniquement). Léger excès calorique (1821/1700, +121) entièrement dû à l'en-cas (brioche + chocolat chaud, 604/102 kcal) : les 3 repas totalisent 1217 kcal, sous leur budget. Lipides quasi à la cible (51/44g), meilleure valeur depuis le 24/09. Glucides au-dessus (229/162g), portés par l'en-cas et les poires au sirop (2 fois). Protéines en déficit (106/153g, 69%), 12e jour consécutif sous cible. Moyenne 7 jours (28/09-04/10) ~2015 kcal/j, proche maintenance. Poids affiché = valeur figée du vendredi, pas une mesure du jour."
     }
   ],
   "mensurations": [
