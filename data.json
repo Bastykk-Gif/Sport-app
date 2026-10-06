@@ -1289,6 +1289,23 @@
       "pas": 1431,
       "sport_kcal": 67,
       "sport_note": "Aucune séance Sport-app enregistrée, 67kcal brûlées (1431 pas, activité quotidienne uniquement). Léger excès calorique (1821/1700, +121) entièrement dû à l'en-cas (brioche + chocolat chaud, 604/102 kcal) : les 3 repas totalisent 1217 kcal, sous leur budget. Lipides quasi à la cible (51/44g), meilleure valeur depuis le 24/09. Glucides au-dessus (229/162g), portés par l'en-cas et les poires au sirop (2 fois). Protéines en déficit (106/153g, 69%), 12e jour consécutif sous cible. Moyenne 7 jours (28/09-04/10) ~2015 kcal/j, proche maintenance. Poids affiché = valeur figée du vendredi, pas une mesure du jour."
+    },
+    {
+      "date": "2026-10-05",
+      "jour": "Lun",
+      "poids": 78.2,
+      "figé": false,
+      "a_jeun": true,
+      "kcal": 2318,
+      "glucides": 263,
+      "glucides_cible": 180,
+      "proteines": 105,
+      "proteines_cible": 120,
+      "lipides": 93,
+      "lipides_cible": 55,
+      "pas": 5199,
+      "sport_kcal": 249,
+      "sport_note": "Aucune séance Sport-app enregistrée, 249kcal brûlées (5199 pas, 2,8km, activité quotidienne uniquement). 1er jour des nouvelles cibles (1700/120P/55L/180G). Excès calorique marqué (2318/1700, +618) porté par le dîner (quiche lorraine + skyr, 1096/680 kcal) et l'en-cas (biscuits pépites de chocolat, 266 kcal). Petit-déjeuner (241) et déjeuner cantine (716/782) dans le budget. Lipides x1,7 (93/55g), glucides au-dessus (263/180g), protéines sous cible (105/120g, 88%). Pesée 78,2kg à jeun (+2kg vs 14/09). Moyenne 7 jours (29/09-05/10) ~2090 kcal/j, au niveau de la maintenance estimée."
     }
   ],
   "mensurations": [
