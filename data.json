@@ -1306,6 +1306,23 @@
       "pas": 5199,
       "sport_kcal": 249,
       "sport_note": "Aucune séance Sport-app enregistrée, 249kcal brûlées (5199 pas, 2,8km, activité quotidienne uniquement). 1er jour des nouvelles cibles (1700/120P/55L/180G). Excès calorique marqué (2318/1700, +618) porté par le dîner (quiche lorraine + skyr, 1096/680 kcal) et l'en-cas (biscuits pépites de chocolat, 266 kcal). Petit-déjeuner (241) et déjeuner cantine (716/782) dans le budget. Lipides x1,7 (93/55g), glucides au-dessus (263/180g), protéines sous cible (105/120g, 88%). Pesée 78,2kg à jeun (+2kg vs 14/09). Moyenne 7 jours (29/09-05/10) ~2090 kcal/j, au niveau de la maintenance estimée."
+    },
+    {
+      "date": "2026-10-06",
+      "jour": "Mar",
+      "poids": 78.2,
+      "figé": false,
+      "a_jeun": true,
+      "kcal": 2163,
+      "glucides": 254,
+      "glucides_cible": 180,
+      "proteines": 143,
+      "proteines_cible": 120,
+      "lipides": 84,
+      "lipides_cible": 55,
+      "pas": 6551,
+      "sport_kcal": 314,
+      "sport_note": "Aucune séance Sport-app enregistrée, 314kcal brûlées (6551 pas, 4,3km, activité quotidienne uniquement). Excès calorique (2163/1700, +463) porté par le dîner (steak de bœuf grillé + purée, 1111/680 kcal, +431) ; 3e dîner >1090 kcal sur les 4 derniers jours. Déjeuner cantine (paupiette de poulet, 852/782) et petit-déjeuner (cake marbré, 200/238) proches du budget. Protéines couvertes (143/120g), 1re fois au-dessus de la cible depuis le 17/09. Lipides x1,5 (84/55g), glucides au-dessus (254/180g). Poids 78,2kg = valeur du 05/10 (pesée hebdomadaire). Moyenne 7 jours (30/09-06/10) ~2060 kcal/j, au niveau de la maintenance estimée."
     }
   ],
   "mensurations": [
