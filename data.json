@@ -1323,6 +1323,23 @@
       "pas": 6551,
       "sport_kcal": 314,
       "sport_note": "Aucune séance Sport-app enregistrée, 314kcal brûlées (6551 pas, 4,3km, activité quotidienne uniquement). Excès calorique (2163/1700, +463) porté par le dîner (steak de bœuf grillé + purée, 1111/680 kcal, +431) ; 3e dîner >1090 kcal sur les 4 derniers jours. Déjeuner cantine (paupiette de poulet, 852/782) et petit-déjeuner (cake marbré, 200/238) proches du budget. Protéines couvertes (143/120g), 1re fois au-dessus de la cible depuis le 17/09. Lipides x1,5 (84/55g), glucides au-dessus (254/180g). Poids 78,2kg = valeur du 05/10 (pesée hebdomadaire). Moyenne 7 jours (30/09-06/10) ~2060 kcal/j, au niveau de la maintenance estimée."
+    },
+    {
+      "date": "2026-10-08",
+      "jour": "Jeu",
+      "poids": 78.2,
+      "figé": false,
+      "a_jeun": true,
+      "kcal": 2493,
+      "glucides": 255,
+      "glucides_cible": 180,
+      "proteines": 177,
+      "proteines_cible": 120,
+      "lipides": 90,
+      "lipides_cible": 55,
+      "pas": 4906,
+      "sport_kcal": 235,
+      "sport_note": "Aucune séance Sport-app enregistrée, 235kcal brûlées (4906 pas, 3,3km, activité quotidienne uniquement). Excès calorique (2493/1700, +793) porté par le dîner (biscottes 6 céréales, skyr..., 1488/680 kcal). Petit-déjeuner 279/238, déjeuner cantine (penne veau marengo) 726/782. Protéines couvertes (177/120g), lipides 90/55g, glucides 255/180g. Poids 78,2kg = valeur du 05/10 (pesée hebdomadaire)."
     }
   ],
   "mensurations": [
