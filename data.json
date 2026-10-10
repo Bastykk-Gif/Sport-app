@@ -1357,6 +1357,23 @@
       "pas": 4906,
       "sport_kcal": 235,
       "sport_note": "Aucune séance Sport-app enregistrée, 235kcal brûlées (4906 pas, 3,3km, activité quotidienne uniquement). Excès calorique (2493/1700, +793) porté par le dîner (biscottes 6 céréales, skyr..., 1488/680 kcal). Petit-déjeuner 279/238, déjeuner cantine (penne veau marengo) 726/782. Protéines couvertes (177/120g), lipides 90/55g, glucides 255/180g. Poids 78,2kg = valeur du 05/10 (pesée hebdomadaire)."
+    },
+    {
+      "date": "2026-10-09",
+      "jour": "Ven",
+      "poids": 78.2,
+      "figé": false,
+      "a_jeun": true,
+      "kcal": 2279,
+      "glucides": 274,
+      "glucides_cible": 180,
+      "proteines": 81,
+      "proteines_cible": 120,
+      "lipides": 80,
+      "lipides_cible": 55,
+      "pas": 8247,
+      "sport_kcal": 395,
+      "sport_note": "Aucune séance Sport-app enregistrée, 395kcal brûlées (8247 pas, 5,3km, activité quotidienne uniquement). Excès calorique (2279/1700, +579) porté par le déjeuner (Raspberry, panini jambon fromage..., 1377/782 kcal). Petit-déjeuner (cake marbré, café) 387/238, dîner (skyr, croque monsieur) 515/680. Protéines sous cible (81/120g), lipides 80/55g, glucides 274/180g. Poids 78,2kg = valeur du 05/10 (pesée hebdomadaire)."
     }
   ],
   "mensurations": [
