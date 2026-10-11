@@ -1374,6 +1374,23 @@
       "pas": 8247,
       "sport_kcal": 395,
       "sport_note": "Aucune séance Sport-app enregistrée, 395kcal brûlées (8247 pas, 5,3km, activité quotidienne uniquement). Excès calorique (2279/1700, +579) porté par le déjeuner (Raspberry, panini jambon fromage..., 1377/782 kcal). Petit-déjeuner (cake marbré, café) 387/238, dîner (skyr, croque monsieur) 515/680. Protéines sous cible (81/120g), lipides 80/55g, glucides 274/180g. Poids 78,2kg = valeur du 05/10 (pesée hebdomadaire)."
+    },
+    {
+      "date": "2026-10-10",
+      "jour": "Sam",
+      "poids": 78.2,
+      "figé": true,
+      "a_jeun": true,
+      "kcal": 2589,
+      "glucides": 295,
+      "glucides_cible": 180,
+      "proteines": 122,
+      "proteines_cible": 120,
+      "lipides": 102,
+      "lipides_cible": 55,
+      "pas": 2052,
+      "sport_kcal": 98,
+      "sport_note": "Aucune séance Sport-app enregistrée, 98kcal brûlées (2052 pas, 1,3km, activité quotidienne uniquement). Excès calorique (2589/1700, +889) réparti : petit-déjeuner (gaufres de liège, café, 550/238 kcal), en-cas (brioche, chocolat chaud, 604 kcal), dîner (apéritif dînatoire, skyr, 777/680). Déjeuner (filets de poulet, riz à la chinoise) 659/782. Protéines couvertes (122/120g), lipides 102/55g, glucides 295/180g. Poids 78,2kg = valeur figée (week-end)."
     }
   ],
   "mensurations": [
