@@ -1391,6 +1391,23 @@
       "pas": 2052,
       "sport_kcal": 98,
       "sport_note": "Aucune séance Sport-app enregistrée, 98kcal brûlées (2052 pas, 1,3km, activité quotidienne uniquement). Excès calorique (2589/1700, +889) réparti : petit-déjeuner (gaufres de liège, café, 550/238 kcal), en-cas (brioche, chocolat chaud, 604 kcal), dîner (apéritif dînatoire, skyr, 777/680). Déjeuner (filets de poulet, riz à la chinoise) 659/782. Protéines couvertes (122/120g), lipides 102/55g, glucides 295/180g. Poids 78,2kg = valeur figée (week-end)."
+    },
+    {
+      "date": "2026-10-11",
+      "jour": "Dim",
+      "poids": 78.2,
+      "figé": true,
+      "a_jeun": true,
+      "kcal": 2302,
+      "glucides": 112,
+      "glucides_cible": 180,
+      "proteines": 103,
+      "proteines_cible": 120,
+      "lipides": 119,
+      "lipides_cible": 55,
+      "pas": 3443,
+      "sport_kcal": 165,
+      "sport_note": "Aucune séance Sport-app enregistrée, 165kcal brûlées (3443 pas, 2,2km, activité quotidienne uniquement). Excès calorique (2302/1700, +602) porté par le dîner (cheeseburger McDonald's, Maxi Be..., 1237/680 kcal) et l'en-cas (Pick up, 572 kcal). Petit-déjeuner café seul (0/238), déjeuner (fromage de chèvre, salade endive) 493/782. Lipides x2,2 (119/55g), glucides sous cible (112/180g), protéines sous cible (103/120g). Poids 78,2kg = valeur figée (week-end)."
     }
   ],
   "mensurations": [
