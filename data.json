@@ -1408,6 +1408,23 @@
       "pas": 3443,
       "sport_kcal": 165,
       "sport_note": "Aucune séance Sport-app enregistrée, 165kcal brûlées (3443 pas, 2,2km, activité quotidienne uniquement). Excès calorique (2302/1700, +602) porté par le dîner (cheeseburger McDonald's, Maxi Be..., 1237/680 kcal) et l'en-cas (Pick up, 572 kcal). Petit-déjeuner café seul (0/238), déjeuner (fromage de chèvre, salade endive) 493/782. Lipides x2,2 (119/55g), glucides sous cible (112/180g), protéines sous cible (103/120g). Poids 78,2kg = valeur figée (week-end)."
+    },
+    {
+      "date": "2026-10-12",
+      "jour": "Lun",
+      "poids": 78.2,
+      "figé": false,
+      "a_jeun": true,
+      "kcal": 2464,
+      "glucides": 293,
+      "glucides_cible": 180,
+      "proteines": 83,
+      "proteines_cible": 120,
+      "lipides": 102,
+      "lipides_cible": 55,
+      "pas": 5767,
+      "sport_kcal": 276,
+      "sport_note": "Aucune séance Sport-app enregistrée, 276kcal brûlées (5767 pas, 4,0km, activité quotidienne uniquement). Excès calorique (2464/1700, +764) porté par le déjeuner (frites de patate douce..., 1150/782 kcal), le dîner (pâtes au chorizo, 770/680) et l'en-cas (Nutella, Cracotte, 250 kcal). Petit-déjeuner (cappuccino, café) 294/238. Protéines sous cible (83/120g), lipides 102/55g, glucides 293/180g. Poids 78,2kg = valeur du 05/10 (pesée hebdomadaire)."
     }
   ],
   "mensurations": [
