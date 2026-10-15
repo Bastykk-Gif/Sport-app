@@ -1442,6 +1442,23 @@
       "pas": 7522,
       "sport_kcal": 360,
       "sport_note": "Aucune séance Sport-app enregistrée, 360kcal brûlées (7522 pas, 4,9km, activité quotidienne uniquement). Calories proches de la cible (1787/1700, +87). Petit-déjeuner (pain de mie complet Jacquet...) 313/238, déjeuner cantine (skyr, pizza régina...) 773/782, dîner (skyr, tartare fromage, pain de mie...) 701/680, pas d'en-cas. Protéines couvertes (135/120g), lipides sous cible (50/55g), glucides 188/180g. Poids 78,2kg = valeur du 05/10 (pesée hebdomadaire)."
+    },
+    {
+      "date": "2026-10-14",
+      "jour": "Mer",
+      "poids": 78.2,
+      "figé": false,
+      "a_jeun": true,
+      "kcal": 2410,
+      "glucides": 260,
+      "glucides_cible": 178,
+      "proteines": 91,
+      "proteines_cible": 116,
+      "lipides": 108,
+      "lipides_cible": 53,
+      "pas": 2400,
+      "sport_kcal": 115,
+      "sport_note": "Aucune séance Sport-app enregistrée, 115kcal brûlées (~2400 pas, chiffre partiellement visible). Excès calorique (2410/1700, +710) porté par le déjeuner cantine (endives braisées..., 1150/782 kcal) et l'en-cas (chocolat chaud, brioche, 604 kcal). Petit-déjeuner (biscuit orange graine de chia, gâteau...) 331/238, dîner (skyr, cordon bleu, semoule couscous...) 325/680. Protéines sous cible (91/120g), lipides x2 (108/55g), glucides 260/180g. Poids 78,2kg = valeur du 05/10 (pesée hebdomadaire). Dernier bilan avant arrêt de l'envoi quotidien (15/10)."
     }
   ],
   "mensurations": [
