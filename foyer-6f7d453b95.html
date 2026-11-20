@@ -46,7 +46,7 @@ summary{cursor:pointer;color:var(--ink2);font-size:14px}
 <p class="sub">Compte commun et prêt immobilier. Moyenne par mois, du 1er novembre 2023 au 31 octobre 2026 (36 mois).</p>
 
 <section class="card" aria-labelledby="h-a">
-  <div class="total"><b>5 176 €</b><span>dépensés en moyenne par mois</span></div>
+  <div class="total"><b>5 177 €</b><span>dépensés en moyenne par mois</span></div>
   <h2 id="h-a" style="margin-top:14px">Poste par poste</h2>
   <div class="legend"><span><i style="background:var(--blue)"></i>Dépenses</span><span><i style="background:var(--green)"></i>Postes où une économie est possible</span></div>
   <div id="chart"></div>
@@ -85,6 +85,23 @@ summary{cursor:pointer;color:var(--ink2);font-size:14px}
   </div>
 </section>
 
+<section class="card" aria-labelledby="h-c">
+  <h2 id="h-c">Détail de la ligne « Autres dépenses diverses »</h2>
+  <p class="sub" style="margin-bottom:6px">152 petits paiements sur 36 mois, chez 106 commerçants différents (la moitié font moins de 16 €). Ce sont des achats occasionnels qui ne rentrent dans aucun autre poste. Total : 5 214 € sur 36 mois, soit 145 € par mois.</p>
+  <table>
+    <tr><th>Commerçant ou libellé du relevé</th><th class="n">Total sur 36 mois</th><th class="n">Par mois</th></tr>
+    <tr><td>Marc Cherruau (1 paiement)</td><td class="n">723 €</td><td class="n">20 €</td></tr>
+    <tr><td>Hetm (5 paiements)</td><td class="n">388 €</td><td class="n">11 €</td></tr>
+    <tr><td>Solicanin (1 virement)</td><td class="n">320 €</td><td class="n">9 €</td></tr>
+    <tr><td>Eucalyptus de Provence (1 paiement)</td><td class="n">237 €</td><td class="n">7 €</td></tr>
+    <tr><td>Ets Dominge (1 paiement)</td><td class="n">215 €</td><td class="n">6 €</td></tr>
+    <tr><td>Comiteo (1 paiement)</td><td class="n">158 €</td><td class="n">4 €</td></tr>
+    <tr><td>Sas Les Mathelle (1 paiement)</td><td class="n">120 €</td><td class="n">3 €</td></tr>
+    <tr><td>Environ 99 autres commerçants</td><td class="n">3 053 €</td><td class="n">85 €</td></tr>
+    <tr class="t"><td>Total</td><td class="n">5 214 €</td><td class="n">145 €</td></tr>
+  </table>
+</section>
+
 <p class="src">Source : exports bancaires BoursoBank (compte commun) et BNP (prêt immobilier), du 01/11/2023 au 30/10/2026. Hors achat de la voiture et hors virements entre comptes. Les postes sont classés à partir du nom des commerçants : ce sont des ordres de grandeur, pas une comptabilité exacte.</p>
 </main>
 <div id="tip" role="tooltip"></div>
@@ -92,19 +109,20 @@ summary{cursor:pointer;color:var(--ink2);font-size:14px}
 // [libellé, moyenne 36 mois, moyenne 12 mois, économie possible (1/0), précision]
 const D=[
  ["Crédits (prêt immo + Arkea)",1942,1942,0,"Prêt immobilier BNP et crédit Arkea"],
- ["Alimentation",802,758,0,"Lidl, Intermarché, Picard, boulangerie"],
+ ["Alimentation",805,761,0,"Lidl, Intermarché, Picard, Super U, boulangerie"],
  ["Énergie, eau, assurances, abonnements",665,669,1,"Énergie 375 €, téléphone et abonnements 92 €, eau 83 €, assurance habitation 64 €, assurances auto 43 €, mutuelle 9 €"],
  ["Scolarité et activités",456,523,0,"St Paul, ISP Dourdan, Cadence"],
  ["Achats et loisirs (Action, Amazon, restaurants...)",321,362,1,"Amazon, Cdiscount, Shein 136 €, Action, B&M 103 €, restauration rapide, pizzas, sorties 82 €"],
  ["Impôts et taxes",291,216,0,"Taxe foncière, impôts, amendes"],
- ["Autres dépenses diverses",192,166,0,""],
+ ["Autres dépenses diverses",145,135,0,"Petits paiements occasionnels chez une centaine de commerçants différents (détail en bas de page)"],
  ["Chèques et retraits",140,129,0,"Destination non précisée sur les relevés"],
- ["Maison et bricolage",108,97,0,""],
- ["Santé",82,71,0,""],
- ["Voyages et locations",70,21,0,""],
- ["Animaux",52,92,0,""],
- ["Vêtements",37,27,0,"Primark, Kiabi, H&M, Gémo, Pull&Bear..."],
- ["Carburant et péages",18,24,0,""]
+ ["Maison et bricolage",108,97,0,"Brico, jardinerie, déco"],
+ ["Santé",91,83,0,"Médecins, pharmacie, imagerie, optique"],
+ ["Voyages, sorties et locations",76,21,0,"Hôtels, zoos, châteaux, parcs"],
+ ["Animaux",72,92,0,"Vétérinaire, nourriture"],
+ ["Vêtements",40,30,0,"Primark, Kiabi, H&M, Gémo, Chaussea..."],
+ ["Carburant et péages",21,27,0,"Carburant, péages, parking"],
+ ["Frais bancaires",4,10,0,"Tenue de compte, frais de prélèvement"]
 ];
 const fmt=n=>n.toLocaleString('fr-FR')+' €';
 const tip=document.getElementById('tip');
